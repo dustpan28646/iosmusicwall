@@ -12,16 +12,18 @@
 
 @synthesize type;
 @synthesize noteLines;
-@synthesize positionLines;
+@synthesize isDefault;
+@synthesize name;
 
-- (id)initWithInstrumentType:(enum SUBSCORE_INSTRUMENT)instrumentType
+- (id)initWithInstrumentType:(enum SUBSCORE_INSTRUMENT)instrumentType withIsDefault:(bool)isSubscoreDefault wthName:(NSString *)subscoreName
 {
     self = [super init];
     if (self)
     {
         self.noteLines = [[NSMutableArray alloc] init];
-        self.positionLines = [[NSMutableArray alloc] init];
         self.type = instrumentType;
+        self.isDefault = isSubscoreDefault;
+        self.name = subscoreName;
     }
     return self;
 }

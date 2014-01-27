@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "DetailViewController.h"
 #import "CHCSVParser.h"
-#import "Subscore.h"
 
 @class DetailViewController;
 

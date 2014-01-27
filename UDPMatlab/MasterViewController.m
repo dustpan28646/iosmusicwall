@@ -29,6 +29,8 @@
     [super awakeFromNib];
 }
 
+
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -44,7 +46,6 @@
     currentSubscoreName = @"";
     score = [self createScore];
     indexFactor = 1.0;
-    [self.detailViewController newTimeIndex:0 withScore:[score objectAtIndex:0]];
 }
 
 - (void) viewDidAppear:(BOOL)animated
@@ -53,6 +54,8 @@
     UITableViewScrollPosition scrollPos = UITableViewScrollPositionNone;
 
     [myTable selectRowAtIndexPath:path animated:YES scrollPosition:scrollPos];
+    
+    [self.detailViewController initializeScoreWithSubscores:subscoreDictionary withNumberOfTimeIndices:numberOfTimesInScore];
 }
 
 - (void) parser:(CHCSVParser *)parser didBeginLine:(NSUInteger)recordNumber
@@ -74,7 +77,7 @@
     {
         if (currentLine == 1)
         {
-            if ([field intValue] > numberOfTimesInScore)
+            if (([field intValue]) > numberOfTimesInScore)
             {
                 numberOfTimesInScore = [field intValue];
             }
@@ -85,7 +88,7 @@
             {
                 if ([field isEqualToString:@"line"])
                 {
-                    if (currentSubscoreName != nil)
+                    if (currentSubscoreName != nil && ![currentSubscoreName isEqualToString:@""])
                     {
                         Subscore *subscore = [subscoreDictionary objectForKey:currentSubscoreName];
                         currentSubscoreLine = [[NSMutableArray alloc] initWithCapacity:numberOfTimesInScore];
@@ -105,28 +108,19 @@
                     {
                         instrumentType = SUBSCORE_GUITAR;
                     }
-                    else if ([field rangeOfString:@"bass drum" options:NSCaseInsensitiveSearch].location != NSNotFound)
+                    else if (([field rangeOfString:@"drum" options:NSCaseInsensitiveSearch].location != NSNotFound) || ([field rangeOfString:@"cymbal" options:NSCaseInsensitiveSearch].location != NSNotFound))
                     {
-                        instrumentType = SUBSCORE_BASS_DRUM;
-                    }
-                    else if ([field rangeOfString:@"snare drum" options:NSCaseInsensitiveSearch].location != NSNotFound)
-                    {
-                        instrumentType = SUBSCORE_SNARE;
-                    }
-                    else if ([field rangeOfString:@"cymbal" options:NSCaseInsensitiveSearch].location != NSNotFound)
-                    {
-                        instrumentType = SUBSCORE_CYMBAL;
-                    }
-                    else if ([field rangeOfString:@"drum" options:NSCaseInsensitiveSearch].location != NSNotFound)
-                    {
-                        instrumentType = SUBSCORE_BASS_DRUM;
+                        instrumentType = SUBSCORE_DRUM;
                     }
                     else
                     {
                         instrumentType = SUBSCORE_PIANO;
                     }
                     
-                    Subscore *subscore = [[Subscore alloc] initWithInstrumentType:instrumentType];
+                    bool isSubscoreDefault = [field isEqualToString:@"Piano/Guitar Lead"] || [field isEqualToString:@"Guitar Chords"] || [field isEqualToString:@"Piano Bass"];
+                    
+                    Subscore *subscore = [[Subscore alloc] initWithInstrumentType:instrumentType withIsDefault:isSubscoreDefault wthName:field];
+                    
                     currentSubscoreLine = [[NSMutableArray alloc] initWithCapacity:numberOfTimesInScore];
                     [subscore.noteLines addObject:currentSubscoreLine];
                     
@@ -135,15 +129,21 @@
             }
             else if ((currentSubscoreName != nil) && ![currentSubscoreName isEqualToString:@""])
             {
-                [currentSubscoreLine addObject:field];
+                [currentSubscoreLine addObject:[[SubscoreNote alloc] initWithNoteString:field]];
             }
         }
     }
     else if (currentSubscoreLine != nil)
     {
-        [currentSubscoreLine addObject:@""];
+        [currentSubscoreLine addObject:[[SubscoreNote alloc] initWithNoteString:@""]];
     }
 }
+
+- (void) parserDidEndDocument:(CHCSVParser *)parser
+{
+}
+
+
 
 
 -(NSMutableArray *)createScore
@@ -268,10 +268,7 @@
         NSDate *object = _objects[indexPath.row];
         self.detailViewController.detailItem = object;
     }
-    if ([score count] > indexPath.row)
-    {
-        [self.detailViewController newTimeIndex:indexPath.row withScore:[score objectAtIndex:indexPath.row]];
-    }
+        [self.detailViewController newTimeIndex:indexPath.row withScore:nil];
     
     
 }

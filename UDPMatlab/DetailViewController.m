@@ -39,6 +39,12 @@
 @synthesize Drum5;
 @synthesize ScoreView;
 @synthesize gridImageView;
+@synthesize buttonOne;
+@synthesize buttonTwo;
+@synthesize buttonThree;
+@synthesize buttonFour;
+@synthesize buttonFive;
+@synthesize buttonSix;
 
 #pragma mark - Managing the detail item
 
@@ -202,6 +208,45 @@
     [self sendData];
 }
 
+- (IBAction)buttonSix:(id)sender {
+}
+
+- (IBAction)touchedButtonOne:(id)sender
+{
+    [score addOrRemoveSubscoreWithName:[buttonOne titleLabel].text withTimeIndex:currentScoreIndex];
+    [score changeTimeIndexTo:currentScoreIndex];
+}
+
+- (IBAction)touchedButtonTwo:(id)sender
+{
+    [score addOrRemoveSubscoreWithName:[buttonTwo titleLabel].text withTimeIndex:currentScoreIndex];
+    [score changeTimeIndexTo:currentScoreIndex];
+}
+
+- (IBAction)touchedButtonThree:(id)sender
+{
+    [score addOrRemoveSubscoreWithName:[buttonThree titleLabel].text withTimeIndex:currentScoreIndex];
+    [score changeTimeIndexTo:currentScoreIndex];
+}
+
+- (IBAction)touchedButtonFour:(id)sender
+{
+    [score addOrRemoveSubscoreWithName:[buttonFour titleLabel].text withTimeIndex:currentScoreIndex];
+    [score changeTimeIndexTo:currentScoreIndex];
+}
+
+- (IBAction)touchedButtonFive:(id)sender
+{
+    [score addOrRemoveSubscoreWithName:[buttonFive titleLabel].text withTimeIndex:currentScoreIndex];
+    [score changeTimeIndexTo:currentScoreIndex];
+}
+
+- (IBAction)touchedButtonSix:(id)sender
+{
+    [score addOrRemoveSubscoreWithName:[buttonSix titleLabel].text withTimeIndex:currentScoreIndex];
+    [score changeTimeIndexTo:currentScoreIndex];
+}
+
 - (IBAction)didTouchTempo:(id)sender
 {
     [masterView setTempoFactor:(tempoControl.maximumValue - tempoControl.value + tempoControl.minimumValue)];
@@ -237,43 +282,65 @@
     masterView = master;
 }
 
+- (void) initializeScoreWithSubscores:(NSMutableDictionary *)subscores withNumberOfTimeIndices:(int)numTimes
+{
+    
+    NSArray *guitarArray = [[NSArray alloc] initWithObjects:Grid2, Grid3, Grid7, Grid9, Grid11, Grid13, Grid14, nil];
+    NSArray *pianoArray = [[NSArray alloc] initWithObjects:Grid1, Grid4, Grid5, Grid6, Grid8, Grid10, Grid12, nil];
+    NSArray *drumArray = [[NSArray alloc] initWithObjects:Drum1, Drum2, Drum3, Drum4, Drum5, nil];
+    InstrumentViewsManager *manager = [[InstrumentViewsManager alloc] initWithGuitars:guitarArray andPianos:pianoArray andDrums:drumArray];
+    
+    score = [[ScoreObject alloc] initWithInstrumentManager:manager withSubscoreDictionary:subscores withTimeIndices:numTimes];
+    
+    NSArray *subscoreTitles = [subscores allKeys];
+    
+    [buttonOne setTitle:[subscoreTitles objectAtIndex:0] forState:UIControlStateNormal];
+    [buttonTwo setTitle:[subscoreTitles objectAtIndex:1] forState:UIControlStateNormal];
+    [buttonThree setTitle:[subscoreTitles objectAtIndex:2] forState:UIControlStateNormal];
+    [buttonFour setTitle:[subscoreTitles objectAtIndex:3] forState:UIControlStateNormal];
+    [buttonFive setTitle:[subscoreTitles objectAtIndex:4] forState:UIControlStateNormal];
+    [buttonSix setTitle:[subscoreTitles objectAtIndex:5] forState:UIControlStateNormal];
+    
+}
+
 -(void)newTimeIndex:(int)index withScore:(NSDictionary *)scoreDict
 {
+    [score changeTimeIndexTo:index];
     currentScoreIndex = index;
-    scoreDictionary = scoreDict;
-    NSMutableArray *drumArray = [scoreDictionary objectForKey:@"drum"];
-    NSMutableArray *drum1 = [drumArray objectAtIndex:0];
-    NSMutableArray *drum2 = [drumArray objectAtIndex:1];
-    NSMutableArray *drum3 = [drumArray objectAtIndex:2];
-    NSMutableArray *drum4 = [drumArray objectAtIndex:3];
-    NSMutableArray *drum5 = [drumArray objectAtIndex:4];
-    
-    [Drum1 setType:CYMBAL withNoteArray:drum1];
-    [Drum2 setType:SNARE withNoteArray:drum2];
-    [Drum3 setType:SNARE withNoteArray:drum3];
-    [Drum4 setType:SNARE withNoteArray:drum4];
-    [Drum5 setType:BASS_DRUM withNoteArray:drum5];
-    
-    NSMutableArray *gridArray = [scoreDictionary objectForKey:@"grid"];
-    
-    [Grid1 setInstrument:NO withSelectedNotes:[gridArray objectAtIndex:0]];
-    [Grid2 setInstrument:YES withSelectedNotes:[gridArray objectAtIndex:1]];
-    [Grid3 setInstrument:YES withSelectedNotes:[gridArray objectAtIndex:2]];
-    [Grid4 setInstrument:NO withSelectedNotes:[gridArray objectAtIndex:3]];
-    [Grid5 setInstrument:NO withSelectedNotes:[gridArray objectAtIndex:4]];
-    [Grid6 setInstrument:NO withSelectedNotes:[gridArray objectAtIndex:5]];
-    [Grid7 setInstrument:YES withSelectedNotes:[gridArray objectAtIndex:6]];
-    [Grid8 setInstrument:NO withSelectedNotes:[gridArray objectAtIndex:7]];
-    [Grid9 setInstrument:YES withSelectedNotes:[gridArray objectAtIndex:8]];
-    [Grid10 setInstrument:NO withSelectedNotes:[gridArray objectAtIndex:9]];
-    [Grid11 setInstrument:YES withSelectedNotes:[gridArray objectAtIndex:10]];
-    [Grid12 setInstrument:NO withSelectedNotes:[gridArray objectAtIndex:11]];
-    [Grid13 setInstrument:YES withSelectedNotes:[gridArray objectAtIndex:12]];
-    [Grid14 setInstrument:YES withSelectedNotes:[gridArray objectAtIndex:13]];
-    //yes if it is a guitar
-    
-    gridViews = [[NSArray alloc] initWithObjects:Grid1,Grid2,Grid3,Grid4,Grid5,Grid6,Grid7,Grid8,Grid9,Grid10,Grid11,Grid12,Grid13,Grid14, nil];
-    drumViews = [[NSArray alloc] initWithObjects:Drum1,Drum2,Drum3,Drum4,Drum5, nil];
+//    scoreDictionary = scoreDict;
+//    NSMutableArray *drumArray = [scoreDictionary objectForKey:@"drum"];
+//    NSMutableArray *drum1 = [drumArray objectAtIndex:0];
+//    NSMutableArray *drum2 = [drumArray objectAtIndex:1];
+//    NSMutableArray *drum3 = [drumArray objectAtIndex:2];
+//    NSMutableArray *drum4 = [drumArray objectAtIndex:3];
+//    NSMutableArray *drum5 = [drumArray objectAtIndex:4];
+//    
+//    [Drum1 setType:CYMBAL withNoteArray:drum1];
+//    [Drum2 setType:SNARE withNoteArray:drum2];
+//    [Drum3 setType:SNARE withNoteArray:drum3];
+//    [Drum4 setType:SNARE withNoteArray:drum4];
+//    [Drum5 setType:BASS_DRUM withNoteArray:drum5];
+//    
+//    NSMutableArray *gridArray = [scoreDictionary objectForKey:@"grid"];
+//    
+//    [Grid1 setInstrument:NO withSelectedNotes:[gridArray objectAtIndex:0]];
+//    [Grid2 setInstrument:YES withSelectedNotes:[gridArray objectAtIndex:1]];
+//    [Grid3 setInstrument:YES withSelectedNotes:[gridArray objectAtIndex:2]];
+//    [Grid4 setInstrument:NO withSelectedNotes:[gridArray objectAtIndex:3]];
+//    [Grid5 setInstrument:NO withSelectedNotes:[gridArray objectAtIndex:4]];
+//    [Grid6 setInstrument:NO withSelectedNotes:[gridArray objectAtIndex:5]];
+//    [Grid7 setInstrument:YES withSelectedNotes:[gridArray objectAtIndex:6]];
+//    [Grid8 setInstrument:NO withSelectedNotes:[gridArray objectAtIndex:7]];
+//    [Grid9 setInstrument:YES withSelectedNotes:[gridArray objectAtIndex:8]];
+//    [Grid10 setInstrument:NO withSelectedNotes:[gridArray objectAtIndex:9]];
+//    [Grid11 setInstrument:YES withSelectedNotes:[gridArray objectAtIndex:10]];
+//    [Grid12 setInstrument:NO withSelectedNotes:[gridArray objectAtIndex:11]];
+//    [Grid13 setInstrument:YES withSelectedNotes:[gridArray objectAtIndex:12]];
+//    [Grid14 setInstrument:YES withSelectedNotes:[gridArray objectAtIndex:13]];
+//    //yes if it is a guitar
+//    
+//    gridViews = [[NSArray alloc] initWithObjects:Grid1,Grid2,Grid3,Grid4,Grid5,Grid6,Grid7,Grid8,Grid9,Grid10,Grid11,Grid12,Grid13,Grid14, nil];
+//    drumViews = [[NSArray alloc] initWithObjects:Drum1,Drum2,Drum3,Drum4,Drum5, nil];
     
 }
 

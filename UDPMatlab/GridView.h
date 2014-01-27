@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "InstrumentType.h"
+#import "BooleanObject.h"
 
 
 @class GridView;
@@ -18,13 +20,13 @@
 
 @interface GridView : UIView
 {
-    NSMutableArray *score;
-    bool isInstrumentGuitar;
+    NSArray *score;
+    InstrumentType *type;
     double jumpSize;
 }
 
 @property (assign, nonatomic) id<GridViewDelegate> delegate;
 
-- (void)setInstrument:(bool)isGuitar withSelectedNotes:(NSMutableArray *)noteArray;
+- (void)setNoteArray:(NSArray *)notes withInstrumentType:(InstrumentType *)instType;
 
 @end

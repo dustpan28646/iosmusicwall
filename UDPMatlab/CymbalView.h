@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "InstrumentType.h"
+#import "BooleanObject.h"
 
 enum DRUM_TYPE
 {
@@ -25,14 +27,14 @@ enum DRUM_TYPE
 
 @interface CymbalView : UIView
 {
-    enum DRUM_TYPE type;
-    NSMutableArray *note;
+    InstrumentType *type;
+    BooleanObject *note;
     NSMutableArray *centers;
     CGPoint center;
 }
 
 @property (assign, nonatomic) id<DrumViewDelegate> delegate;
 
-- (void) setType:(enum DRUM_TYPE)newType withNoteArray:(NSMutableArray *)noteArray;
+- (void)setNote:(BooleanObject *)booleanNoteObject withInstrumentType:(InstrumentType *)instType;
 
 @end

@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import "InstrumentViewsManager.h"
-#import "InstantaneousScoreObject.h"
 #import "Subscore.h"
 
 @interface ScoreObject : NSObject
@@ -18,10 +17,14 @@
 @property (nonatomic) int numberOfTimeInstances;
 @property (strong, nonatomic) NSMutableArray *instantaneousScoreArray;
 
-- (id) initWithInstrumentManager:(InstrumentViewsManager *)instrumentManager WithSubscoreDictionary:(NSMutableDictionary *)subscoreDict WithTimeIndices:(int)numberOfTimes;
+- (id) initWithInstrumentManager:(InstrumentViewsManager *)instrumentManager withSubscoreDictionary:(NSMutableDictionary *)subscoreDict withTimeIndices:(int)numberOfTimes;
 
-- (bool) addSubscoreWithName:(NSString *)subscoreName WithTimeIndex:(int)timeIndex;
+- (void) addSubscoreWithName:(NSString *)subscoreName withTimeIndex:(int)timeIndex;
 
-- (bool) removeSubscoreWithName:(NSString *)subscoreName WithTimeIndex:(int)timeIndex;
+- (void) removeSubscoreWithName:(NSString *)subscoreName withTimeIndex:(int)timeIndex;
+
+- (void) addOrRemoveSubscoreWithName:(NSString *)subscoreName withTimeIndex:(int)timeIndex;
+
+- (void) changeTimeIndexTo:(int)index;
 
 @end

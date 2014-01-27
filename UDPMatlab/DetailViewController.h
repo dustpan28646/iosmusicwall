@@ -9,9 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "AsyncUdpSocket.h"
 #import "GCDAsyncUdpSocket.h"
-#import "GridView.h"
-#import "CymbalView.h"
 #import "MasterViewController.h"
+#import "ScoreObject.h"
 
 @interface DetailViewController : UIViewController <UISplitViewControllerDelegate, AsyncUdpSocketDelegate, GCDAsyncUdpSocketDelegate, DrumViewDelegate, GridViewDelegate>
 {
@@ -24,6 +23,7 @@
     NSDictionary *scoreDictionary;
     NSArray *gridViews;
     NSArray *drumViews;
+    ScoreObject *score;
 }
 
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
@@ -54,7 +54,23 @@
 @property (weak, nonatomic) IBOutlet CymbalView *Drum4;
 @property (weak, nonatomic) IBOutlet CymbalView *Drum5;
 @property (weak, nonatomic) IBOutlet UIImageView *gridImageView;
+
+@property (weak, nonatomic) IBOutlet UIButton *buttonOne;
+@property (weak, nonatomic) IBOutlet UIButton *buttonTwo;
+@property (weak, nonatomic) IBOutlet UIButton *buttonThree;
+@property (weak, nonatomic) IBOutlet UIButton *buttonFour;
+@property (weak, nonatomic) IBOutlet UIButton *buttonFive;
+@property (weak, nonatomic) IBOutlet UIButton *buttonSix;
+
+- (IBAction)touchedButtonOne:(id)sender;
+- (IBAction)touchedButtonTwo:(id)sender;
+- (IBAction)touchedButtonThree:(id)sender;
+- (IBAction)touchedButtonFour:(id)sender;
+- (IBAction)touchedButtonFive:(id)sender;
+- (IBAction)touchedButtonSix:(id)sender;
+
 - (IBAction)didTouchTempo:(id)sender;
 -(void)newTimeIndex:(int)index withScore:(NSDictionary *)scoreDict;
 -(void)setMasterView:(id)master;
+- (void) initializeScoreWithSubscores:(NSMutableDictionary *)subscores withNumberOfTimeIndices:(int)numTimes;
 @end

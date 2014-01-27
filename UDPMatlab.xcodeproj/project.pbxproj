@@ -38,6 +38,9 @@
 		C9B494C9184A53BC00512016 /* imageedit_2_3232341617.png in Resources */ = {isa = PBXBuildFile; fileRef = C9B494C8184A53BC00512016 /* imageedit_2_3232341617.png */; };
 		C9B7959E183D0EA60098A7FC /* GridImage.png in Resources */ = {isa = PBXBuildFile; fileRef = C9B7959D183D0EA60098A7FC /* GridImage.png */; };
 		C9DAA27B184F7164006B7219 /* CHCSVParser.m in Sources */ = {isa = PBXBuildFile; fileRef = C9DAA27A184F7164006B7219 /* CHCSVParser.m */; };
+		C9F22F4918967C54007497C6 /* SubscoreNote.m in Sources */ = {isa = PBXBuildFile; fileRef = C9F22F4818967C54007497C6 /* SubscoreNote.m */; };
+		C9F22F4C18969453007497C6 /* BooleanObject.m in Sources */ = {isa = PBXBuildFile; fileRef = C9F22F4B18969453007497C6 /* BooleanObject.m */; };
+		C9F22F4F1896A1AC007497C6 /* InstrumentType.m in Sources */ = {isa = PBXBuildFile; fileRef = C9F22F4E1896A1AC007497C6 /* InstrumentType.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -87,6 +90,12 @@
 		C9B7959D183D0EA60098A7FC /* GridImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GridImage.png; sourceTree = "<group>"; };
 		C9DAA279184F7164006B7219 /* CHCSVParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHCSVParser.h; sourceTree = "<group>"; };
 		C9DAA27A184F7164006B7219 /* CHCSVParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHCSVParser.m; sourceTree = "<group>"; };
+		C9F22F4718967C54007497C6 /* SubscoreNote.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubscoreNote.h; sourceTree = "<group>"; };
+		C9F22F4818967C54007497C6 /* SubscoreNote.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubscoreNote.m; sourceTree = "<group>"; };
+		C9F22F4A18969453007497C6 /* BooleanObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BooleanObject.h; sourceTree = "<group>"; };
+		C9F22F4B18969453007497C6 /* BooleanObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BooleanObject.m; sourceTree = "<group>"; };
+		C9F22F4D1896A1AC007497C6 /* InstrumentType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InstrumentType.h; sourceTree = "<group>"; };
+		C9F22F4E1896A1AC007497C6 /* InstrumentType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InstrumentType.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -157,6 +166,12 @@
 				78BE742A1894B2C800C6FEEF /* InstantaneousScoreObject.m */,
 				C9444313188F0B8500EDE608 /* Subscore.h */,
 				C9444314188F0B8500EDE608 /* Subscore.m */,
+				C9F22F4718967C54007497C6 /* SubscoreNote.h */,
+				C9F22F4818967C54007497C6 /* SubscoreNote.m */,
+				C9F22F4A18969453007497C6 /* BooleanObject.h */,
+				C9F22F4B18969453007497C6 /* BooleanObject.m */,
+				C9F22F4D1896A1AC007497C6 /* InstrumentType.h */,
+				C9F22F4E1896A1AC007497C6 /* InstrumentType.m */,
 				C935106E181976E2002B3C19 /* Piano_Keyboard.jpg */,
 				C9351070181978E2002B3C19 /* acoustic6string.jpg */,
 				C935107218197CE0002B3C19 /* DV016_Jpg_Large_H71031.001.003_walnut_burst_24x18.jpg */,
@@ -269,13 +284,16 @@
 				C9425FBB17F09FF700A32E9B /* MasterViewController.m in Sources */,
 				78BE742B1894B2C800C6FEEF /* InstantaneousScoreObject.m in Sources */,
 				C95B00EB182AEF04008DBAF1 /* ScoreObject.m in Sources */,
+				C9F22F4F1896A1AC007497C6 /* InstrumentType.m in Sources */,
 				78BE74281894B27800C6FEEF /* InstrumentViewsManager.m in Sources */,
 				C9425FBE17F09FF700A32E9B /* DetailViewController.m in Sources */,
 				C9425FC617F0A2A500A32E9B /* AsyncUdpSocket.m in Sources */,
 				C9425FC917F3345200A32E9B /* GCDAsyncUdpSocket.m in Sources */,
 				C935106A18195B5F002B3C19 /* GridView.m in Sources */,
+				C9F22F4C18969453007497C6 /* BooleanObject.m in Sources */,
 				C9DAA27B184F7164006B7219 /* CHCSVParser.m in Sources */,
 				C935107E1819895D002B3C19 /* CymbalView.m in Sources */,
+				C9F22F4918967C54007497C6 /* SubscoreNote.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

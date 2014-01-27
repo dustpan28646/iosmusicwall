@@ -7,7 +7,19 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "BooleanObject.h"
+#import "InstrumentType.h"
 
 @interface InstantaneousScoreObject : NSObject
+
+@property (strong, nonatomic) NSArray *guitarScoreArray;
+@property (strong, nonatomic) NSArray *pianoScoreArray;
+@property (strong, nonatomic) NSArray *drumScoreArray;
+@property (strong, nonatomic) NSMutableDictionary *subscores;
+@property (strong, nonatomic) NSArray *guitarHasInstrumentType;
+@property (strong, nonatomic) NSArray *pianoHasInstrumentType;
+@property (strong, nonatomic) NSArray *drumHasInstrumentType;
+
+- (id) initInstantaneousScoreObject;
 
 @end

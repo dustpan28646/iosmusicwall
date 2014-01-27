@@ -38,11 +38,11 @@ static float const buttonRadius = 6.0;
 -(void)initCustomView:(CGRect)frame
 {
     NSLog(@"Frame Height = %f, Frame Width = %f", frame.size.height, frame.size.width);
-    isInstrumentGuitar = NO;
+    type = [[InstrumentType alloc] initWithType:TYPE_PIANO];
     NSMutableArray *myArray = [[NSMutableArray alloc] initWithCapacity:6];
     for (int i = 0; i < 6; i++)
     {
-        [myArray addObject:[NSNumber numberWithBool:NO]];
+        [myArray addObject:[[BooleanObject alloc] initWithBool:NO]];
     }
     score = myArray;
     // Initialization code
@@ -102,10 +102,15 @@ static float const buttonRadius = 6.0;
 
 - (void)touchedChangeInstrument:(id)sender
 {
-    if (delegate != nil)
+    if (type.type == TYPE_GUITAR)
     {
-        [delegate didTapChangeGridInView:self withIsGuitar:isInstrumentGuitar];
+        type.type = TYPE_PIANO;
     }
+    else if (type.type == TYPE_PIANO)
+    {
+        type.type = TYPE_GUITAR;
+    }
+    [self setNeedsDisplay];
 }
 
 
@@ -114,7 +119,7 @@ static float const buttonRadius = 6.0;
 {
     UIImage *instrumentImage = nil;
     
-    if (isInstrumentGuitar)
+    if (type.type == TYPE_GUITAR)
     {
         instrumentImage = [UIImage imageNamed:@"acoustic6string.jpg"];
     }
@@ -140,7 +145,8 @@ static float const buttonRadius = 6.0;
     float circleRadius = unselectedRadius;
     while (i < 6)
     {
-        if ([[score objectAtIndex:i] boolValue])
+        BooleanObject *boolObj = [score objectAtIndex:i];
+        if (boolObj.doesNoteExist)
         {
             circleRadius = selectedRadius;
             myColor = [UIColor yellowColor];
@@ -160,90 +166,53 @@ static float const buttonRadius = 6.0;
     }
 }
 
-- (void)setInstrument:(bool)isGuitar withSelectedNotes:(NSMutableArray *)noteArray
+- (void)setNoteArray:(NSArray *)notes withInstrumentType:(InstrumentType *)instType
 {
-    isInstrumentGuitar = isGuitar;
-    score = noteArray;
+    type = instType;
+    score = notes;
     [self setNeedsDisplay];
 }
 
 -(void)touchedNoteSix:(id)sender
 {
     int i = 5;
-    if ([[score objectAtIndex:i] boolValue])
-    {
-        [score setObject:[NSNumber numberWithBool:NO] atIndexedSubscript:i];
-    }
-    else
-    {
-        [score setObject:[NSNumber numberWithBool:YES] atIndexedSubscript:i];
-    }
-    
+    BooleanObject *boolObj = [score objectAtIndex:i];
+    boolObj.doesNoteExist = !boolObj.doesNoteExist;
     [self setNeedsDisplay];
 }
 -(void)touchedNoteOne:(id)sender
 {
     int i = 0;
-    if ([[score objectAtIndex:i] boolValue])
-    {
-        [score setObject:[NSNumber numberWithBool:NO] atIndexedSubscript:i];
-    }
-    else
-    {
-        [score setObject:[NSNumber numberWithBool:YES] atIndexedSubscript:i];
-    }
+    BooleanObject *boolObj = [score objectAtIndex:i];
+    boolObj.doesNoteExist = !boolObj.doesNoteExist;
     [self setNeedsDisplay];
 }
 -(void)touchedNoteTwo:(id)sender
 {
     int i = 1;
-    if ([[score objectAtIndex:i] boolValue])
-    {
-        [score setObject:[NSNumber numberWithBool:NO] atIndexedSubscript:i];
-    }
-    else
-    {
-        [score setObject:[NSNumber numberWithBool:YES] atIndexedSubscript:i];
-    }
+    BooleanObject *boolObj = [score objectAtIndex:i];
+    boolObj.doesNoteExist = !boolObj.doesNoteExist;
     [self setNeedsDisplay];
 }
 -(void)touchedNoteThree:(id)sender
 {
     int i = 2;
-    if ([[score objectAtIndex:i] boolValue])
-    {
-        [score setObject:[NSNumber numberWithBool:NO] atIndexedSubscript:i];
-    }
-    else
-    {
-        [score setObject:[NSNumber numberWithBool:YES] atIndexedSubscript:i];
-    }
+    BooleanObject *boolObj = [score objectAtIndex:i];
+    boolObj.doesNoteExist = !boolObj.doesNoteExist;
     [self setNeedsDisplay];
 }
 -(void)touchedNoteFour:(id)sender
 {
     int i = 3;
-    if ([[score objectAtIndex:i] boolValue])
-    {
-        [score setObject:[NSNumber numberWithBool:NO] atIndexedSubscript:i];
-    }
-    else
-    {
-        [score setObject:[NSNumber numberWithBool:YES] atIndexedSubscript:i];
-    }
+    BooleanObject *boolObj = [score objectAtIndex:i];
+    boolObj.doesNoteExist = !boolObj.doesNoteExist;
     [self setNeedsDisplay];
 }
 -(void)touchedNoteFive:(id)sender
 {
     int i = 4;
-    if ([[score objectAtIndex:i] boolValue])
-    {
-        [score setObject:[NSNumber numberWithBool:NO] atIndexedSubscript:i];
-    }
-    else
-    {
-        [score setObject:[NSNumber numberWithBool:YES] atIndexedSubscript:i];
-    }
+    BooleanObject *boolObj = [score objectAtIndex:i];
+    boolObj.doesNoteExist = !boolObj.doesNoteExist;
     [self setNeedsDisplay];
 }
 

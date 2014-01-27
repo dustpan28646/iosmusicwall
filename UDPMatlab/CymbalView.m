@@ -41,8 +41,8 @@ static float const inset = 3.0;
 
 - (void)initCustomView:(CGRect)frame
 {
-    type = SNARE;
-    note = [[NSMutableArray alloc] initWithObjects:[NSNumber numberWithBool:NO], nil];
+    type = [[InstrumentType alloc] initWithType:TYPE_SNARE];
+    note = [[BooleanObject alloc] initWithBool:NO];
     CGRect myRect = CGRectMake(round(frame.origin.x + inset), round(frame.origin.y + inset) , round(frame.size.width - 2.0 * inset), round(frame.size.height - 2.0 * inset));
     center = CGPointMake(round(0.0 + (myRect.size.width/2.0)), round(0.0 + (myRect.size.height / 2.0)));
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -64,25 +64,36 @@ static float const inset = 3.0;
 
 - (void) touchedChangeInstrument:(id)sender
 {
-    if (delegate != nil)
+    switch (type.type)
     {
-        [delegate didTapChangeDrumInView:self withCurrentDrumType:type];
+        case TYPE_CYMBAL:
+            type.type = TYPE_SNARE;
+            break;
+        case TYPE_SNARE:
+            type.type = TYPE_BASS_DRUM;
+            break;
+        case TYPE_BASS_DRUM:
+            type.type = TYPE_CYMBAL;
+            break;
+        default:
+            break;
     }
+    [self setNeedsDisplay];
 }
 
 - (void)drawRect:(CGRect)rect
 {
     UIImage *piano;
     
-    switch (type)
+    switch (type.type)
     {
-        case SNARE:
+        case TYPE_SNARE:
             piano = [UIImage imageNamed:@"mpml3600cnlfr-d53b5582572e373a15dde974b3e6a0eb.jpg"];
             break;
-        case CYMBAL:
+        case TYPE_CYMBAL:
             piano = [UIImage imageNamed:@"cymbal.jpg"];
             break;
-        case BASS_DRUM:
+        case TYPE_BASS_DRUM:
             piano = [UIImage imageNamed:@"DV016_Jpg_Large_H71031.001.003_walnut_burst_24x18.jpg"];
             break;
         default:
@@ -118,7 +129,7 @@ static float const inset = 3.0;
     CGContextStrokePath(context);
     UIColor *circleColor = blackColor;
     float drawRadius = 0.0;
-    if ([[note objectAtIndex:0] boolValue])
+    if (note.doesNoteExist)
     {
         drawRadius = selectedRadius;
         circleColor = yellowColor;
@@ -133,23 +144,16 @@ static float const inset = 3.0;
     CGContextFillPath(context);
 }
 
-- (void) setType:(enum DRUM_TYPE)newType withNoteArray:(NSMutableArray *)noteArray
+- (void)setNote:(BooleanObject *)booleanNoteObject withInstrumentType:(InstrumentType *)instType
 {
-    type = newType;
-    note = noteArray;
+    type = instType;
+    note = booleanNoteObject;
     [self setNeedsDisplay];
 }
 
 - (void) touchedNote:(id)sender
 {
-    if ([[note objectAtIndex:0] boolValue])
-    {
-        [note setObject:[NSNumber numberWithBool:NO] atIndexedSubscript:0];
-    }
-    else
-    {
-        [note setObject:[NSNumber numberWithBool:YES] atIndexedSubscript:0];
-    }
+    note.doesNoteExist = !note.doesNoteExist;
     [self setNeedsDisplay];
 }
 

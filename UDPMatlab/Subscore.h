@@ -7,12 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "SubscoreNote.h"
 
 enum SUBSCORE_INSTRUMENT
 {
-    SUBSCORE_CYMBAL,
-    SUBSCORE_BASS_DRUM,
-    SUBSCORE_SNARE,
+    SUBSCORE_DRUM,
     SUBSCORE_PIANO,
     SUBSCORE_GUITAR,
     SUBSCORE_NO_INSTRUMENT
@@ -22,8 +21,9 @@ enum SUBSCORE_INSTRUMENT
 
 @property (nonatomic) enum SUBSCORE_INSTRUMENT type;
 @property (strong, nonatomic) NSMutableArray *noteLines;
-@property (strong, nonatomic) NSMutableArray *positionLines;
+@property (nonatomic) bool isDefault;
+@property (strong, nonatomic) NSString *name;
 
-- (id)initWithInstrumentType:(enum SUBSCORE_INSTRUMENT)instrumentType;
+- (id)initWithInstrumentType:(enum SUBSCORE_INSTRUMENT)instrumentType withIsDefault:(bool)isSubscoreDefault wthName:(NSString *)subscoreName;
 
 @end
