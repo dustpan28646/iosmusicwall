@@ -1,0 +1,416 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		78BE74281894B27800C6FEEF /* InstrumentViewsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 78BE74271894B27800C6FEEF /* InstrumentViewsManager.m */; };
+		78BE742B1894B2C800C6FEEF /* InstantaneousScoreObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 78BE742A1894B2C800C6FEEF /* InstantaneousScoreObject.m */; };
+		78BE742D1895AC7C00C6FEEF /* ScoreXML.csv in Resources */ = {isa = PBXBuildFile; fileRef = 78BE742C1895AC7C00C6FEEF /* ScoreXML.csv */; };
+		C935106A18195B5F002B3C19 /* GridView.m in Sources */ = {isa = PBXBuildFile; fileRef = C935106918195B5F002B3C19 /* GridView.m */; };
+		C935106F181976E2002B3C19 /* Piano_Keyboard.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C935106E181976E2002B3C19 /* Piano_Keyboard.jpg */; };
+		C9351071181978E2002B3C19 /* acoustic6string.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C9351070181978E2002B3C19 /* acoustic6string.jpg */; };
+		C935107318197CE0002B3C19 /* DV016_Jpg_Large_H71031.001.003_walnut_burst_24x18.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C935107218197CE0002B3C19 /* DV016_Jpg_Large_H71031.001.003_walnut_burst_24x18.jpg */; };
+		C93510781819802E002B3C19 /* mpml3600cnlfr-d53b5582572e373a15dde974b3e6a0eb.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C93510771819802E002B3C19 /* mpml3600cnlfr-d53b5582572e373a15dde974b3e6a0eb.jpg */; };
+		C935107E1819895D002B3C19 /* CymbalView.m in Sources */ = {isa = PBXBuildFile; fileRef = C935107D1819895D002B3C19 /* CymbalView.m */; };
+		C93510801819898F002B3C19 /* cymbal.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C935107F1819898F002B3C19 /* cymbal.jpg */; };
+		C935108218198A9D002B3C19 /* Piano-Keyboard-Bumper-Sticker-(7396).jpg in Resources */ = {isa = PBXBuildFile; fileRef = C935108118198A9D002B3C19 /* Piano-Keyboard-Bumper-Sticker-(7396).jpg */; };
+		C9425F9C17F09FF700A32E9B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9425F9B17F09FF700A32E9B /* UIKit.framework */; };
+		C9425F9E17F09FF700A32E9B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9425F9D17F09FF700A32E9B /* Foundation.framework */; };
+		C9425FA017F09FF700A32E9B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9425F9F17F09FF700A32E9B /* CoreGraphics.framework */; };
+		C9425FA617F09FF700A32E9B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C9425FA417F09FF700A32E9B /* InfoPlist.strings */; };
+		C9425FA817F09FF700A32E9B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C9425FA717F09FF700A32E9B /* main.m */; };
+		C9425FAC17F09FF700A32E9B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C9425FAB17F09FF700A32E9B /* AppDelegate.m */; };
+		C9425FAE17F09FF700A32E9B /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = C9425FAD17F09FF700A32E9B /* Default.png */; };
+		C9425FB017F09FF700A32E9B /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C9425FAF17F09FF700A32E9B /* Default@2x.png */; };
+		C9425FB217F09FF700A32E9B /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C9425FB117F09FF700A32E9B /* Default-568h@2x.png */; };
+		C9425FB517F09FF700A32E9B /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C9425FB317F09FF700A32E9B /* MainStoryboard_iPhone.storyboard */; };
+		C9425FB817F09FF700A32E9B /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C9425FB617F09FF700A32E9B /* MainStoryboard_iPad.storyboard */; };
+		C9425FBB17F09FF700A32E9B /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9425FBA17F09FF700A32E9B /* MasterViewController.m */; };
+		C9425FBE17F09FF700A32E9B /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9425FBD17F09FF700A32E9B /* DetailViewController.m */; };
+		C9425FC617F0A2A500A32E9B /* AsyncUdpSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = C9425FC517F0A2A500A32E9B /* AsyncUdpSocket.m */; };
+		C9425FC917F3345200A32E9B /* GCDAsyncUdpSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = C9425FC817F3345200A32E9B /* GCDAsyncUdpSocket.m */; };
+		C9444315188F0B8500EDE608 /* Subscore.m in Sources */ = {isa = PBXBuildFile; fileRef = C9444314188F0B8500EDE608 /* Subscore.m */; };
+		C95B00EB182AEF04008DBAF1 /* ScoreObject.m in Sources */ = {isa = PBXBuildFile; fileRef = C95B00EA182AEF04008DBAF1 /* ScoreObject.m */; };
+		C9B494C9184A53BC00512016 /* imageedit_2_3232341617.png in Resources */ = {isa = PBXBuildFile; fileRef = C9B494C8184A53BC00512016 /* imageedit_2_3232341617.png */; };
+		C9B7959E183D0EA60098A7FC /* GridImage.png in Resources */ = {isa = PBXBuildFile; fileRef = C9B7959D183D0EA60098A7FC /* GridImage.png */; };
+		C9DAA27B184F7164006B7219 /* CHCSVParser.m in Sources */ = {isa = PBXBuildFile; fileRef = C9DAA27A184F7164006B7219 /* CHCSVParser.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		78BE74261894B27800C6FEEF /* InstrumentViewsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InstrumentViewsManager.h; sourceTree = "<group>"; };
+		78BE74271894B27800C6FEEF /* InstrumentViewsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InstrumentViewsManager.m; sourceTree = "<group>"; };
+		78BE74291894B2C800C6FEEF /* InstantaneousScoreObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InstantaneousScoreObject.h; sourceTree = "<group>"; };
+		78BE742A1894B2C800C6FEEF /* InstantaneousScoreObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InstantaneousScoreObject.m; sourceTree = "<group>"; };
+		78BE742C1895AC7C00C6FEEF /* ScoreXML.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ScoreXML.csv; sourceTree = "<group>"; };
+		C935106818195B5F002B3C19 /* GridView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridView.h; sourceTree = "<group>"; };
+		C935106918195B5F002B3C19 /* GridView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GridView.m; sourceTree = "<group>"; };
+		C935106E181976E2002B3C19 /* Piano_Keyboard.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Piano_Keyboard.jpg; sourceTree = "<group>"; };
+		C9351070181978E2002B3C19 /* acoustic6string.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = acoustic6string.jpg; sourceTree = "<group>"; };
+		C935107218197CE0002B3C19 /* DV016_Jpg_Large_H71031.001.003_walnut_burst_24x18.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = DV016_Jpg_Large_H71031.001.003_walnut_burst_24x18.jpg; sourceTree = "<group>"; };
+		C93510771819802E002B3C19 /* mpml3600cnlfr-d53b5582572e373a15dde974b3e6a0eb.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "mpml3600cnlfr-d53b5582572e373a15dde974b3e6a0eb.jpg"; sourceTree = "<group>"; };
+		C935107C1819895D002B3C19 /* CymbalView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CymbalView.h; sourceTree = "<group>"; };
+		C935107D1819895D002B3C19 /* CymbalView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CymbalView.m; sourceTree = "<group>"; };
+		C935107F1819898F002B3C19 /* cymbal.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cymbal.jpg; sourceTree = "<group>"; };
+		C935108118198A9D002B3C19 /* Piano-Keyboard-Bumper-Sticker-(7396).jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Piano-Keyboard-Bumper-Sticker-(7396).jpg"; sourceTree = "<group>"; };
+		C9425F9817F09FF700A32E9B /* UDPMatlab.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UDPMatlab.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C9425F9B17F09FF700A32E9B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		C9425F9D17F09FF700A32E9B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		C9425F9F17F09FF700A32E9B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		C9425FA317F09FF700A32E9B /* UDPMatlab-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "UDPMatlab-Info.plist"; sourceTree = "<group>"; };
+		C9425FA517F09FF700A32E9B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		C9425FA717F09FF700A32E9B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		C9425FA917F09FF700A32E9B /* UDPMatlab-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UDPMatlab-Prefix.pch"; sourceTree = "<group>"; };
+		C9425FAA17F09FF700A32E9B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		C9425FAB17F09FF700A32E9B /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		C9425FAD17F09FF700A32E9B /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		C9425FAF17F09FF700A32E9B /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		C9425FB117F09FF700A32E9B /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		C9425FB417F09FF700A32E9B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
+		C9425FB717F09FF700A32E9B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
+		C9425FB917F09FF700A32E9B /* MasterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MasterViewController.h; sourceTree = "<group>"; };
+		C9425FBA17F09FF700A32E9B /* MasterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
+		C9425FBC17F09FF700A32E9B /* DetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
+		C9425FBD17F09FF700A32E9B /* DetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
+		C9425FC417F0A2A500A32E9B /* AsyncUdpSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncUdpSocket.h; sourceTree = "<group>"; };
+		C9425FC517F0A2A500A32E9B /* AsyncUdpSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsyncUdpSocket.m; sourceTree = "<group>"; };
+		C9425FC717F3345200A32E9B /* GCDAsyncUdpSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncUdpSocket.h; sourceTree = "<group>"; };
+		C9425FC817F3345200A32E9B /* GCDAsyncUdpSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncUdpSocket.m; sourceTree = "<group>"; };
+		C9444313188F0B8500EDE608 /* Subscore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Subscore.h; sourceTree = "<group>"; };
+		C9444314188F0B8500EDE608 /* Subscore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Subscore.m; sourceTree = "<group>"; };
+		C95B00E9182AEF04008DBAF1 /* ScoreObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScoreObject.h; sourceTree = "<group>"; };
+		C95B00EA182AEF04008DBAF1 /* ScoreObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScoreObject.m; sourceTree = "<group>"; };
+		C9B494C8184A53BC00512016 /* imageedit_2_3232341617.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = imageedit_2_3232341617.png; sourceTree = "<group>"; };
+		C9B7959D183D0EA60098A7FC /* GridImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GridImage.png; sourceTree = "<group>"; };
+		C9DAA279184F7164006B7219 /* CHCSVParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHCSVParser.h; sourceTree = "<group>"; };
+		C9DAA27A184F7164006B7219 /* CHCSVParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHCSVParser.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C9425F9517F09FF700A32E9B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C9425F9C17F09FF700A32E9B /* UIKit.framework in Frameworks */,
+				C9425F9E17F09FF700A32E9B /* Foundation.framework in Frameworks */,
+				C9425FA017F09FF700A32E9B /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		C9425F8F17F09FF700A32E9B = {
+			isa = PBXGroup;
+			children = (
+				C9425FA117F09FF700A32E9B /* UDPMatlab */,
+				C9425F9A17F09FF700A32E9B /* Frameworks */,
+				C9425F9917F09FF700A32E9B /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		C9425F9917F09FF700A32E9B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C9425F9817F09FF700A32E9B /* UDPMatlab.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C9425F9A17F09FF700A32E9B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C9425F9B17F09FF700A32E9B /* UIKit.framework */,
+				C9425F9D17F09FF700A32E9B /* Foundation.framework */,
+				C9425F9F17F09FF700A32E9B /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C9425FA117F09FF700A32E9B /* UDPMatlab */ = {
+			isa = PBXGroup;
+			children = (
+				C9425FC717F3345200A32E9B /* GCDAsyncUdpSocket.h */,
+				C9425FC817F3345200A32E9B /* GCDAsyncUdpSocket.m */,
+				C9425FAA17F09FF700A32E9B /* AppDelegate.h */,
+				C9425FAB17F09FF700A32E9B /* AppDelegate.m */,
+				C9425FC417F0A2A500A32E9B /* AsyncUdpSocket.h */,
+				C9425FC517F0A2A500A32E9B /* AsyncUdpSocket.m */,
+				C9425FB317F09FF700A32E9B /* MainStoryboard_iPhone.storyboard */,
+				C9425FB617F09FF700A32E9B /* MainStoryboard_iPad.storyboard */,
+				C935107C1819895D002B3C19 /* CymbalView.h */,
+				C935107D1819895D002B3C19 /* CymbalView.m */,
+				C935106818195B5F002B3C19 /* GridView.h */,
+				C935106918195B5F002B3C19 /* GridView.m */,
+				C9425FB917F09FF700A32E9B /* MasterViewController.h */,
+				C9425FBA17F09FF700A32E9B /* MasterViewController.m */,
+				C9425FBC17F09FF700A32E9B /* DetailViewController.h */,
+				C9425FBD17F09FF700A32E9B /* DetailViewController.m */,
+				C95B00E9182AEF04008DBAF1 /* ScoreObject.h */,
+				C95B00EA182AEF04008DBAF1 /* ScoreObject.m */,
+				78BE74261894B27800C6FEEF /* InstrumentViewsManager.h */,
+				78BE74271894B27800C6FEEF /* InstrumentViewsManager.m */,
+				78BE74291894B2C800C6FEEF /* InstantaneousScoreObject.h */,
+				78BE742A1894B2C800C6FEEF /* InstantaneousScoreObject.m */,
+				C9444313188F0B8500EDE608 /* Subscore.h */,
+				C9444314188F0B8500EDE608 /* Subscore.m */,
+				C935106E181976E2002B3C19 /* Piano_Keyboard.jpg */,
+				C9351070181978E2002B3C19 /* acoustic6string.jpg */,
+				C935107218197CE0002B3C19 /* DV016_Jpg_Large_H71031.001.003_walnut_burst_24x18.jpg */,
+				C93510771819802E002B3C19 /* mpml3600cnlfr-d53b5582572e373a15dde974b3e6a0eb.jpg */,
+				C935107F1819898F002B3C19 /* cymbal.jpg */,
+				C935108118198A9D002B3C19 /* Piano-Keyboard-Bumper-Sticker-(7396).jpg */,
+				C9B7959D183D0EA60098A7FC /* GridImage.png */,
+				C9B494C8184A53BC00512016 /* imageedit_2_3232341617.png */,
+				C9DAA279184F7164006B7219 /* CHCSVParser.h */,
+				C9DAA27A184F7164006B7219 /* CHCSVParser.m */,
+				78BE742C1895AC7C00C6FEEF /* ScoreXML.csv */,
+				C9425FA217F09FF700A32E9B /* Supporting Files */,
+			);
+			path = UDPMatlab;
+			sourceTree = "<group>";
+		};
+		C9425FA217F09FF700A32E9B /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				C9425FA317F09FF700A32E9B /* UDPMatlab-Info.plist */,
+				C9425FA417F09FF700A32E9B /* InfoPlist.strings */,
+				C9425FA717F09FF700A32E9B /* main.m */,
+				C9425FA917F09FF700A32E9B /* UDPMatlab-Prefix.pch */,
+				C9425FAD17F09FF700A32E9B /* Default.png */,
+				C9425FAF17F09FF700A32E9B /* Default@2x.png */,
+				C9425FB117F09FF700A32E9B /* Default-568h@2x.png */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C9425F9717F09FF700A32E9B /* UDPMatlab */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C9425FC117F09FF700A32E9B /* Build configuration list for PBXNativeTarget "UDPMatlab" */;
+			buildPhases = (
+				C9425F9417F09FF700A32E9B /* Sources */,
+				C9425F9517F09FF700A32E9B /* Frameworks */,
+				C9425F9617F09FF700A32E9B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = UDPMatlab;
+			productName = UDPMatlab;
+			productReference = C9425F9817F09FF700A32E9B /* UDPMatlab.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C9425F9017F09FF700A32E9B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = "Matthew Rice";
+			};
+			buildConfigurationList = C9425F9317F09FF700A32E9B /* Build configuration list for PBXProject "UDPMatlab" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = C9425F8F17F09FF700A32E9B;
+			productRefGroup = C9425F9917F09FF700A32E9B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C9425F9717F09FF700A32E9B /* UDPMatlab */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		C9425F9617F09FF700A32E9B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C9B494C9184A53BC00512016 /* imageedit_2_3232341617.png in Resources */,
+				C9425FA617F09FF700A32E9B /* InfoPlist.strings in Resources */,
+				78BE742D1895AC7C00C6FEEF /* ScoreXML.csv in Resources */,
+				C9425FAE17F09FF700A32E9B /* Default.png in Resources */,
+				C9425FB017F09FF700A32E9B /* Default@2x.png in Resources */,
+				C9425FB217F09FF700A32E9B /* Default-568h@2x.png in Resources */,
+				C9B7959E183D0EA60098A7FC /* GridImage.png in Resources */,
+				C9425FB517F09FF700A32E9B /* MainStoryboard_iPhone.storyboard in Resources */,
+				C9425FB817F09FF700A32E9B /* MainStoryboard_iPad.storyboard in Resources */,
+				C935106F181976E2002B3C19 /* Piano_Keyboard.jpg in Resources */,
+				C9351071181978E2002B3C19 /* acoustic6string.jpg in Resources */,
+				C935107318197CE0002B3C19 /* DV016_Jpg_Large_H71031.001.003_walnut_burst_24x18.jpg in Resources */,
+				C93510781819802E002B3C19 /* mpml3600cnlfr-d53b5582572e373a15dde974b3e6a0eb.jpg in Resources */,
+				C93510801819898F002B3C19 /* cymbal.jpg in Resources */,
+				C935108218198A9D002B3C19 /* Piano-Keyboard-Bumper-Sticker-(7396).jpg in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C9425F9417F09FF700A32E9B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C9444315188F0B8500EDE608 /* Subscore.m in Sources */,
+				C9425FA817F09FF700A32E9B /* main.m in Sources */,
+				C9425FAC17F09FF700A32E9B /* AppDelegate.m in Sources */,
+				C9425FBB17F09FF700A32E9B /* MasterViewController.m in Sources */,
+				78BE742B1894B2C800C6FEEF /* InstantaneousScoreObject.m in Sources */,
+				C95B00EB182AEF04008DBAF1 /* ScoreObject.m in Sources */,
+				78BE74281894B27800C6FEEF /* InstrumentViewsManager.m in Sources */,
+				C9425FBE17F09FF700A32E9B /* DetailViewController.m in Sources */,
+				C9425FC617F0A2A500A32E9B /* AsyncUdpSocket.m in Sources */,
+				C9425FC917F3345200A32E9B /* GCDAsyncUdpSocket.m in Sources */,
+				C935106A18195B5F002B3C19 /* GridView.m in Sources */,
+				C9DAA27B184F7164006B7219 /* CHCSVParser.m in Sources */,
+				C935107E1819895D002B3C19 /* CymbalView.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		C9425FA417F09FF700A32E9B /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C9425FA517F09FF700A32E9B /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		C9425FB317F09FF700A32E9B /* MainStoryboard_iPhone.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C9425FB417F09FF700A32E9B /* en */,
+			);
+			name = MainStoryboard_iPhone.storyboard;
+			sourceTree = "<group>";
+		};
+		C9425FB617F09FF700A32E9B /* MainStoryboard_iPad.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C9425FB717F09FF700A32E9B /* en */,
+			);
+			name = MainStoryboard_iPad.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		C9425FBF17F09FF700A32E9B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		C9425FC017F09FF700A32E9B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		C9425FC217F09FF700A32E9B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "UDPMatlab/UDPMatlab-Prefix.pch";
+				INFOPLIST_FILE = "UDPMatlab/UDPMatlab-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		C9425FC317F09FF700A32E9B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "UDPMatlab/UDPMatlab-Prefix.pch";
+				INFOPLIST_FILE = "UDPMatlab/UDPMatlab-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C9425F9317F09FF700A32E9B /* Build configuration list for PBXProject "UDPMatlab" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C9425FBF17F09FF700A32E9B /* Debug */,
+				C9425FC017F09FF700A32E9B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C9425FC117F09FF700A32E9B /* Build configuration list for PBXNativeTarget "UDPMatlab" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C9425FC217F09FF700A32E9B /* Debug */,
+				C9425FC317F09FF700A32E9B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = C9425F9017F09FF700A32E9B /* Project object */;
+}
