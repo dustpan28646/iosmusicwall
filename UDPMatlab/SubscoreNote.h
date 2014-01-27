@@ -20,18 +20,18 @@ enum NOTE_OCTAVE
 
 enum NOTE_LETTER
 {
-    NOTE_G = 0,
-    NOTE_G_SHARP = 1,
-    NOTE_A = 2,
-    NOTE_B_FLAT = 3,
-    NOTE_B = 4,
-    NOTE_C = 5,
-    NOTE_C_SHARP = 6,
-    NOTE_D = 7,
-    NOTE_E_FLAT = 8,
-    NOTE_E = 9,
-    NOTE_F = 10,
-    NOTE_F_SHARP = 11,
+    NOTE_A = 0,
+    NOTE_B_FLAT = 1,
+    NOTE_B = 2,
+    NOTE_C = 3,
+    NOTE_C_SHARP = 4,
+    NOTE_D = 5,
+    NOTE_E_FLAT = 6,
+    NOTE_E = 7,
+    NOTE_F = 8,
+    NOTE_F_SHARP = 9,
+    NOTE_G = 10,
+    NOTE_G_SHARP = 11,
     NOTE_NO_NOTE = 100
 };
 
