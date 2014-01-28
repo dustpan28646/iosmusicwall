@@ -15,7 +15,7 @@
 
 @protocol GridViewDelegate <NSObject>
 @required
-- (void) didTapChangeGridInView:(GridView *)view withIsGuitar:(bool)isGuitar;
+- (void) didTapChangeGridInView:(GridView *)view withInstrumentType:(InstrumentType *)instrumentType;
 @end
 
 @interface GridView : UIView
@@ -25,7 +25,7 @@
     double jumpSize;
 }
 
-@property (assign, nonatomic) id<GridViewDelegate> delegate;
+@property (weak, nonatomic) id<GridViewDelegate> delegate;
 
 - (void)setNoteArray:(NSArray *)notes withInstrumentType:(InstrumentType *)instType;
 

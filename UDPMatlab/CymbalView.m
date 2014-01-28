@@ -64,20 +64,27 @@ static float const inset = 3.0;
 
 - (void) touchedChangeInstrument:(id)sender
 {
+    InstrumentType *newType;
     switch (type.type)
     {
         case TYPE_CYMBAL:
-            type.type = TYPE_SNARE;
+            //type.type = TYPE_SNARE;
+            newType = [[InstrumentType alloc] initWithType:TYPE_SNARE];
             break;
         case TYPE_SNARE:
-            type.type = TYPE_BASS_DRUM;
+            //type.type = TYPE_BASS_DRUM;
+            newType = [[InstrumentType alloc] initWithType:TYPE_BASS_DRUM];
             break;
         case TYPE_BASS_DRUM:
-            type.type = TYPE_CYMBAL;
+            //type.type = TYPE_CYMBAL;
+            newType = [[InstrumentType alloc] initWithType:TYPE_CYMBAL];
             break;
         default:
+            newType = [[InstrumentType alloc] initWithType:TYPE_SNARE];
+            NSLog(@"Invalid Type in cymbal view");
             break;
     }
+    [delegate didTapChangeDrumInView:self withInstrumentType:newType];
     [self setNeedsDisplay];
 }
 

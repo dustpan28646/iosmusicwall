@@ -27,4 +27,10 @@
 
 - (void) changeTimeIndexTo:(int)index;
 
+- (void) changeGridView:(GridView *)view toInstrumentType:(InstrumentType *)instrumentType withTimeIndex:(int)time;
+
+- (void) changeDrumView:(CymbalView *)view toInstrumentType:(InstrumentType *)instrumentType withTimeIndex:(int)time;
+
+- (bool) isSubscoreName:(NSString *)subscoreName includedInScoreAtTime:(int)time;
+
 @end

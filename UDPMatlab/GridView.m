@@ -102,14 +102,23 @@ static float const buttonRadius = 6.0;
 
 - (void)touchedChangeInstrument:(id)sender
 {
+    InstrumentType *newType;
     if (type.type == TYPE_GUITAR)
     {
-        type.type = TYPE_PIANO;
+        //type.type = TYPE_PIANO;
+        newType = [[InstrumentType alloc] initWithType:TYPE_PIANO];
     }
     else if (type.type == TYPE_PIANO)
     {
-        type.type = TYPE_GUITAR;
+        //type.type = TYPE_GUITAR;
+        newType = [[InstrumentType alloc] initWithType:TYPE_GUITAR];
     }
+    else
+    {
+        newType = [[InstrumentType alloc] initWithType:TYPE_PIANO];
+        NSLog(@"Invalid Type in grid view");
+    }
+    [delegate didTapChangeGridInView:self withInstrumentType:newType];
     [self setNeedsDisplay];
 }
 

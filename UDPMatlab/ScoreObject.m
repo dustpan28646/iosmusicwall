@@ -133,9 +133,9 @@
                     BooleanObject *scoreNote = [instantaneousScore.pianoScoreArray objectAtIndex:integerIndex];
                     scoreNote.doesNoteExist = NO;
                 }
-                else if(integerIndex != 1000)
+                else if(integerIndex != 220)
                 {
-                    NSLog(@"Warning! Invalid Index Attempted to add to Score");
+                    NSLog(@"Warning! Invalid Index Attempted to remove from Score");
                 }
                 [instantaneousScore.subscores removeObjectForKey:subscoreName];
             }
@@ -155,9 +155,9 @@
                     BooleanObject *scoreNote = [instantaneousScore.guitarScoreArray objectAtIndex:integerIndex];
                     scoreNote.doesNoteExist = NO;
                 }
-                else if (integerIndex != 1000)
+                else if (integerIndex != 220)
                 {
-                    NSLog(@"Warning! Invalid Index Attempted to add to Score");
+                    NSLog(@"Warning! Invalid Index Attempted to remove from Score");
                 }
                 [instantaneousScore.subscores removeObjectForKey:subscoreName];
             }
@@ -177,9 +177,9 @@
                     BooleanObject *scoreNote = [instantaneousScore.drumScoreArray objectAtIndex:integerIndex];
                     scoreNote.doesNoteExist = NO;
                 }
-                else  if (integerIndex != 1000)
+                else  if (integerIndex != 220)
                 {
-                    NSLog(@"Warning! Invalid Index Attempted to add to Score");
+                    NSLog(@"Warning! Invalid Index Attempted to remove from Score");
                 }
                 [instantaneousScore.subscores removeObjectForKey:subscoreName];
             }
@@ -199,8 +199,7 @@
 
 - (void) addOrRemoveSubscoreWithName:(NSString *)subscoreName withTimeIndex:(int)timeIndex
 {
-    InstantaneousScoreObject *instScore = [instantaneousScoreArray objectAtIndex:timeIndex];
-    if ([instScore.subscores objectForKey:subscoreName] != nil)
+    if ([self isSubscoreName:subscoreName includedInScoreAtTime:timeIndex])
     {
         [self removeSubscoreWithName:subscoreName withTimeIndex:timeIndex];
     }
@@ -208,6 +207,54 @@
     {
         [self addSubscoreWithName:subscoreName withTimeIndex:timeIndex];
     }
+}
+
+- (bool) isSubscoreName:(NSString *)subscoreName includedInScoreAtTime:(int)time
+{
+    InstantaneousScoreObject *instScore = [instantaneousScoreArray objectAtIndex:time];
+    return ([instScore.subscores objectForKey:subscoreName] != nil);
+}
+
+- (void) changeDrumView:(CymbalView *)view toInstrumentType:(InstrumentType *)instrumentType withTimeIndex:(int)time
+{
+    NSUInteger index = [instViewsManager.drumViews indexOfObject:view];
+    if (index != NSNotFound)
+    {
+        for (int i = time; i < numberOfTimeInstances; i++)
+        {
+            InstantaneousScoreObject *instScore = [instantaneousScoreArray objectAtIndex:i];
+            InstrumentType *myInstType = [instScore.drumHasInstrumentType objectAtIndex:index];
+            myInstType.type = instrumentType.type;
+        }
+    }
+}
+
+- (void) changeGridView:(GridView *)view toInstrumentType:(InstrumentType *)instrumentType withTimeIndex:(int)time
+{
+    NSUInteger index = [instViewsManager.guitarViews indexOfObject:view];
+    if (index != NSNotFound)
+    {
+        for (int i = time; i < numberOfTimeInstances; i++)
+        {
+            InstantaneousScoreObject *instScore = [instantaneousScoreArray objectAtIndex:i];
+            InstrumentType *myInstType = [instScore.guitarHasInstrumentType objectAtIndex:index];
+            myInstType.type = instrumentType.type;
+        }
+        return;
+    }
+    
+    index = [instViewsManager.pianoViews indexOfObject:view];
+    
+    if (index != NSNotFound)
+    {
+        for (int i = time; i < numberOfTimeInstances; i++)
+        {
+            InstantaneousScoreObject *instScore = [instantaneousScoreArray objectAtIndex:i];
+            InstrumentType *myInstType = [instScore.pianoHasInstrumentType objectAtIndex:index];
+            myInstType.type = instrumentType.type;
+        }
+    }
+    
 }
 
 @end

@@ -24,6 +24,7 @@
     NSArray *gridViews;
     NSArray *drumViews;
     ScoreObject *score;
+    NSArray *buttonArray;
 }
 
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;

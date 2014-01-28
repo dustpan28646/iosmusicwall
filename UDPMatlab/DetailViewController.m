@@ -77,7 +77,6 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     [self configureView];
-    Drum1.delegate = self;
     lastControlValue = 0;
     currentScoreIndex = 0;
 }
@@ -155,7 +154,8 @@
     tempoControl.maximumValue = 1.5;
     tempoControl.stepValue = 0.1;
     tempoControl.value = 1.0;
-    [self newTimeIndex:currentScoreIndex withScore:scoreDictionary];
+    [self newTimeIndex:currentScoreIndex withScore:nil];
+    [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateButtonColors) userInfo:nil repeats:NO];
 //    [self sendData];
 //    [self receiveData];
 }
@@ -208,43 +208,40 @@
     [self sendData];
 }
 
-- (IBAction)buttonSix:(id)sender {
-}
-
 - (IBAction)touchedButtonOne:(id)sender
 {
     [score addOrRemoveSubscoreWithName:[buttonOne titleLabel].text withTimeIndex:currentScoreIndex];
-    [score changeTimeIndexTo:currentScoreIndex];
+    [self newTimeIndex:currentScoreIndex withScore:nil];
 }
 
 - (IBAction)touchedButtonTwo:(id)sender
 {
     [score addOrRemoveSubscoreWithName:[buttonTwo titleLabel].text withTimeIndex:currentScoreIndex];
-    [score changeTimeIndexTo:currentScoreIndex];
+    [self newTimeIndex:currentScoreIndex withScore:nil];
 }
 
 - (IBAction)touchedButtonThree:(id)sender
 {
     [score addOrRemoveSubscoreWithName:[buttonThree titleLabel].text withTimeIndex:currentScoreIndex];
-    [score changeTimeIndexTo:currentScoreIndex];
+    [self newTimeIndex:currentScoreIndex withScore:nil];
 }
 
 - (IBAction)touchedButtonFour:(id)sender
 {
     [score addOrRemoveSubscoreWithName:[buttonFour titleLabel].text withTimeIndex:currentScoreIndex];
-    [score changeTimeIndexTo:currentScoreIndex];
+    [self newTimeIndex:currentScoreIndex withScore:nil];
 }
 
 - (IBAction)touchedButtonFive:(id)sender
 {
     [score addOrRemoveSubscoreWithName:[buttonFive titleLabel].text withTimeIndex:currentScoreIndex];
-    [score changeTimeIndexTo:currentScoreIndex];
+    [self newTimeIndex:currentScoreIndex withScore:nil];
 }
 
 - (IBAction)touchedButtonSix:(id)sender
 {
     [score addOrRemoveSubscoreWithName:[buttonSix titleLabel].text withTimeIndex:currentScoreIndex];
-    [score changeTimeIndexTo:currentScoreIndex];
+    [self newTimeIndex:currentScoreIndex withScore:nil];
 }
 
 - (IBAction)didTouchTempo:(id)sender
@@ -284,10 +281,24 @@
 
 - (void) initializeScoreWithSubscores:(NSMutableDictionary *)subscores withNumberOfTimeIndices:(int)numTimes
 {
-    
+    buttonArray = [[NSArray alloc] initWithObjects:buttonOne, buttonTwo, buttonThree, buttonFour, buttonFive, buttonSix, nil];
     NSArray *guitarArray = [[NSArray alloc] initWithObjects:Grid2, Grid3, Grid7, Grid9, Grid11, Grid13, Grid14, nil];
     NSArray *pianoArray = [[NSArray alloc] initWithObjects:Grid1, Grid4, Grid5, Grid6, Grid8, Grid10, Grid12, nil];
     NSArray *drumArray = [[NSArray alloc] initWithObjects:Drum1, Drum2, Drum3, Drum4, Drum5, nil];
+    for (GridView *view in guitarArray)
+    {
+        view.delegate = self;
+    }
+    
+    for (GridView *view in pianoArray)
+    {
+        view.delegate = self;
+    }
+    
+    for (CymbalView *view in drumArray)
+    {
+        view.delegate = self;
+    }
     InstrumentViewsManager *manager = [[InstrumentViewsManager alloc] initWithGuitars:guitarArray andPianos:pianoArray andDrums:drumArray];
     
     score = [[ScoreObject alloc] initWithInstrumentManager:manager withSubscoreDictionary:subscores withTimeIndices:numTimes];
@@ -307,6 +318,7 @@
 {
     [score changeTimeIndexTo:index];
     currentScoreIndex = index;
+    [self updateButtonColors];
 //    scoreDictionary = scoreDict;
 //    NSMutableArray *drumArray = [scoreDictionary objectForKey:@"drum"];
 //    NSMutableArray *drum1 = [drumArray objectAtIndex:0];
@@ -344,12 +356,29 @@
     
 }
 
-- (void) didTapChangeDrumInView:(CymbalView *)view withCurrentDrumType:(enum DRUM_TYPE)drumType
+- (void) updateButtonColors
 {
+    for (UIButton *button in buttonArray)
+    {
+        if ([score isSubscoreName:button.titleLabel.text includedInScoreAtTime:currentScoreIndex])
+        {
+            [button setTitleColor:[UIColor yellowColor] forState:UIControlStateNormal];
+        }
+        else
+        {
+            [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        }
+    }
 }
 
-- (void) didTapChangeGridInView:(GridView *)view withIsGuitar:(bool)isGuitar
+- (void) didTapChangeDrumInView:(CymbalView *)view withInstrumentType:(InstrumentType *)instrumentType
 {
+    [score changeDrumView:view toInstrumentType:instrumentType withTimeIndex:currentScoreIndex];
+}
+
+- (void) didTapChangeGridInView:(GridView *)view withInstrumentType:(InstrumentType *)instrumentType
+{
+    [score changeGridView:view toInstrumentType:instrumentType withTimeIndex:currentScoreIndex];
 }
 
 @end
