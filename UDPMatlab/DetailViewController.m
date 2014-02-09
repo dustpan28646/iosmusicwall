@@ -305,13 +305,10 @@
     
     NSArray *subscoreTitles = [subscores allKeys];
     
-    [buttonOne setTitle:[subscoreTitles objectAtIndex:0] forState:UIControlStateNormal];
-    [buttonTwo setTitle:[subscoreTitles objectAtIndex:1] forState:UIControlStateNormal];
-    [buttonThree setTitle:[subscoreTitles objectAtIndex:2] forState:UIControlStateNormal];
-    [buttonFour setTitle:[subscoreTitles objectAtIndex:3] forState:UIControlStateNormal];
-    [buttonFive setTitle:[subscoreTitles objectAtIndex:4] forState:UIControlStateNormal];
-    [buttonSix setTitle:[subscoreTitles objectAtIndex:5] forState:UIControlStateNormal];
-    
+    for (int i = 0; i < [subscoreTitles count]; i++)
+    {
+        [[buttonArray objectAtIndex:i] setTitle:[subscoreTitles objectAtIndex:i] forState:UIControlStateNormal];
+    }
 }
 
 -(void)newTimeIndex:(int)index withScore:(NSDictionary *)scoreDict
@@ -360,9 +357,11 @@
 {
     for (UIButton *button in buttonArray)
     {
-        if ([score isSubscoreName:button.titleLabel.text includedInScoreAtTime:currentScoreIndex])
+        NSString *subscoreName = button.titleLabel.text;
+        if ([score isSubscoreName:subscoreName includedInScoreAtTime:currentScoreIndex])
         {
-            [button setTitleColor:[UIColor yellowColor] forState:UIControlStateNormal];
+            Subscore *subscore = [score.subscoreDictionary objectForKey:subscoreName];
+            [button setTitleColor:subscore.color forState:UIControlStateNormal];
         }
         else
         {

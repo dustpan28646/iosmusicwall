@@ -21,6 +21,7 @@
     NSMutableDictionary *subscoreDictionary;
     NSMutableArray *currentSubscoreLine;
     NSString *currentSubscoreName;
+    NSArray *colorArray;
 }
 
 @property (strong, nonatomic) DetailViewController *detailViewController;

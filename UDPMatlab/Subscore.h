@@ -23,7 +23,8 @@ enum SUBSCORE_INSTRUMENT
 @property (strong, nonatomic) NSMutableArray *noteLines;
 @property (nonatomic) bool isDefault;
 @property (strong, nonatomic) NSString *name;
+@property (strong, nonatomic)  UIColor *color;
 
-- (id)initWithInstrumentType:(enum SUBSCORE_INSTRUMENT)instrumentType withIsDefault:(bool)isSubscoreDefault wthName:(NSString *)subscoreName;
+- (id)initWithInstrumentType:(enum SUBSCORE_INSTRUMENT)instrumentType withIsDefault:(bool)isSubscoreDefault wthName:(NSString *)subscoreName withColor:(UIColor *)subscoreColor;
 
 @end

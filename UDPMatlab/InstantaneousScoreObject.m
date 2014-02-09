@@ -26,19 +26,19 @@
         NSMutableArray *guitarArray = [[NSMutableArray alloc] initWithCapacity:42];
         for (int i = 0; i < 42; i++)
         {
-            [guitarArray addObject:[[BooleanObject alloc] initWithBool:NO]];
+            [guitarArray addObject:[[BooleanObject alloc] initWithBool:NO withSubscore:nil]];
         }
         
         NSMutableArray *pianoArray = [[NSMutableArray alloc] initWithCapacity:42];
         for (int i = 0; i < 42; i++)
         {
-            [pianoArray addObject:[[BooleanObject alloc] initWithBool:NO]];
+            [pianoArray addObject:[[BooleanObject alloc] initWithBool:NO withSubscore:nil]];
         }
         
         NSMutableArray *drumArray = [[NSMutableArray alloc] initWithCapacity:5];
         for (int i = 0; i < 5; i++)
         {
-            [drumArray addObject:[[BooleanObject alloc] initWithBool:NO]];
+            [drumArray addObject:[[BooleanObject alloc] initWithBool:NO withSubscore:nil]];
         }
         
         self.guitarScoreArray = [NSArray arrayWithArray:guitarArray];

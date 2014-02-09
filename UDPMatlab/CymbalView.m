@@ -42,7 +42,7 @@ static float const inset = 3.0;
 - (void)initCustomView:(CGRect)frame
 {
     type = [[InstrumentType alloc] initWithType:TYPE_SNARE];
-    note = [[BooleanObject alloc] initWithBool:NO];
+    note = [[BooleanObject alloc] initWithBool:NO withSubscore:nil];
     CGRect myRect = CGRectMake(round(frame.origin.x + inset), round(frame.origin.y + inset) , round(frame.size.width - 2.0 * inset), round(frame.size.height - 2.0 * inset));
     center = CGPointMake(round(0.0 + (myRect.size.width/2.0)), round(0.0 + (myRect.size.height / 2.0)));
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -110,7 +110,6 @@ static float const inset = 3.0;
     [piano drawInRect:rect blendMode:kCGBlendModeNormal alpha:0.5];
     
     UIColor *blackColor = [UIColor blackColor];
-    UIColor *yellowColor = [UIColor yellowColor];
     float crossLegLength = 10.0;
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextSetStrokeColorWithColor(context, blackColor.CGColor);
@@ -139,7 +138,7 @@ static float const inset = 3.0;
     if (note.doesNoteExist)
     {
         drawRadius = selectedRadius;
-        circleColor = yellowColor;
+        circleColor = [BooleanObject colorForSubscore:note.noteSubscore];
     }
     else
     {
@@ -161,6 +160,7 @@ static float const inset = 3.0;
 - (void) touchedNote:(id)sender
 {
     note.doesNoteExist = !note.doesNoteExist;
+    note.noteSubscore = nil;
     [self setNeedsDisplay];
 }
 

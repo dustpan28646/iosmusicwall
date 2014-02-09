@@ -42,7 +42,7 @@ static float const buttonRadius = 6.0;
     NSMutableArray *myArray = [[NSMutableArray alloc] initWithCapacity:6];
     for (int i = 0; i < 6; i++)
     {
-        [myArray addObject:[[BooleanObject alloc] initWithBool:NO]];
+        [myArray addObject:[[BooleanObject alloc] initWithBool:NO withSubscore:nil]];
     }
     score = myArray;
     // Initialization code
@@ -127,7 +127,7 @@ static float const buttonRadius = 6.0;
 - (void)drawRect:(CGRect)rect
 {
     UIImage *instrumentImage = nil;
-    
+    UIColor *blackColor = [UIColor blackColor];
     if (type.type == TYPE_GUITAR)
     {
         instrumentImage = [UIImage imageNamed:@"acoustic6string.jpg"];
@@ -158,12 +158,12 @@ static float const buttonRadius = 6.0;
         if (boolObj.doesNoteExist)
         {
             circleRadius = selectedRadius;
-            myColor = [UIColor yellowColor];
+            myColor = [BooleanObject colorForSubscore:boolObj.noteSubscore];
         }
         else
         {
             circleRadius = unselectedRadius;
-            myColor = [UIColor blackColor];
+            myColor = blackColor;
         }
         CGContextSetFillColorWithColor(context, myColor.CGColor);
         CGContextMoveToPoint(context, round(0.0 + (((double)(i + 1)) * jumpSize)), round(0.0 + (rect.size.height * 0.25)));
@@ -187,6 +187,7 @@ static float const buttonRadius = 6.0;
     int i = 5;
     BooleanObject *boolObj = [score objectAtIndex:i];
     boolObj.doesNoteExist = !boolObj.doesNoteExist;
+    boolObj.noteSubscore = nil;
     [self setNeedsDisplay];
 }
 -(void)touchedNoteOne:(id)sender
@@ -194,6 +195,7 @@ static float const buttonRadius = 6.0;
     int i = 0;
     BooleanObject *boolObj = [score objectAtIndex:i];
     boolObj.doesNoteExist = !boolObj.doesNoteExist;
+    boolObj.noteSubscore = nil;
     [self setNeedsDisplay];
 }
 -(void)touchedNoteTwo:(id)sender
@@ -201,6 +203,7 @@ static float const buttonRadius = 6.0;
     int i = 1;
     BooleanObject *boolObj = [score objectAtIndex:i];
     boolObj.doesNoteExist = !boolObj.doesNoteExist;
+    boolObj.noteSubscore = nil;
     [self setNeedsDisplay];
 }
 -(void)touchedNoteThree:(id)sender
@@ -208,6 +211,7 @@ static float const buttonRadius = 6.0;
     int i = 2;
     BooleanObject *boolObj = [score objectAtIndex:i];
     boolObj.doesNoteExist = !boolObj.doesNoteExist;
+    boolObj.noteSubscore = nil;
     [self setNeedsDisplay];
 }
 -(void)touchedNoteFour:(id)sender
@@ -215,6 +219,7 @@ static float const buttonRadius = 6.0;
     int i = 3;
     BooleanObject *boolObj = [score objectAtIndex:i];
     boolObj.doesNoteExist = !boolObj.doesNoteExist;
+    boolObj.noteSubscore = nil;
     [self setNeedsDisplay];
 }
 -(void)touchedNoteFive:(id)sender
@@ -222,6 +227,7 @@ static float const buttonRadius = 6.0;
     int i = 4;
     BooleanObject *boolObj = [score objectAtIndex:i];
     boolObj.doesNoteExist = !boolObj.doesNoteExist;
+    boolObj.noteSubscore = nil;
     [self setNeedsDisplay];
 }
 

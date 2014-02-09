@@ -56,12 +56,13 @@
                 {
                     BooleanObject *scoreNote = [instantaneousScore.pianoScoreArray objectAtIndex:integerIndex];
                     scoreNote.doesNoteExist = YES;
+                    scoreNote.noteSubscore = subscore;
                 }
                 else if(integerIndex != 220)
                 {
                     NSLog(@"Warning! Invalid Index Attempted to add to Score: %i",integerIndex);
                 }
-                [instantaneousScore.subscores setObject:[NSNumber numberWithInt:0] forKey:subscoreName];
+                [instantaneousScore.subscores setObject:subscore forKey:subscoreName];
             }
         }
     }
@@ -78,12 +79,13 @@
                 {
                     BooleanObject *scoreNote = [instantaneousScore.guitarScoreArray objectAtIndex:integerIndex];
                     scoreNote.doesNoteExist = YES;
+                    scoreNote.noteSubscore = subscore;
                 }
                 else if (integerIndex != 220)
                 {
                     NSLog(@"Warning! Invalid Index Attempted to add to Score: %i",integerIndex);
                 }
-                [instantaneousScore.subscores setObject:[NSNumber numberWithInt:0] forKey:subscoreName];
+                [instantaneousScore.subscores setObject:subscore forKey:subscoreName];
             }
         }
     }
@@ -100,12 +102,13 @@
                 {
                     BooleanObject *scoreNote = [instantaneousScore.drumScoreArray objectAtIndex:integerIndex];
                     scoreNote.doesNoteExist = YES;
+                    scoreNote.noteSubscore = subscore;
                 }
                 else  if (integerIndex != 220)
                 {
                     NSLog(@"Warning! Invalid Index Attempted to add to Score: %i",integerIndex);
                 }
-                [instantaneousScore.subscores setObject:[NSNumber numberWithInt:0] forKey:subscoreName];
+                [instantaneousScore.subscores setObject:subscore forKey:subscoreName];
             }
         }
     }
@@ -132,6 +135,7 @@
                 {
                     BooleanObject *scoreNote = [instantaneousScore.pianoScoreArray objectAtIndex:integerIndex];
                     scoreNote.doesNoteExist = NO;
+                    scoreNote.noteSubscore = nil;
                 }
                 else if(integerIndex != 220)
                 {
@@ -154,6 +158,7 @@
                 {
                     BooleanObject *scoreNote = [instantaneousScore.guitarScoreArray objectAtIndex:integerIndex];
                     scoreNote.doesNoteExist = NO;
+                    scoreNote.noteSubscore = nil;
                 }
                 else if (integerIndex != 220)
                 {
@@ -176,6 +181,7 @@
                 {
                     BooleanObject *scoreNote = [instantaneousScore.drumScoreArray objectAtIndex:integerIndex];
                     scoreNote.doesNoteExist = NO;
+                    scoreNote.noteSubscore = nil;
                 }
                 else  if (integerIndex != 220)
                 {

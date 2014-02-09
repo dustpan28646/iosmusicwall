@@ -7,11 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Subscore.h"
 
 @interface BooleanObject : NSObject
 
 @property (nonatomic) bool doesNoteExist;
+@property (nonatomic, weak) Subscore *noteSubscore;
 
-- (id) initWithBool:(bool)noteExist;
+
++ (UIColor *)colorForSubscore:(Subscore *)subscore;
+
+- (id) initWithBool:(bool)noteExist withSubscore:(Subscore *)initSubscore;
 
 @end

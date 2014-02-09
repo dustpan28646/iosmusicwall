@@ -39,12 +39,16 @@
 
     //UIBarButtonItem*addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
     //self.navigationItem.rightBarButtonItem = addButton;
+    colorArray = [[NSArray alloc] initWithObjects:[UIColor blueColor], [UIColor redColor], [UIColor greenColor], [UIColor cyanColor], [UIColor purpleColor], [UIColor orangeColor], nil];
     self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
     [self.detailViewController setMasterView:self];
     numberOfTimesInScore = 4;
     subscoreDictionary = [[NSMutableDictionary alloc] init];
     currentSubscoreName = @"";
-    score = [self createScore];
+    NSString* filePath = [[NSBundle mainBundle] pathForResource:@"ScoreXML" ofType:@"csv"];
+    CHCSVParser *parser = [[CHCSVParser alloc] initWithContentsOfCSVFile:filePath];
+    parser.delegate = self;
+    [parser parse];
     indexFactor = 1.0;
 }
 
@@ -119,7 +123,7 @@
                     
                     bool isSubscoreDefault = [field isEqualToString:@"Piano/Guitar Lead"] || [field isEqualToString:@"Guitar Chords"] || [field isEqualToString:@"Piano Bass"];
                     
-                    Subscore *subscore = [[Subscore alloc] initWithInstrumentType:instrumentType withIsDefault:isSubscoreDefault wthName:field];
+                    Subscore *subscore = [[Subscore alloc] initWithInstrumentType:instrumentType withIsDefault:isSubscoreDefault wthName:field withColor:[colorArray objectAtIndex:[subscoreDictionary count]]];
                     
                     currentSubscoreLine = [[NSMutableArray alloc] initWithCapacity:numberOfTimesInScore];
                     [subscore.noteLines addObject:currentSubscoreLine];
@@ -146,13 +150,8 @@
 
 
 
--(NSMutableArray *)createScore
+/*-(NSMutableArray *)createScore
 {
-    NSString* filePath = [[NSBundle mainBundle] pathForResource:@"ScoreXML" ofType:@"csv"];
-    CHCSVParser *parser = [[CHCSVParser alloc] initWithContentsOfCSVFile:filePath];
-    parser.delegate = self;
-    [parser parse];
-    
     NSMutableArray *returnArray = [[NSMutableArray alloc] initWithCapacity:4];
     for (int i = 0; i < 4;i++)
     {
@@ -192,9 +191,9 @@
         [returnArray addObject:dict];
     }
     [[self tableView] reloadData];
-    return returnArray;
+    return nil;
 }
-
+*/
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import "InstrumentViewsManager.h"
-#import "Subscore.h"
 
 @interface ScoreObject : NSObject
 

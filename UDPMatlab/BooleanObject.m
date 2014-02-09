@@ -10,14 +10,24 @@
 
 @implementation BooleanObject
 
--(id) initWithBool:(bool)noteExist
+-(id) initWithBool:(bool)noteExist withSubscore:(Subscore *)initSubscore
 {
     self = [super init];
     if (self)
     {
         self.doesNoteExist = noteExist;
+        self.noteSubscore = initSubscore;
     }
     return self;
+}
+
++ (UIColor *)colorForSubscore:(Subscore *)subscore
+{
+    if (subscore != nil)
+    {
+        return subscore.color;
+    }
+    return [UIColor yellowColor];
 }
 
 @end

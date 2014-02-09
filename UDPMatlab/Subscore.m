@@ -15,7 +15,7 @@
 @synthesize isDefault;
 @synthesize name;
 
-- (id)initWithInstrumentType:(enum SUBSCORE_INSTRUMENT)instrumentType withIsDefault:(bool)isSubscoreDefault wthName:(NSString *)subscoreName
+- (id)initWithInstrumentType:(enum SUBSCORE_INSTRUMENT)instrumentType withIsDefault:(bool)isSubscoreDefault wthName:(NSString *)subscoreName withColor:(UIColor *)subscoreColor
 {
     self = [super init];
     if (self)
@@ -24,6 +24,7 @@
         self.type = instrumentType;
         self.isDefault = isSubscoreDefault;
         self.name = subscoreName;
+        self.color = subscoreColor;
     }
     return self;
 }
