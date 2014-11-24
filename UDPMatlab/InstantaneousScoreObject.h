@@ -11,6 +11,9 @@
 #import "InstrumentType.h"
 
 @interface InstantaneousScoreObject : NSObject
+{
+    Subscore *userSubscore;
+}
 
 @property (strong, nonatomic) NSArray *guitarScoreArray;
 @property (strong, nonatomic) NSArray *pianoScoreArray;
@@ -20,6 +23,8 @@
 @property (strong, nonatomic) NSArray *pianoHasInstrumentType;
 @property (strong, nonatomic) NSArray *drumHasInstrumentType;
 
-- (id) initInstantaneousScoreObject;
+- (id) initInstantaneousScoreObjectWithUserSubscore:(Subscore *)userSub;
+- (bool)doesHaveUserNotes;
+- (NSDictionary *)subscoresWithNotes;
 
 @end

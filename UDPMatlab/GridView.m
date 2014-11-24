@@ -137,7 +137,7 @@ static float const buttonRadius = 6.0;
         instrumentImage = [UIImage imageNamed:@"Piano_Keyboard.jpg"];
     }
     
-    [instrumentImage drawInRect:rect blendMode:kCGBlendModeNormal alpha:0.25];
+    [instrumentImage drawInRect:rect blendMode:kCGBlendModeNormal alpha:0.4];
     
     int i = 0;
     UIColor *myColor = [UIColor blackColor];
@@ -189,6 +189,7 @@ static float const buttonRadius = 6.0;
     boolObj.doesNoteExist = !boolObj.doesNoteExist;
     boolObj.noteSubscore = nil;
     [self setNeedsDisplay];
+    [delegate didChangeNoteForCurrentTime];
 }
 -(void)touchedNoteOne:(id)sender
 {
@@ -197,6 +198,7 @@ static float const buttonRadius = 6.0;
     boolObj.doesNoteExist = !boolObj.doesNoteExist;
     boolObj.noteSubscore = nil;
     [self setNeedsDisplay];
+    [delegate didChangeNoteForCurrentTime];
 }
 -(void)touchedNoteTwo:(id)sender
 {
@@ -205,6 +207,7 @@ static float const buttonRadius = 6.0;
     boolObj.doesNoteExist = !boolObj.doesNoteExist;
     boolObj.noteSubscore = nil;
     [self setNeedsDisplay];
+    [delegate didChangeNoteForCurrentTime];
 }
 -(void)touchedNoteThree:(id)sender
 {
@@ -213,6 +216,7 @@ static float const buttonRadius = 6.0;
     boolObj.doesNoteExist = !boolObj.doesNoteExist;
     boolObj.noteSubscore = nil;
     [self setNeedsDisplay];
+    [delegate didChangeNoteForCurrentTime];
 }
 -(void)touchedNoteFour:(id)sender
 {
@@ -221,6 +225,7 @@ static float const buttonRadius = 6.0;
     boolObj.doesNoteExist = !boolObj.doesNoteExist;
     boolObj.noteSubscore = nil;
     [self setNeedsDisplay];
+    [delegate didChangeNoteForCurrentTime];
 }
 -(void)touchedNoteFive:(id)sender
 {
@@ -229,6 +234,18 @@ static float const buttonRadius = 6.0;
     boolObj.doesNoteExist = !boolObj.doesNoteExist;
     boolObj.noteSubscore = nil;
     [self setNeedsDisplay];
+    [delegate didChangeNoteForCurrentTime];
+}
+
+-(void) printButtonPositions
+{
+    CGRect bigFrame = self.frame;
+    jumpSize = bigFrame.size.width/7.0;
+    for (int i = 0; i<6; i++)
+    {
+        CGRect frame = CGRectMake(round(0.0 + (((double)(i + 1)) * jumpSize) - buttonRadius) , round(0.0 + (bigFrame.size.height * 0.5) - buttonRadius), round(2 * buttonRadius), round(2 * buttonRadius));
+        printf("%0.2f, %0.2f;...\n", round(bigFrame.origin.x + frame.origin.x + (frame.size.width/2.0)), round(bigFrame.origin.y + frame.origin.y + (frame.size.height/2.0)));
+    }
 }
 
 @end

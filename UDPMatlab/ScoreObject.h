@@ -32,4 +32,8 @@
 
 - (bool) isSubscoreName:(NSString *)subscoreName includedInScoreAtTime:(int)time;
 
+- (bool) isCurrentScoreFeasible:(NSArray *)numAvailableRobots withOptimalDistribution:(NSMutableArray *)optimalDistribution withFeasibilityArray:(NSMutableArray *)feasArray;
+
+
+
 @end

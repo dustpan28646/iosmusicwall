@@ -22,11 +22,15 @@
     NSMutableArray *currentSubscoreLine;
     NSString *currentSubscoreName;
     NSArray *colorArray;
+    NSArray *circleImageArray;
+    NSIndexPath *currentSelection;
 }
 
 @property (strong, nonatomic) DetailViewController *detailViewController;
 @property (strong, nonatomic) IBOutlet UITableView *myTable;
+@property (strong, nonatomic) NSMutableArray *subscoreNames;
 
 - (void) setTempoFactor:(double)newFactor;
+- (void) refreshNoteExistance;
 
 @end

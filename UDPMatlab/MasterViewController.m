@@ -9,6 +9,7 @@
 #import "MasterViewController.h"
 
 #import "DetailViewController.h"
+#import "MasterTableCell.h"
 
 @interface MasterViewController ()
 {
@@ -19,6 +20,9 @@
 @implementation MasterViewController
 
 @synthesize myTable;
+@synthesize subscoreNames;
+
+static float const coloredCircleDiameter = 28.0;
 
 - (void)awakeFromNib
 {
@@ -29,27 +33,54 @@
     [super awakeFromNib];
 }
 
-
+- (void) viewWillAppear:(BOOL)animated
+{
+    [myTable selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] animated:YES scrollPosition:0];
+}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     //self.navigationItem.leftBarButtonItem = self.editButtonItem;
-
     //UIBarButtonItem*addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
     //self.navigationItem.rightBarButtonItem = addButton;
-    colorArray = [[NSArray alloc] initWithObjects:[UIColor blueColor], [UIColor redColor], [UIColor greenColor], [UIColor cyanColor], [UIColor purpleColor], [UIColor orangeColor], nil];
+    colorArray = [[NSArray alloc] initWithObjects:[UIColor blueColor], [UIColor brownColor], [UIColor greenColor], [UIColor cyanColor], [UIColor purpleColor], [UIColor orangeColor], [UIColor yellowColor], nil];
+    [self createUIImageArray];
     self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
     [self.detailViewController setMasterView:self];
     numberOfTimesInScore = 4;
     subscoreDictionary = [[NSMutableDictionary alloc] init];
     currentSubscoreName = @"";
+    subscoreNames = [[NSMutableArray alloc] initWithCapacity:6];
     NSString* filePath = [[NSBundle mainBundle] pathForResource:@"ScoreXML" ofType:@"csv"];
     CHCSVParser *parser = [[CHCSVParser alloc] initWithContentsOfCSVFile:filePath];
     parser.delegate = self;
     [parser parse];
     indexFactor = 1.0;
+}
+
+- (void) createUIImageArray
+{
+    NSMutableArray *mutableArray = [[NSMutableArray alloc] initWithCapacity:[colorArray count]];
+    for (UIColor *circleColor in colorArray)
+    {
+        CGSize size = CGSizeMake(coloredCircleDiameter, coloredCircleDiameter);
+        UIGraphicsBeginImageContextWithOptions(size, NO, 0);
+        [[UIColor clearColor] setFill];
+        CGContextRef ctx = UIGraphicsGetCurrentContext();
+        CGRect circleRect = CGRectMake(0, 0,
+                                       size.width,
+                                       size.height);
+        CGContextFillRect(ctx, circleRect);
+        circleRect = CGRectInset(circleRect, 5, 5);
+        [circleColor setFill];
+        CGContextFillEllipseInRect(ctx, circleRect);
+        UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        [mutableArray addObject:image];
+    }
+    circleImageArray = [NSArray arrayWithArray:mutableArray];
 }
 
 - (void) viewDidAppear:(BOOL)animated
@@ -60,6 +91,14 @@
     [myTable selectRowAtIndexPath:path animated:YES scrollPosition:scrollPos];
     
     [self.detailViewController initializeScoreWithSubscores:subscoreDictionary withNumberOfTimeIndices:numberOfTimesInScore];
+    [self.tableView reloadData];
+    [super viewDidAppear:animated];
+    [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(initialSelection:) userInfo:nil repeats:NO];
+}
+     
+- (void)initialSelection:(id)sender
+{
+    [myTable selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] animated:NO scrollPosition:UITableViewScrollPositionNone];
 }
 
 - (void) parser:(CHCSVParser *)parser didBeginLine:(NSUInteger)recordNumber
@@ -124,7 +163,7 @@
                     bool isSubscoreDefault = [field isEqualToString:@"Piano/Guitar Lead"] || [field isEqualToString:@"Guitar Chords"] || [field isEqualToString:@"Piano Bass"];
                     
                     Subscore *subscore = [[Subscore alloc] initWithInstrumentType:instrumentType withIsDefault:isSubscoreDefault wthName:field withColor:[colorArray objectAtIndex:[subscoreDictionary count]]];
-                    
+                    [subscoreNames addObject:field];
                     currentSubscoreLine = [[NSMutableArray alloc] initWithCapacity:numberOfTimesInScore];
                     [subscore.noteLines addObject:currentSubscoreLine];
                     
@@ -147,53 +186,6 @@
 {
 }
 
-
-
-
-/*-(NSMutableArray *)createScore
-{
-    NSMutableArray *returnArray = [[NSMutableArray alloc] initWithCapacity:4];
-    for (int i = 0; i < 4;i++)
-    {
-        NSMutableArray *gridArray = [[NSMutableArray alloc] initWithCapacity:14];
-        
-        for (int i2 = 0; i2 < 14; i2++)
-        {
-            NSMutableArray *grid = [[NSMutableArray alloc] initWithCapacity:6];
-            for (int i3 = 0; i3 < 6; i3++)
-            {
-                if (((i + i2 + i3) % 5) == 0)
-                {
-                    [grid addObject:[NSNumber numberWithBool:YES]];//[grid addObject:[NSNumber numberWithBool:YES]];
-                }
-                else
-                {
-                    [grid addObject:[NSNumber numberWithBool:NO]];
-                }
-            }
-            [gridArray addObject:grid];
-        }
-        NSMutableArray *drumArray = [[NSMutableArray alloc] initWithCapacity:5];
-        
-        for (int i4 = 0; i4 < 5; i4++)
-        {
-            if (((i4 + i) % 3) == 0)
-            {
-                [drumArray addObject:[NSMutableArray arrayWithObject:[NSNumber numberWithBool:YES]]];//[drumArray addObject:[NSMutableArray arrayWithObject:[NSNumber numberWithBool:YES]]];
-            }
-            else
-            {
-                [drumArray addObject:[NSMutableArray arrayWithObject:[NSNumber numberWithBool:NO]]];
-            }
-        }
-        
-        NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:gridArray,@"grid",drumArray,@"drum", nil];
-        [returnArray addObject:dict];
-    }
-    [[self tableView] reloadData];
-    return nil;
-}
-*/
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -224,15 +216,84 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+    /*UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     cell.textLabel.text = [NSString stringWithFormat:@"t = %0.1f", (((double)(indexPath.row + 1)) * indexFactor)];
+    */
+    static NSString *cellIdentifier = @"MasterTableCell";
+    //3
+    MasterTableCell *cell = (MasterTableCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    
+    //3.1 you do not need this if you have set TableCellID as identifier in the storyboard (else you can remove the comments on this code). Do not use this code if you are following this tutorial
+    
+    if (cell == nil)
+       {
+            cell = [[[NSBundle mainBundle]loadNibNamed:@"MasterTableCell" owner:self options:nil]objectAtIndex:0];//initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
+       }
+    
+    NSArray *circles = [[NSArray alloc] initWithObjects:cell.circle1, cell.circle2, cell.circle3, cell.circle4, cell.circle5, cell.circle6, cell.circle7, nil];
+    
+    NSArray *noteExistanceArray = [self.detailViewController getNoteExistanceArrayForTime:(int)indexPath.row];
+    
+    for (int i = 0; i < [circleImageArray count]; i++)
+    {
+        UIImageView *imageView = [circles objectAtIndex:i];
+        imageView.image = [circleImageArray objectAtIndex:i];
+        imageView.hidden = !((NoteExistanceStructure *)[noteExistanceArray objectAtIndex:i]).doNotesExist;
+    }
+    
+    if (self.detailViewController && [self.detailViewController doesScoreExist])
+    {
+        if([[[self.detailViewController getFeasibilityArray] objectAtIndex:indexPath.row] boolValue])
+        {
+            cell.backgroundColor = [UIColor clearColor];
+        }
+        else
+        {
+            cell.backgroundColor = [UIColor redColor];
+            NSLog(@"Red Row at %i\n", (int)indexPath.row);
+        }
+        
+        if (currentSelection != nil)
+        {
+            [tableView selectRowAtIndexPath:currentSelection animated:NO scrollPosition:UITableViewScrollPositionNone];
+        }
+    }
+    
+    cell.timeText.text = [NSString stringWithFormat:@"t = %0.1f", (((double)(indexPath.row)) * indexFactor)];
+    UIView *selectionColor = [[UIView alloc] init];
+    selectionColor.backgroundColor = [UIColor yellowColor];
+    cell.selectedBackgroundView = selectionColor;
+    //3.2
+    if ((currentSelection != nil) && (indexPath.row != currentSelection.row))
+    {
+        [cell setHighlighted:NO];
+    }
+    
     return cell;
 }
+
+//- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    if (self.detailViewController && [self.detailViewController doesScoreExist])
+//    {
+//        NSArray *feasArray = [self.detailViewController getFeasibilityArray];
+//        if (([feasArray count] < numberOfTimesInScore) || [[feasArray objectAtIndex:indexPath.row] boolValue])
+//        {
+//            cell.backgroundColor = [UIColor clearColor];
+//            NSLog(@"print clear");
+//        }
+//        else
+//        {
+//            cell.backgroundColor = [UIColor redColor];
+//            NSLog(@"print red");
+//        }
+//    }
+//}
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Return NO if you do not want the specified item to be editable.
-    return YES;
+    return NO;
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
@@ -263,12 +324,14 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    currentSelection = indexPath;
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
         NSDate *object = _objects[indexPath.row];
         self.detailViewController.detailItem = object;
     }
-        [self.detailViewController newTimeIndex:indexPath.row withScore:nil];
     
+    [self.detailViewController setTimeIndexWithoutUpdate:(int)indexPath.row];
+        //[self.detailViewController newTimeIndex:indexPath.row withScore:nil];
     
 }
 
@@ -285,6 +348,56 @@
 {
     indexFactor = newFactor;
     [myTable reloadData];
+    [myTable selectRowAtIndexPath:currentSelection animated:NO scrollPosition:UITableViewScrollPositionNone];
+}
+
+- (void) refreshNoteExistance
+{
+    //optimize by only refreshing certain rows
+    //can also add animation to row update
+    [self.tableView reloadData];
+    [myTable selectRowAtIndexPath:currentSelection animated:NO scrollPosition:UITableViewScrollPositionNone];
+}
+
+- (void)tableView:(UITableView *)tableView didUnhighlightRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row == currentSelection.row)
+    {
+        [tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+    }
+}
+
+- (void) tableView:(UITableView *)tableView didHighlightRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(indexPath.row != currentSelection.row)
+    {
+        UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+        [cell setHighlighted:NO];
+        [tableView deselectRowAtIndexPath:indexPath animated:NO];
+    }
+    NSLog(@"Highlighted Cell %i",(int)indexPath.row);
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if ((indexPath.row != currentSelection.row))
+    {
+        [cell setHighlighted:NO];
+    }
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    if ((currentSelection == nil) && [myTable indexPathForSelectedRow])
+    {
+        currentSelection = [myTable indexPathForSelectedRow];
+    }
+    [myTable reloadData];
+    if (currentSelection)
+    {
+        [myTable selectRowAtIndexPath:currentSelection animated:NO scrollPosition:UITableViewScrollPositionNone];
+    }
+    //NSLog(@"Did Scroll");
 }
 
 @end

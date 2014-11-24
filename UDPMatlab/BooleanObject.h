@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "Subscore.h"
 
+
 @interface BooleanObject : NSObject
 
 @property (nonatomic) bool doesNoteExist;

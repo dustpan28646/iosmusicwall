@@ -143,7 +143,6 @@ static float const inset = 3.0;
     else
     {
         drawRadius = unselectedRadius;
-        circleColor = blackColor;
     }
     CGContextSetFillColorWithColor(context, circleColor.CGColor);
     CGContextFillEllipseInRect(context, CGRectMake(round(center.x - drawRadius) , round(center.y - drawRadius), round(2.0 * drawRadius), round(2.0 * drawRadius)));
@@ -162,8 +161,19 @@ static float const inset = 3.0;
     note.doesNoteExist = !note.doesNoteExist;
     note.noteSubscore = nil;
     [self setNeedsDisplay];
+    [delegate didChangeNoteForCurrentTime];
 }
 
+
+- (void) printPosition
+{
+    printf("%0.2f, %0.2f;...\n",round(center.x + self.frame.origin.x),round(center.y + self.frame.origin.y));
+}
+
+- (enum INSTRUMENT_TYPE) getInstrumentType
+{
+    return type.type;
+}
 
 
 

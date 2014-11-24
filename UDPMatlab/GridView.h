@@ -16,6 +16,7 @@
 @protocol GridViewDelegate <NSObject>
 @required
 - (void) didTapChangeGridInView:(GridView *)view withInstrumentType:(InstrumentType *)instrumentType;
+- (void) didChangeNoteForCurrentTime;
 @end
 
 @interface GridView : UIView
@@ -28,5 +29,6 @@
 @property (weak, nonatomic) id<GridViewDelegate> delegate;
 
 - (void)setNoteArray:(NSArray *)notes withInstrumentType:(InstrumentType *)instType;
+-(void) printButtonPositions;
 
 @end

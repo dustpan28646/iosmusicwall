@@ -45,6 +45,8 @@ enum DRUM_NOTES
 };
 
 @interface SubscoreNote : NSObject
+{
+}
 
 @property (nonatomic) enum NOTE_OCTAVE octave;
 @property (nonatomic) enum NOTE_LETTER letter;

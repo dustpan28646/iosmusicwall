@@ -23,6 +23,7 @@ enum DRUM_TYPE
 @protocol DrumViewDelegate <NSObject>
 @required
 - (void) didTapChangeDrumInView:(CymbalView *)view withInstrumentType:(InstrumentType *)instrumentType;
+- (void) didChangeNoteForCurrentTime;
 @end
 
 @interface CymbalView : UIView
@@ -36,5 +37,7 @@ enum DRUM_TYPE
 @property (weak, nonatomic) id<DrumViewDelegate> delegate;
 
 - (void)setNote:(BooleanObject *)booleanNoteObject withInstrumentType:(InstrumentType *)instType;
+- (void) printPosition;
+- (enum INSTRUMENT_TYPE) getInstrumentType;
 
 @end
