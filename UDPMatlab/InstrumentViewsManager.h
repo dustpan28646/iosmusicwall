@@ -12,13 +12,16 @@
 #import "CymbalView.h"
 
 @interface InstrumentViewsManager : NSObject
+{
+    NetworkHelper *networkHelper;
+}
 
 @property (strong, nonatomic) NSArray *guitarViews;
 @property (strong, nonatomic) NSArray *pianoViews;
 @property (strong, nonatomic) NSArray *drumViews;
 
-- (id) initWithGuitars:(NSArray *)guitars andPianos:(NSArray *)pianos andDrums:(NSArray *)drums;
+- (id) initWithGuitars:(NSArray *)guitars andPianos:(NSArray *)pianos andDrums:(NSArray *)drums andNetworkHelper:(NetworkHelper *)helper;
 
-- (void) newInstantaneousScore:(InstantaneousScoreObject *)instantScore;
+- (void) newInstantaneousScore:(InstantaneousScoreObject *)instantScore withTime:(int)timeIndex;
 
 @end

@@ -14,7 +14,7 @@
 @synthesize pianoViews;
 @synthesize drumViews;
 
-- (id) initWithGuitars:(NSArray *)guitars andPianos:(NSArray *)pianos andDrums:(NSArray *)drums
+- (id) initWithGuitars:(NSArray *)guitars andPianos:(NSArray *)pianos andDrums:(NSArray *)drums andNetworkHelper:(NetworkHelper *)helper
 {
     self = [super init];
     if (self)
@@ -22,6 +22,7 @@
         self.guitarViews = guitars;
         self.pianoViews = pianos;
         self.drumViews = drums;
+        networkHelper = helper;
         //comment this when not wanting to print all this crap
         //this is just a convenient place to force all the positions to print to console
         
@@ -74,7 +75,7 @@
     return self;
 }
 
-- (void) newInstantaneousScore:(InstantaneousScoreObject *)instantScore
+- (void) newInstantaneousScore:(InstantaneousScoreObject *)instantScore withTime:(int)timeIndex
 {
     for (int i = 0; i < [guitarViews count]; i++)
     {
@@ -84,7 +85,7 @@
         {
             [array addObject:[instantScore.guitarScoreArray objectAtIndex:(i*6 + j)]];
         }
-        [view setNoteArray:array withInstrumentType:[instantScore.guitarHasInstrumentType objectAtIndex:i]];
+        [view setNoteArray:array withInstrumentType:[instantScore.guitarHasInstrumentType objectAtIndex:i] withNetworkHelper:networkHelper withInstrumentIndex:(i + 7) withTimeIndex:timeIndex];
     }
     
     for (int i = 0; i < [pianoViews count]; i++)
@@ -95,13 +96,13 @@
         {
             [array addObject:[instantScore.pianoScoreArray objectAtIndex:(i*6 + j)]];
         }
-        [view setNoteArray:array withInstrumentType:[instantScore.pianoHasInstrumentType objectAtIndex:i]];
+        [view setNoteArray:array withInstrumentType:[instantScore.pianoHasInstrumentType objectAtIndex:i] withNetworkHelper:networkHelper withInstrumentIndex:i withTimeIndex:timeIndex];
     }
     
     for (int i = 0; i < [drumViews count]; i++)
     {
         CymbalView *view = [drumViews objectAtIndex:i];
-        [view setNote:[instantScore.drumScoreArray objectAtIndex:i] withInstrumentType:[instantScore.drumHasInstrumentType objectAtIndex:i]];
+        [view setNote:[instantScore.drumScoreArray objectAtIndex:i] withInstrumentType:[instantScore.drumHasInstrumentType objectAtIndex:i] withNetworkHelper:networkHelper withInstrumentIndex:i withTimeIndex:timeIndex];
     }
 }
 

@@ -84,6 +84,7 @@ static float const inset = 3.0;
             NSLog(@"Invalid Type in cymbal view");
             break;
     }
+    [networkHelper sendString:[NSString stringWithFormat:@"<cd%i:%i:%i>",newType.type - 2,time,drumIndex]];
     [delegate didTapChangeDrumInView:self withInstrumentType:newType];
     [self setNeedsDisplay];
 }
@@ -149,10 +150,13 @@ static float const inset = 3.0;
     CGContextFillPath(context);
 }
 
-- (void)setNote:(BooleanObject *)booleanNoteObject withInstrumentType:(InstrumentType *)instType
+- (void)setNote:(BooleanObject *)booleanNoteObject withInstrumentType:(InstrumentType *)instType withNetworkHelper:(NetworkHelper *)helper withInstrumentIndex:(int)index withTimeIndex:(int)timeIndex
 {
     type = instType;
     note = booleanNoteObject;
+    networkHelper = helper;
+    drumIndex = index;
+    time = timeIndex;
     [self setNeedsDisplay];
 }
 
@@ -160,6 +164,14 @@ static float const inset = 3.0;
 {
     note.doesNoteExist = !note.doesNoteExist;
     note.noteSubscore = nil;
+    if (note.doesNoteExist)
+    {
+        [networkHelper sendString:[NSString stringWithFormat:@"<ad%i:%i:%i>",type.type - 2,time,drumIndex]];
+    }
+    else
+    {
+        [networkHelper sendString:[NSString stringWithFormat:@"<rd%i:%i:%i>",type.type - 2,time,drumIndex]];
+    }
     [self setNeedsDisplay];
     [delegate didChangeNoteForCurrentTime];
 }

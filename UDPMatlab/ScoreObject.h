@@ -10,13 +10,16 @@
 #import "InstrumentViewsManager.h"
 
 @interface ScoreObject : NSObject
+{
+    NetworkHelper *networkHelper;
+}
 
 @property (strong, nonatomic) InstrumentViewsManager *instViewsManager;
 @property (strong, nonatomic) NSMutableDictionary *subscoreDictionary;
 @property (nonatomic) int numberOfTimeInstances;
 @property (strong, nonatomic) NSMutableArray *instantaneousScoreArray;
 
-- (id) initWithInstrumentManager:(InstrumentViewsManager *)instrumentManager withSubscoreDictionary:(NSMutableDictionary *)subscoreDict withTimeIndices:(int)numberOfTimes;
+- (id) initWithInstrumentManager:(InstrumentViewsManager *)instrumentManager withSubscoreDictionary:(NSMutableDictionary *)subscoreDict withTimeIndices:(int)numberOfTimes withNetworkHelper:(NetworkHelper *)helper;
 
 - (void) addSubscoreWithName:(NSString *)subscoreName withTimeIndex:(int)timeIndex;
 
@@ -33,6 +36,8 @@
 - (bool) isSubscoreName:(NSString *)subscoreName includedInScoreAtTime:(int)time;
 
 - (bool) isCurrentScoreFeasible:(NSArray *)numAvailableRobots withOptimalDistribution:(NSMutableArray *)optimalDistribution withFeasibilityArray:(NSMutableArray *)feasArray;
+
+- (void) startPlayingWithMessage:(NSString *)message;
 
 
 

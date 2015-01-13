@@ -10,11 +10,11 @@
 
 enum INSTRUMENT_TYPE
 {
-    TYPE_GUITAR,
-    TYPE_PIANO,
-    TYPE_CYMBAL,
-    TYPE_SNARE,
-    TYPE_BASS_DRUM
+    TYPE_GUITAR = 0,
+    TYPE_PIANO = 1,
+    TYPE_CYMBAL = 2,
+    TYPE_SNARE = 3,
+    TYPE_BASS_DRUM = 4,
 };
 
 @interface InstrumentType : NSObject

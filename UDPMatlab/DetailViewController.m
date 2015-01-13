@@ -75,6 +75,7 @@
 @synthesize PDTypeText;
 @synthesize PGDTypeText;
 @synthesize topBar;
+@synthesize startButton;
 
 
 #pragma mark - Managing the detail item
@@ -155,45 +156,6 @@
     [super viewWillAppear:animated];
 }
 
-- (void)drawDrumWithCenter:(CGPoint)center withRadius:(int)radius
-{
-//    CGRect r;
-//    
-//    r.origin.y = center.y - radius;
-//    r.origin.x = center.x - radius;
-//    r.size.width = 2*radius;
-//    r.size.height = 2*radius;
-    
-    //CGRect borderRect = CGRectMake(0.0, 0.0, 60.0, 60.0);
-//    CGContextRef context = UIGraphicsGetCurrentContext();
-//    CGContextSetRGBStrokeColor(context, 1.0, 1.0, 1.0, 1.0);
-//    CGContextSetRGBFillColor(context, 0, 255, 0, 1.0);
-//    CGContextSetLineWidth(context, 2.0);
-//    CGContextFillEllipseInRect (context, r);
-//    CGContextStrokeEllipseInRect(context, r);
-//    CGContextFillPath(context);
-    
-//    UIView *lineView = [[GridView alloc] initWithFrame:CGRectMake(self.view.bounds.origin.y, self.view.bounds.origin.x, self.view.bounds.size.width, self.view.bounds.size.height)];
-//    [self.view addSubview:lineView];
-    //lineView.backgroundColor = [UIColor blackColor];
-//    CGContextRef context = UIGraphicsGetCurrentContext();
-//    CGContextSetRGBStrokeColor(context, 1.0, 1.0, 1.0, 1.0);
-//    CGContextSetRGBFillColor(context,1.0 ,0.0 , 1.0, .5);
-//    CGContextAddEllipseInRect(context, lineView.frame);
-    //lineView.backgroundColor = [UIColor blackColor];
-    
-}
-
-- (void)drawGridInRect:(CGRect)rectangle withVerticalLines:(int)vertical withHorizontalLines:(int)horizontal
-{
-    
-}
-
-- (void)drawPianoWithBottomLeftPoint:(CGPoint)bottomLeft withHeight:(int)height withWidth:(int)width
-{
-    
-}
-
 - (void) viewDidAppear:(BOOL)animated
 {
     tempoControl.minimumValue = 0.5;
@@ -208,19 +170,19 @@
 - (void) sendData
 {
     //rework sending and receiving
-    if(sendSocket == nil)
-    {
-        sendSocket = [[GCDAsyncUdpSocket alloc] initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
-        [sendSocket bindToPort:4550 error:nil];
-        [sendSocket beginReceiving:nil];
-    }
-    
-    NSString * string = @"Indices: 1 2 3 4 5 6 7";
-    //NSString * address = @"128.61.61.11";
-    NSString * address = @"143.215.117.137";
-    UInt16 port = 4560;
-    NSData * data = [string dataUsingEncoding:NSUTF8StringEncoding];
-    [sendSocket sendData:data toHost:address port:port withTimeout:-1 tag:1];
+//    if(sendSocket == nil)
+//    {
+//        sendSocket = [[GCDAsyncUdpSocket alloc] initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
+//        [sendSocket bindToPort:4550 error:nil];
+//        [sendSocket beginReceiving:nil];
+//    }
+//    
+//    NSString * string = @"Indices: 1 2 3 4 5 6 7";
+//    //NSString * address = @"128.61.61.11";
+//    NSString * address = @"143.215.117.137";
+//    UInt16 port = 4560;
+//    NSData * data = [string dataUsingEncoding:NSUTF8StringEncoding];
+//    [sendSocket sendData:data toHost:address port:port withTimeout:-1 tag:1];
 }
 
 - (void) receiveDataWithSocket:(AsyncUdpSocket *)socket
@@ -256,9 +218,9 @@
 
 - (void) udpSocket:(GCDAsyncUdpSocket *)sock didReceiveData:(NSData *)data fromAddress:(NSData *)address withFilterContext:(id)filterContext
 {
-    NSString *mystring = [NSString stringWithUTF8String:[data bytes]];
-    NSLog(@"Received %@", mystring);
-    [self sendData];
+//    NSString *mystring = [NSString stringWithUTF8String:[data bytes]];
+//    NSLog(@"Received %@", mystring);
+//    [self sendData];
 }
 
 - (IBAction)PSliderValueChanged:(id)sender
@@ -417,43 +379,53 @@
 
 - (IBAction)touchedButtonOne:(id)sender
 {
-    [score addOrRemoveSubscoreWithName:[buttonOne titleLabel].text withTimeIndex:currentScoreIndex];
+//    [score addOrRemoveSubscoreWithName:[buttonOne titleLabel].text withTimeIndex:currentScoreIndex];
+    [score addOrRemoveSubscoreWithName:[buttonOne titleLabel].text withTimeIndex:0];
     [self newTimeIndex:currentScoreIndex withScore:nil];
 }
 
 - (IBAction)touchedButtonTwo:(id)sender
 {
-    [score addOrRemoveSubscoreWithName:[buttonTwo titleLabel].text withTimeIndex:currentScoreIndex];
+//    [score addOrRemoveSubscoreWithName:[buttonTwo titleLabel].text withTimeIndex:currentScoreIndex];
+    [score addOrRemoveSubscoreWithName:[buttonTwo titleLabel].text withTimeIndex:0];
     [self newTimeIndex:currentScoreIndex withScore:nil];
 }
 
 - (IBAction)touchedButtonThree:(id)sender
 {
-    [score addOrRemoveSubscoreWithName:[buttonThree titleLabel].text withTimeIndex:currentScoreIndex];
+//    [score addOrRemoveSubscoreWithName:[buttonThree titleLabel].text withTimeIndex:currentScoreIndex];
+    [score addOrRemoveSubscoreWithName:[buttonThree titleLabel].text withTimeIndex:0];
     [self newTimeIndex:currentScoreIndex withScore:nil];
 }
 
 - (IBAction)touchedButtonFour:(id)sender
 {
-    [score addOrRemoveSubscoreWithName:[buttonFour titleLabel].text withTimeIndex:currentScoreIndex];
+//    [score addOrRemoveSubscoreWithName:[buttonFour titleLabel].text withTimeIndex:currentScoreIndex];
+    [score addOrRemoveSubscoreWithName:[buttonFour titleLabel].text withTimeIndex:0];
     [self newTimeIndex:currentScoreIndex withScore:nil];
 }
 
 - (IBAction)touchedButtonFive:(id)sender
 {
-    [score addOrRemoveSubscoreWithName:[buttonFive titleLabel].text withTimeIndex:currentScoreIndex];
+//    [score addOrRemoveSubscoreWithName:[buttonFive titleLabel].text withTimeIndex:currentScoreIndex];
+    [score addOrRemoveSubscoreWithName:[buttonFive titleLabel].text withTimeIndex:0];
     [self newTimeIndex:currentScoreIndex withScore:nil];
 }
 
 - (IBAction)touchedButtonSix:(id)sender
 {
-    [score addOrRemoveSubscoreWithName:[buttonSix titleLabel].text withTimeIndex:currentScoreIndex];
+//    [score addOrRemoveSubscoreWithName:[buttonSix titleLabel].text withTimeIndex:currentScoreIndex];
+    [score addOrRemoveSubscoreWithName:[buttonSix titleLabel].text withTimeIndex:0];
     [self newTimeIndex:currentScoreIndex withScore:nil];
 }
 
 - (IBAction)startPush:(id)sender
 {
     [self updateFeasibilityAndRobotDistribution];
+    UIView *mask = [[UIView alloc] initWithFrame:self.view.window.frame];
+    [mask setBackgroundColor:[UIColor colorWithWhite:0.0 alpha:0.78]];
+    [self.view addSubview:mask];
+    [score startPlayingWithMessage:[NSString stringWithFormat:@":%@:%@:%@:%@:%@:%@:%@", PInUseText.text, GInUseText.text, DInUseText.text, PGInUseText.text, GDInUseText.text, PDInUseText.text, PGDInUseText.text]];
 }
 
 - (IBAction)didTouchTempo:(id)sender
@@ -512,11 +484,13 @@
     {
         view.delegate = self;
     }
-    InstrumentViewsManager *manager = [[InstrumentViewsManager alloc] initWithGuitars:guitarArray andPianos:pianoArray andDrums:drumArray];
+    
+    NetworkHelper *networkHelper = [[NetworkHelper alloc] init];
+    InstrumentViewsManager *manager = [[InstrumentViewsManager alloc] initWithGuitars:guitarArray andPianos:pianoArray andDrums:drumArray andNetworkHelper:networkHelper];
     //comment line below when we don't wanna print the position crud anymore
     printf("frameSize = [%0.2f,%0.2f];\n",ScoreView.frame.size.width,ScoreView.frame.size.height);
     
-    score = [[ScoreObject alloc] initWithInstrumentManager:manager withSubscoreDictionary:subscores withTimeIndices:numTimes];
+    score = [[ScoreObject alloc] initWithInstrumentManager:manager withSubscoreDictionary:subscores withTimeIndices:numTimes withNetworkHelper:networkHelper];
     
     NSArray *subscoreTitles = [subscores allKeys];
     
@@ -673,7 +647,7 @@
         GDInUseText.text = @"0";
         PDInUseText.text = @"0";
         PGDInUseText.text = @"0";
-        
+        startButton.enabled = false;
     }
     else
     {
@@ -686,6 +660,7 @@
         PDInUseText.text = [[NSString alloc] initWithFormat:@"%i",[[optimalDistrib objectAtIndex:5] intValue]];
         PGDInUseText.text = [[NSString alloc] initWithFormat:@"%i",[[optimalDistrib objectAtIndex:6] intValue]];
         NSLog(@"WOOOO FEASIBLE!!!!");
+        startButton.enabled = true;
     }
 //    [[UINavigationBar appearance] setTintColor:[UIColor redColor]];
 //    [[UINavigationBar appearance] setBackgroundImage:[[UIImage alloc] init] forBarMetrics:UIBarMetricsDefault];

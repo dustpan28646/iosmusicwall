@@ -17,11 +17,12 @@
 @synthesize numberOfTimeInstances;
 @synthesize instantaneousScoreArray;
 
-- (id) initWithInstrumentManager:(InstrumentViewsManager *)instrumentManager withSubscoreDictionary:(NSMutableDictionary *)subscoreDict withTimeIndices:(int)numberOfTimes
+- (id) initWithInstrumentManager:(InstrumentViewsManager *)instrumentManager withSubscoreDictionary:(NSMutableDictionary *)subscoreDict withTimeIndices:(int)numberOfTimes withNetworkHelper:(NetworkHelper *)helper
 {
     self = [super init];
     if (self)
     {
+        networkHelper = helper;
         self.instViewsManager = instrumentManager;
         self.subscoreDictionary = subscoreDict;
         self.numberOfTimeInstances = numberOfTimes;
@@ -44,6 +45,7 @@
 
 - (void) addSubscoreWithName:(NSString *)subscoreName withTimeIndex:(int)timeIndex
 {
+    [networkHelper sendString:[NSString stringWithFormat:@"<as:%i:%@>",timeIndex,subscoreName]];
     Subscore *subscore = [subscoreDictionary objectForKey:subscoreName];
     
     if (subscore.type == SUBSCORE_PIANO)
@@ -123,6 +125,7 @@
 
 - (void) removeSubscoreWithName:(NSString *)subscoreName withTimeIndex:(int)timeIndex
 {
+    [networkHelper sendString:[NSString stringWithFormat:@"<rs:%i:%@>",timeIndex,subscoreName]];
     Subscore *subscore = [subscoreDictionary objectForKey:subscoreName];
     
     if (subscore.type == SUBSCORE_PIANO)
@@ -203,7 +206,7 @@
 
 - (void) changeTimeIndexTo:(int)index
 {
-    [instViewsManager newInstantaneousScore:[instantaneousScoreArray objectAtIndex:index]];
+    [instViewsManager newInstantaneousScore:[instantaneousScoreArray objectAtIndex:index] withTime:index];
 }
 
 - (void) addOrRemoveSubscoreWithName:(NSString *)subscoreName withTimeIndex:(int)timeIndex
@@ -370,6 +373,11 @@
             return TYPE_D;
             break;
     }
+}
+
+- (void) startPlayingWithMessage:(NSString *)message
+{
+    [networkHelper sendString:[NSString stringWithFormat:@"<start%@>", message]];
 }
 
 @end

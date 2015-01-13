@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "InstrumentType.h"
 #import "BooleanObject.h"
+#import "NetworkHelper.h"
 
 enum DRUM_TYPE
 {
@@ -32,11 +33,14 @@ enum DRUM_TYPE
     BooleanObject *note;
     NSMutableArray *centers;
     CGPoint center;
+    NetworkHelper *networkHelper;
+    int drumIndex;
+    int time;
 }
 
 @property (weak, nonatomic) id<DrumViewDelegate> delegate;
 
-- (void)setNote:(BooleanObject *)booleanNoteObject withInstrumentType:(InstrumentType *)instType;
+- (void)setNote:(BooleanObject *)booleanNoteObject withInstrumentType:(InstrumentType *)instType withNetworkHelper:(NetworkHelper *)helper withInstrumentIndex:(int)index withTimeIndex:(int)timeIndex;
 - (void) printPosition;
 - (enum INSTRUMENT_TYPE) getInstrumentType;
 

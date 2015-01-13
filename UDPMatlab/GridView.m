@@ -107,15 +107,18 @@ static float const buttonRadius = 6.0;
     {
         //type.type = TYPE_PIANO;
         newType = [[InstrumentType alloc] initWithType:TYPE_PIANO];
+        [networkHelper sendString:[NSString stringWithFormat:@"<cp:%i:%i>",time,gridIndex]];
     }
     else if (type.type == TYPE_PIANO)
     {
         //type.type = TYPE_GUITAR;
         newType = [[InstrumentType alloc] initWithType:TYPE_GUITAR];
+        [networkHelper sendString:[NSString stringWithFormat:@"<cg:%i:%i>",time,gridIndex]];
     }
     else
     {
         newType = [[InstrumentType alloc] initWithType:TYPE_PIANO];
+        [networkHelper sendString:[NSString stringWithFormat:@"<cp:%i:%i>",time,gridIndex]];
         NSLog(@"Invalid Type in grid view");
     }
     [delegate didTapChangeGridInView:self withInstrumentType:newType];
@@ -175,10 +178,13 @@ static float const buttonRadius = 6.0;
     }
 }
 
-- (void)setNoteArray:(NSArray *)notes withInstrumentType:(InstrumentType *)instType
+- (void)setNoteArray:(NSArray *)notes withInstrumentType:(InstrumentType *)instType withNetworkHelper:(NetworkHelper *)helper withInstrumentIndex:(int)index withTimeIndex:(int)timeIndex
 {
     type = instType;
     score = notes;
+    networkHelper = helper;
+    gridIndex = index;
+    time = timeIndex;
     [self setNeedsDisplay];
 }
 
@@ -188,6 +194,7 @@ static float const buttonRadius = 6.0;
     BooleanObject *boolObj = [score objectAtIndex:i];
     boolObj.doesNoteExist = !boolObj.doesNoteExist;
     boolObj.noteSubscore = nil;
+    [self sendAddOrRemoveNoteMessageWithNoteIndex:i withAddOrRemoveBool:boolObj.doesNoteExist];
     [self setNeedsDisplay];
     [delegate didChangeNoteForCurrentTime];
 }
@@ -197,6 +204,7 @@ static float const buttonRadius = 6.0;
     BooleanObject *boolObj = [score objectAtIndex:i];
     boolObj.doesNoteExist = !boolObj.doesNoteExist;
     boolObj.noteSubscore = nil;
+    [self sendAddOrRemoveNoteMessageWithNoteIndex:i withAddOrRemoveBool:boolObj.doesNoteExist];
     [self setNeedsDisplay];
     [delegate didChangeNoteForCurrentTime];
 }
@@ -206,6 +214,7 @@ static float const buttonRadius = 6.0;
     BooleanObject *boolObj = [score objectAtIndex:i];
     boolObj.doesNoteExist = !boolObj.doesNoteExist;
     boolObj.noteSubscore = nil;
+    [self sendAddOrRemoveNoteMessageWithNoteIndex:i withAddOrRemoveBool:boolObj.doesNoteExist];
     [self setNeedsDisplay];
     [delegate didChangeNoteForCurrentTime];
 }
@@ -215,6 +224,7 @@ static float const buttonRadius = 6.0;
     BooleanObject *boolObj = [score objectAtIndex:i];
     boolObj.doesNoteExist = !boolObj.doesNoteExist;
     boolObj.noteSubscore = nil;
+    [self sendAddOrRemoveNoteMessageWithNoteIndex:i withAddOrRemoveBool:boolObj.doesNoteExist];
     [self setNeedsDisplay];
     [delegate didChangeNoteForCurrentTime];
 }
@@ -224,6 +234,7 @@ static float const buttonRadius = 6.0;
     BooleanObject *boolObj = [score objectAtIndex:i];
     boolObj.doesNoteExist = !boolObj.doesNoteExist;
     boolObj.noteSubscore = nil;
+    [self sendAddOrRemoveNoteMessageWithNoteIndex:i withAddOrRemoveBool:boolObj.doesNoteExist];
     [self setNeedsDisplay];
     [delegate didChangeNoteForCurrentTime];
 }
@@ -233,6 +244,7 @@ static float const buttonRadius = 6.0;
     BooleanObject *boolObj = [score objectAtIndex:i];
     boolObj.doesNoteExist = !boolObj.doesNoteExist;
     boolObj.noteSubscore = nil;
+    [self sendAddOrRemoveNoteMessageWithNoteIndex:i withAddOrRemoveBool:boolObj.doesNoteExist];
     [self setNeedsDisplay];
     [delegate didChangeNoteForCurrentTime];
 }
@@ -245,6 +257,33 @@ static float const buttonRadius = 6.0;
     {
         CGRect frame = CGRectMake(round(0.0 + (((double)(i + 1)) * jumpSize) - buttonRadius) , round(0.0 + (bigFrame.size.height * 0.5) - buttonRadius), round(2 * buttonRadius), round(2 * buttonRadius));
         printf("%0.2f, %0.2f;...\n", round(bigFrame.origin.x + frame.origin.x + (frame.size.width/2.0)), round(bigFrame.origin.y + frame.origin.y + (frame.size.height/2.0)));
+    }
+}
+
+- (void) sendAddOrRemoveNoteMessageWithNoteIndex:(int)index withAddOrRemoveBool:(bool)doesNoteExist
+{
+    int fullNoteIndex = index + gridIndex*6;
+    if (doesNoteExist)
+    {//add note
+        if (type.type == TYPE_PIANO)
+        {
+            [networkHelper sendString:[NSString stringWithFormat:@"<ap:%i:%i>",time,fullNoteIndex]];
+        }
+        else if (type.type == TYPE_GUITAR)
+        {
+            [networkHelper sendString:[NSString stringWithFormat:@"<ag:%i:%i>",time,fullNoteIndex]];
+        }
+    }
+    else
+    {//remove note
+        if (type.type == TYPE_PIANO)
+        {
+            [networkHelper sendString:[NSString stringWithFormat:@"<rp:%i:%i>",time,fullNoteIndex]];
+        }
+        else if (type.type == TYPE_GUITAR)
+        {
+            [networkHelper sendString:[NSString stringWithFormat:@"<rg:%i:%i>",time,fullNoteIndex]];
+        }
     }
 }
 

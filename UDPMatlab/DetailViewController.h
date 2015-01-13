@@ -13,7 +13,7 @@
 #import "ScoreObject.h"
 #import "NoteExistanceStructure.h"
 
-@interface DetailViewController : UIViewController <UISplitViewControllerDelegate, AsyncUdpSocketDelegate, GCDAsyncUdpSocketDelegate, DrumViewDelegate, GridViewDelegate>
+@interface DetailViewController : UIViewController <UISplitViewControllerDelegate, AsyncUdpSocketDelegate, DrumViewDelegate, GridViewDelegate>
 {
     NSTimer *myTimer;
     GCDAsyncUdpSocket *sendSocket;
@@ -99,6 +99,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *GDTypeText;
 @property (weak, nonatomic) IBOutlet UILabel *PDTypeText;
 @property (weak, nonatomic) IBOutlet UILabel *PGDTypeText;
+@property (weak, nonatomic) IBOutlet UIButton *startButton;
 
 @property (weak, nonatomic) IBOutlet UINavigationItem *topBar;
 

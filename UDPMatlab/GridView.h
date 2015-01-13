@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "InstrumentType.h"
 #import "BooleanObject.h"
+#import "NetworkHelper.h"
 
 
 @class GridView;
@@ -24,11 +25,14 @@
     NSArray *score;
     InstrumentType *type;
     double jumpSize;
+    NetworkHelper *networkHelper;
+    int gridIndex;
+    int time;
 }
 
 @property (weak, nonatomic) id<GridViewDelegate> delegate;
 
-- (void)setNoteArray:(NSArray *)notes withInstrumentType:(InstrumentType *)instType;
+- (void)setNoteArray:(NSArray *)notes withInstrumentType:(InstrumentType *)instType withNetworkHelper:(NetworkHelper *)helper withInstrumentIndex:(int)index withTimeIndex:(int)timeIndex;
 -(void) printButtonPositions;
 
 @end

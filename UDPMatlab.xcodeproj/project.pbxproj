@@ -39,6 +39,7 @@
 		C966954618F336E800386C09 /* hungarian.c in Sources */ = {isa = PBXBuildFile; fileRef = C966954018F336E800386C09 /* hungarian.c */; };
 		C966954718F336E800386C09 /* initialAssignment.c in Sources */ = {isa = PBXBuildFile; fileRef = C966954218F336E800386C09 /* initialAssignment.c */; };
 		C966954818F336E800386C09 /* minRobots.c in Sources */ = {isa = PBXBuildFile; fileRef = C966954418F336E800386C09 /* minRobots.c */; };
+		C96DDCF11A23ACD300C8DADA /* NetworkHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C96DDCF01A23ACD300C8DADA /* NetworkHelper.m */; };
 		C9B494C9184A53BC00512016 /* imageedit_2_3232341617.png in Resources */ = {isa = PBXBuildFile; fileRef = C9B494C8184A53BC00512016 /* imageedit_2_3232341617.png */; };
 		C9B7959E183D0EA60098A7FC /* GridImage.png in Resources */ = {isa = PBXBuildFile; fileRef = C9B7959D183D0EA60098A7FC /* GridImage.png */; };
 		C9DAA27B184F7164006B7219 /* CHCSVParser.m in Sources */ = {isa = PBXBuildFile; fileRef = C9DAA27A184F7164006B7219 /* CHCSVParser.m */; };
@@ -101,6 +102,8 @@
 		C966954318F336E800386C09 /* initialAssignment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = initialAssignment.h; sourceTree = "<group>"; };
 		C966954418F336E800386C09 /* minRobots.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = minRobots.c; sourceTree = "<group>"; };
 		C966954518F336E800386C09 /* minRobots.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = minRobots.h; sourceTree = "<group>"; };
+		C96DDCEF1A23ACD300C8DADA /* NetworkHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkHelper.h; sourceTree = "<group>"; };
+		C96DDCF01A23ACD300C8DADA /* NetworkHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkHelper.m; sourceTree = "<group>"; };
 		C9B494C8184A53BC00512016 /* imageedit_2_3232341617.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = imageedit_2_3232341617.png; sourceTree = "<group>"; };
 		C9B7959D183D0EA60098A7FC /* GridImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GridImage.png; sourceTree = "<group>"; };
 		C9DAA279184F7164006B7219 /* CHCSVParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHCSVParser.h; sourceTree = "<group>"; };
@@ -216,6 +219,8 @@
 				C9DAA279184F7164006B7219 /* CHCSVParser.h */,
 				C9DAA27A184F7164006B7219 /* CHCSVParser.m */,
 				78BE742C1895AC7C00C6FEEF /* ScoreXML.csv */,
+				C96DDCEF1A23ACD300C8DADA /* NetworkHelper.h */,
+				C96DDCF01A23ACD300C8DADA /* NetworkHelper.m */,
 				C9425FA217F09FF700A32E9B /* Supporting Files */,
 			);
 			path = UDPMatlab;
@@ -318,6 +323,7 @@
 				C9425FAC17F09FF700A32E9B /* AppDelegate.m in Sources */,
 				C9425FBB17F09FF700A32E9B /* MasterViewController.m in Sources */,
 				78BE742B1894B2C800C6FEEF /* InstantaneousScoreObject.m in Sources */,
+				C96DDCF11A23ACD300C8DADA /* NetworkHelper.m in Sources */,
 				C966954618F336E800386C09 /* hungarian.c in Sources */,
 				C95B00EB182AEF04008DBAF1 /* ScoreObject.m in Sources */,
 				C9F22F4F1896A1AC007497C6 /* InstrumentType.m in Sources */,
