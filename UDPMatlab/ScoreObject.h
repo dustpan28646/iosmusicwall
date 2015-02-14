@@ -25,7 +25,7 @@
 
 - (void) removeSubscoreWithName:(NSString *)subscoreName withTimeIndex:(int)timeIndex;
 
-- (void) addOrRemoveSubscoreWithName:(NSString *)subscoreName withTimeIndex:(int)timeIndex;
+- (bool) addOrRemoveSubscoreWithName:(NSString *)subscoreName withTimeIndex:(int)timeIndex;
 
 - (void) changeTimeIndexTo:(int)index;
 
@@ -39,6 +39,8 @@
 
 - (void) startPlayingWithMessage:(NSString *)message;
 
+- (void) sendRemoveSubscoreMessage:(NSString *)subscoreName withStartTimeIndex:(int)timeIndex;
 
+- (void) sendAddSubscoreMessage:(NSString *)subscoreName withStartTimeIndex:(int)timeIndex;
 
 @end

@@ -36,6 +36,8 @@ static float const coloredCircleDiameter = 28.0;
 - (void) viewWillAppear:(BOOL)animated
 {
     [myTable selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] animated:YES scrollPosition:0];
+    [myTable setContentOffset:CGPointMake(0, -myTable.contentInset.top) animated:YES];
+    myTable.separatorColor = [UIColor whiteColor];
 }
 
 - (void)viewDidLoad
@@ -45,7 +47,7 @@ static float const coloredCircleDiameter = 28.0;
     //self.navigationItem.leftBarButtonItem = self.editButtonItem;
     //UIBarButtonItem*addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
     //self.navigationItem.rightBarButtonItem = addButton;
-    colorArray = [[NSArray alloc] initWithObjects:[UIColor blueColor], [UIColor brownColor], [UIColor greenColor], [UIColor cyanColor], [UIColor purpleColor], [UIColor orangeColor], [UIColor yellowColor], nil];
+    colorArray = [[NSArray alloc] initWithObjects:[UIColor blueColor], [UIColor brownColor], [UIColor greenColor], [UIColor cyanColor], [UIColor purpleColor], [UIColor orangeColor], [UIColor magentaColor], nil];
     [self createUIImageArray];
     self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
     [self.detailViewController setMasterView:self];
@@ -245,7 +247,14 @@ static float const coloredCircleDiameter = 28.0;
     {
         if([[[self.detailViewController getFeasibilityArray] objectAtIndex:indexPath.row] boolValue])
         {
-            cell.backgroundColor = [UIColor clearColor];
+            if ([self.detailViewController isTimeIndexDisabled:(int)indexPath.row])
+            {
+                cell.backgroundColor = [UIColor lightGrayColor];
+            }
+            else
+            {
+                cell.backgroundColor = [UIColor blackColor];
+            }
         }
         else
         {
@@ -260,6 +269,7 @@ static float const coloredCircleDiameter = 28.0;
     }
     
     cell.timeText.text = [NSString stringWithFormat:@"t = %0.1f", (((double)(indexPath.row)) * indexFactor)];
+    cell.timeText.textColor = [UIColor lightGrayColor];
     UIView *selectionColor = [[UIView alloc] init];
     selectionColor.backgroundColor = [UIColor yellowColor];
     cell.selectedBackgroundView = selectionColor;
@@ -268,6 +278,7 @@ static float const coloredCircleDiameter = 28.0;
     {
         [cell setHighlighted:NO];
     }
+    cell.separatorInset = UIEdgeInsetsZero;
     
     return cell;
 }
@@ -331,7 +342,6 @@ static float const coloredCircleDiameter = 28.0;
     }
     
     [self.detailViewController setTimeIndexWithoutUpdate:(int)indexPath.row];
-        //[self.detailViewController newTimeIndex:indexPath.row withScore:nil];
     
 }
 

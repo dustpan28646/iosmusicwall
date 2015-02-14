@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "GCDAsyncUdpSocket.h"
 
+@protocol NetworkHelperDelegate;
+
 @interface NetworkHelper : NSObject<NSStreamDelegate>
 //UDP<GCDAsyncUdpSocketDelegate>
 {
@@ -26,6 +28,19 @@
     bool streamHasBeenOpened;
 }
 
+@property (weak, nonatomic) id<NetworkHelperDelegate> delegate;
+
 - (void) sendString:(NSString *)string;
+- (id)initWithDelegate:(id<NetworkHelperDelegate>)networkDelegate;
+
+@end
+
+
+
+@protocol NetworkHelperDelegate <NSObject>
+
+@required
+- (void)matlabReachedTimeIndex:(int)index;
+- (void)matlabFinishedPlayingScore;
 
 @end

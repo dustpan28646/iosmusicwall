@@ -27,7 +27,7 @@
     {
         return subscore.color;
     }
-    return [UIColor yellowColor];
+    return [UIColor magentaColor];
 }
 
 @end

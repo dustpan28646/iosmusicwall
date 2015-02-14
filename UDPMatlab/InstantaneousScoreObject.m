@@ -48,7 +48,7 @@
         
         guitarHasInstrumentType = [[NSArray alloc] initWithObjects:[[InstrumentType alloc] initWithType:TYPE_GUITAR],[[InstrumentType alloc] initWithType:TYPE_GUITAR],[[InstrumentType alloc] initWithType:TYPE_GUITAR],[[InstrumentType alloc] initWithType:TYPE_GUITAR],[[InstrumentType alloc] initWithType:TYPE_GUITAR],[[InstrumentType alloc] initWithType:TYPE_GUITAR],[[InstrumentType alloc] initWithType:TYPE_GUITAR], nil];
         pianoHasInstrumentType = [[NSArray alloc] initWithObjects:[[InstrumentType alloc] initWithType:TYPE_PIANO],[[InstrumentType alloc] initWithType:TYPE_PIANO],[[InstrumentType alloc] initWithType:TYPE_PIANO],[[InstrumentType alloc] initWithType:TYPE_PIANO],[[InstrumentType alloc] initWithType:TYPE_PIANO],[[InstrumentType alloc] initWithType:TYPE_PIANO],[[InstrumentType alloc] initWithType:TYPE_PIANO], nil];
-        drumHasInstrumentType = [[NSArray alloc] initWithObjects:[[InstrumentType alloc] initWithType:TYPE_CYMBAL],[[InstrumentType alloc] initWithType:TYPE_SNARE],[[InstrumentType alloc] initWithType:TYPE_SNARE],[[InstrumentType alloc] initWithType:TYPE_SNARE],[[InstrumentType alloc] initWithType:TYPE_BASS_DRUM], nil];
+        drumHasInstrumentType = [[NSArray alloc] initWithObjects:[[InstrumentType alloc] initWithType:TYPE_CYMBAL],[[InstrumentType alloc] initWithType:TYPE_BASS_DRUM],[[InstrumentType alloc] initWithType:TYPE_BASS_DRUM_2],[[InstrumentType alloc] initWithType:TYPE_CYMBAL_2],[[InstrumentType alloc] initWithType:TYPE_SNARE], nil];
         
         
         //comment below to suppress printing of matlab initialization array

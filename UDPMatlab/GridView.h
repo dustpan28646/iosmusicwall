@@ -17,7 +17,7 @@
 @protocol GridViewDelegate <NSObject>
 @required
 - (void) didTapChangeGridInView:(GridView *)view withInstrumentType:(InstrumentType *)instrumentType;
-- (void) didChangeNoteForCurrentTime;
+- (bool) isValidNoteChangeForCurrentTime;
 @end
 
 @interface GridView : UIView

@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		78BE74281894B27800C6FEEF /* InstrumentViewsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 78BE74271894B27800C6FEEF /* InstrumentViewsManager.m */; };
 		78BE742B1894B2C800C6FEEF /* InstantaneousScoreObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 78BE742A1894B2C800C6FEEF /* InstantaneousScoreObject.m */; };
-		78BE742D1895AC7C00C6FEEF /* ScoreXML.csv in Resources */ = {isa = PBXBuildFile; fileRef = 78BE742C1895AC7C00C6FEEF /* ScoreXML.csv */; };
 		C935106A18195B5F002B3C19 /* GridView.m in Sources */ = {isa = PBXBuildFile; fileRef = C935106918195B5F002B3C19 /* GridView.m */; };
 		C935106F181976E2002B3C19 /* Piano_Keyboard.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C935106E181976E2002B3C19 /* Piano_Keyboard.jpg */; };
 		C9351071181978E2002B3C19 /* acoustic6string.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C9351070181978E2002B3C19 /* acoustic6string.jpg */; };
@@ -40,12 +39,14 @@
 		C966954718F336E800386C09 /* initialAssignment.c in Sources */ = {isa = PBXBuildFile; fileRef = C966954218F336E800386C09 /* initialAssignment.c */; };
 		C966954818F336E800386C09 /* minRobots.c in Sources */ = {isa = PBXBuildFile; fileRef = C966954418F336E800386C09 /* minRobots.c */; };
 		C96DDCF11A23ACD300C8DADA /* NetworkHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C96DDCF01A23ACD300C8DADA /* NetworkHelper.m */; };
+		C9B48D791A69E36900CAA6BA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C9B48D781A69E36900CAA6BA /* Images.xcassets */; };
 		C9B494C9184A53BC00512016 /* imageedit_2_3232341617.png in Resources */ = {isa = PBXBuildFile; fileRef = C9B494C8184A53BC00512016 /* imageedit_2_3232341617.png */; };
 		C9B7959E183D0EA60098A7FC /* GridImage.png in Resources */ = {isa = PBXBuildFile; fileRef = C9B7959D183D0EA60098A7FC /* GridImage.png */; };
 		C9DAA27B184F7164006B7219 /* CHCSVParser.m in Sources */ = {isa = PBXBuildFile; fileRef = C9DAA27A184F7164006B7219 /* CHCSVParser.m */; };
 		C9E0C27018A863AA00C0EE7A /* MasterTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C9E0C26F18A863AA00C0EE7A /* MasterTableCell.m */; };
 		C9E0C27218A863ED00C0EE7A /* MasterTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9E0C27118A863ED00C0EE7A /* MasterTableCell.xib */; };
 		C9E0C27518A9558200C0EE7A /* NoteExistanceStructure.m in Sources */ = {isa = PBXBuildFile; fileRef = C9E0C27418A9558200C0EE7A /* NoteExistanceStructure.m */; };
+		C9E246CE1A656EA600FAC79D /* ScoreXML.csv in Resources */ = {isa = PBXBuildFile; fileRef = C9E246CD1A656EA600FAC79D /* ScoreXML.csv */; };
 		C9F22F4918967C54007497C6 /* SubscoreNote.m in Sources */ = {isa = PBXBuildFile; fileRef = C9F22F4818967C54007497C6 /* SubscoreNote.m */; };
 		C9F22F4C18969453007497C6 /* BooleanObject.m in Sources */ = {isa = PBXBuildFile; fileRef = C9F22F4B18969453007497C6 /* BooleanObject.m */; };
 		C9F22F4F1896A1AC007497C6 /* InstrumentType.m in Sources */ = {isa = PBXBuildFile; fileRef = C9F22F4E1896A1AC007497C6 /* InstrumentType.m */; };
@@ -56,7 +57,6 @@
 		78BE74271894B27800C6FEEF /* InstrumentViewsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InstrumentViewsManager.m; sourceTree = "<group>"; };
 		78BE74291894B2C800C6FEEF /* InstantaneousScoreObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InstantaneousScoreObject.h; sourceTree = "<group>"; };
 		78BE742A1894B2C800C6FEEF /* InstantaneousScoreObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InstantaneousScoreObject.m; sourceTree = "<group>"; };
-		78BE742C1895AC7C00C6FEEF /* ScoreXML.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ScoreXML.csv; sourceTree = "<group>"; };
 		C935106818195B5F002B3C19 /* GridView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridView.h; sourceTree = "<group>"; };
 		C935106918195B5F002B3C19 /* GridView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GridView.m; sourceTree = "<group>"; };
 		C935106E181976E2002B3C19 /* Piano_Keyboard.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Piano_Keyboard.jpg; sourceTree = "<group>"; };
@@ -104,6 +104,7 @@
 		C966954518F336E800386C09 /* minRobots.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = minRobots.h; sourceTree = "<group>"; };
 		C96DDCEF1A23ACD300C8DADA /* NetworkHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkHelper.h; sourceTree = "<group>"; };
 		C96DDCF01A23ACD300C8DADA /* NetworkHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkHelper.m; sourceTree = "<group>"; };
+		C9B48D781A69E36900CAA6BA /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		C9B494C8184A53BC00512016 /* imageedit_2_3232341617.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = imageedit_2_3232341617.png; sourceTree = "<group>"; };
 		C9B7959D183D0EA60098A7FC /* GridImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GridImage.png; sourceTree = "<group>"; };
 		C9DAA279184F7164006B7219 /* CHCSVParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHCSVParser.h; sourceTree = "<group>"; };
@@ -113,6 +114,7 @@
 		C9E0C27118A863ED00C0EE7A /* MasterTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MasterTableCell.xib; sourceTree = "<group>"; };
 		C9E0C27318A9558200C0EE7A /* NoteExistanceStructure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteExistanceStructure.h; sourceTree = "<group>"; };
 		C9E0C27418A9558200C0EE7A /* NoteExistanceStructure.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteExistanceStructure.m; sourceTree = "<group>"; };
+		C9E246CD1A656EA600FAC79D /* ScoreXML.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ScoreXML.csv; sourceTree = "<group>"; };
 		C9F22F4718967C54007497C6 /* SubscoreNote.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubscoreNote.h; sourceTree = "<group>"; };
 		C9F22F4818967C54007497C6 /* SubscoreNote.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubscoreNote.m; sourceTree = "<group>"; };
 		C9F22F4A18969453007497C6 /* BooleanObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BooleanObject.h; sourceTree = "<group>"; };
@@ -218,10 +220,11 @@
 				C9B494C8184A53BC00512016 /* imageedit_2_3232341617.png */,
 				C9DAA279184F7164006B7219 /* CHCSVParser.h */,
 				C9DAA27A184F7164006B7219 /* CHCSVParser.m */,
-				78BE742C1895AC7C00C6FEEF /* ScoreXML.csv */,
 				C96DDCEF1A23ACD300C8DADA /* NetworkHelper.h */,
 				C96DDCF01A23ACD300C8DADA /* NetworkHelper.m */,
+				C9E246CD1A656EA600FAC79D /* ScoreXML.csv */,
 				C9425FA217F09FF700A32E9B /* Supporting Files */,
+				C9B48D781A69E36900CAA6BA /* Images.xcassets */,
 			);
 			path = UDPMatlab;
 			sourceTree = "<group>";
@@ -268,6 +271,11 @@
 			attributes = {
 				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = "Matthew Rice";
+				TargetAttributes = {
+					C9425F9717F09FF700A32E9B = {
+						DevelopmentTeam = G5KH7Y6MV9;
+					};
+				};
 			};
 			buildConfigurationList = C9425F9317F09FF700A32E9B /* Build configuration list for PBXProject "UDPMatlab" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -293,7 +301,6 @@
 			files = (
 				C9B494C9184A53BC00512016 /* imageedit_2_3232341617.png in Resources */,
 				C9425FA617F09FF700A32E9B /* InfoPlist.strings in Resources */,
-				78BE742D1895AC7C00C6FEEF /* ScoreXML.csv in Resources */,
 				C9425FAE17F09FF700A32E9B /* Default.png in Resources */,
 				C9425FB017F09FF700A32E9B /* Default@2x.png in Resources */,
 				C9425FB217F09FF700A32E9B /* Default-568h@2x.png in Resources */,
@@ -303,10 +310,12 @@
 				C9425FB817F09FF700A32E9B /* MainStoryboard_iPad.storyboard in Resources */,
 				C935106F181976E2002B3C19 /* Piano_Keyboard.jpg in Resources */,
 				C9351071181978E2002B3C19 /* acoustic6string.jpg in Resources */,
+				C9B48D791A69E36900CAA6BA /* Images.xcassets in Resources */,
 				C935107318197CE0002B3C19 /* DV016_Jpg_Large_H71031.001.003_walnut_burst_24x18.jpg in Resources */,
 				C93510781819802E002B3C19 /* mpml3600cnlfr-d53b5582572e373a15dde974b3e6a0eb.jpg in Resources */,
 				C93510801819898F002B3C19 /* cymbal.jpg in Resources */,
 				C935108218198A9D002B3C19 /* Piano-Keyboard-Bumper-Sticker-(7396).jpg in Resources */,
+				C9E246CE1A656EA600FAC79D /* ScoreXML.csv in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -434,10 +443,16 @@
 		C9425FC217F09FF700A32E9B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "UDPMatlab/UDPMatlab-Prefix.pch";
 				INFOPLIST_FILE = "UDPMatlab/UDPMatlab-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 2;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -445,10 +460,16 @@
 		C9425FC317F09FF700A32E9B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "UDPMatlab/UDPMatlab-Prefix.pch";
 				INFOPLIST_FILE = "UDPMatlab/UDPMatlab-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 2;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

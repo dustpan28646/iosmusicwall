@@ -12,30 +12,23 @@
 
 - (id)init
 {
+    return [self initWithDelegate:nil];
+}
+
+- (id)initWithDelegate:(id<NetworkHelperDelegate>)networkDelegate
+{
     self = [super init];
     if (self)
     {
         streamHasBeenOpened = false;
-        //UDP
-//        if (networkSocket != nil)
-//        {
-//            networkSocket = nil;
-//        }
-//        messageBuffer = [[NSMutableDictionary alloc] init];
-//        lastSentID = 0;
-//        nextIDToAddToBuffer = 1;
-//        networkSocket = [[GCDAsyncUdpSocket alloc] initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
-//        [networkSocket bindToPort:4550 error:nil];
-//        [networkSocket beginReceiving:nil];
-        
-        //TCP Socket
         NSLog(@"Tcp Client Initialise");
         
         CFReadStreamRef readStream;
         CFWriteStreamRef writeStream;
-        CFStringRef remoteHost = CFSTR("localhost");
+        CFStringRef remoteHost = /*CFSTR("192.168.1.10");*/CFSTR("localhost");/*CFSTR("192.168.1.29");*/
+        //CFSTR("192.168.1.10");
         
-        CFStreamCreatePairWithSocketToHost(NULL, remoteHost, 4550, &readStream, &writeStream);
+        CFStreamCreatePairWithSocketToHost(NULL, remoteHost, 4380, &readStream, &writeStream);
         
         InputStream = (NSInputStream *)CFBridgingRelease(readStream);
         OutputStream = (NSOutputStream *)CFBridgingRelease(writeStream);
@@ -48,76 +41,10 @@
         
         [InputStream open];
         [OutputStream open];
+        
+        self.delegate = networkDelegate;
     }
     return self;
-}
-
-- (void)addMessageToSendQueue:(NSString *)message
-{
-    //input message format command_code:start_time_index-end_time_index:object_index
-    //UDP
-//    NSString *ID = [NSString stringWithFormat:@"%i",nextIDToAddToBuffer];
-//    NSString *messageWithID = [NSString stringWithFormat:@"<%@:%@>",ID,message];
-//    [messageBuffer setObject:message forKey:ID];
-//    nextIDToAddToBuffer++;
-//    if([messageBuffer count] < 2)
-//    {
-//        [self sendNextMessage];
-//    }
-    
-    //TCP
-    
-    
-}
-
-- (void)sendNextMessage
-{
-    //UDP
-//    int sendingID = lastSentID + 1;
-//    
-//    NSString *messageToSend = nil;
-//    
-//    while (messageToSend == nil)
-//    {
-//        if (sendingID < nextIDToAddToBuffer)
-//        {
-//            messageToSend = [messageBuffer objectForKey:[NSString stringWithFormat:@"%i",sendingID]];
-//        }
-//        else
-//        {
-//            NSLog(@"Warning: Tried to send message, but no messages in buffer to send.");
-//            lastSentID = nextIDToAddToBuffer - 1;
-//            return;
-//        }
-//    }
-//    //rework sending and receiving
-////    if(sendSocket == nil)
-////    {
-////        sendSocket = [[GCDAsyncUdpSocket alloc] initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
-////        [sendSocket bindToPort:4550 error:nil];
-////        [sendSocket beginReceiving:nil];
-////    }
-//    
-////    NSString * string = @"Indices: 1 2 3 4 5 6 7";
-////    NSString * address = @"128.61.61.11";
-//    NSString *address = @"143.215.117.137";
-//    UInt16 port = 4560;
-//    NSData *data = [messageToSend dataUsingEncoding:NSUTF8StringEncoding];
-//    [networkSocket sendData:data toHost:address port:port withTimeout:-1 tag:(long)sendingID];
-//    timeoutTimer = [NSTimer scheduledTimerWithTimeInterval:10.0
-//                                     target:self
-//                                   selector:@selector(didNotReceiveConfirmation)
-//                                   userInfo:nil
-//                                    repeats:NO];
-//    lastSentID = sendingID;
-    
-    //TCP
-    
-    NSString *response  = @"HELLO1234";
-    NSData *data = [[NSData alloc] initWithData:[response dataUsingEncoding:NSASCIIStringEncoding]];
-    [OutputStream write:[data bytes] maxLength:[data length]];	//<<Returns actual number of bytes sent - check if trying to send a large number of bytes as they may well not have all gone in this write and will need sending once there is a hasspaceavailable event
-    
-
 }
 
 - (void)dealloc
@@ -128,38 +55,6 @@
     OutputStream = nil;
     OutputData = nil;
 }
-
-//UDP
-//- (void) didNotReceiveConfirmation
-//{
-//    [timeoutTimer invalidate];
-//    timeoutTimer = nil;
-//    lastSentID--;
-//    [self sendNextMessage];
-//}
-
-//- (void) udpSocket:(GCDAsyncUdpSocket *)sock didReceiveData:(NSData *)data fromAddress:(NSData *)address withFilterContext:(id)filterContext
-//{
-//    [timeoutTimer invalidate];
-//    timeoutTimer = nil;
-//    NSString *mystring = [NSString stringWithUTF8String:[data bytes]];
-//    NSLog(@"Received %@", mystring);
-////    NSArray *openMessageArray = [mystring componentsSeparatedByString:@"<"];
-////    NSArray *closeMessageArray = [((NSString *)[openMessageArray objectAtIndex:1]) componentsSeparatedByString:@">"];
-//    NSRange openBracket = [mystring rangeOfString:@"<"];
-//    NSRange closeBracket = [mystring rangeOfString:@">"];
-//    if ((openBracket.location == NSNotFound) || (closeBracket.location == NSNotFound))
-//    {
-//        NSLog(@"No valid response message found");
-//        return;
-//    }
-//    NSRange numberRange = NSMakeRange(openBracket.location + 1, closeBracket.location - openBracket.location - 1);
-//    NSString *messageID = [mystring substringWithRange:numberRange];
-//    [messageBuffer removeObjectForKey:messageID];
-//    [self sendNextMessage];
-//}
-
-//TCP
 
 - (void)stream:(NSStream *)theStream handleEvent:(NSStreamEvent)StreamEvent
 {
@@ -189,7 +84,9 @@
                         
                         if (nil != output)
                         {
+                            
                             NSLog(@"TCP Client - Server sent: %@", output);
+                            
                             if (InputString == nil)
                             {
                                 InputString = [[NSMutableString alloc] initWithString:output];
@@ -198,6 +95,7 @@
                             {
                                 [InputString appendString:output];
                             }
+                            [self receivedInput];
                         }
                     }
                 }
@@ -280,8 +178,52 @@
 - (void) receivedInput
 {
     //We don't expect to receive messages, so we just discard them :)
+    //just kidding, we expect lot's of fun messages now!
+    if((InputString != nil) && ([InputString length] > 0))
+    {
+        NSArray *commandArray = [InputString componentsSeparatedByString:@">"];
+        
+        for (int i = 0; i < ([commandArray count] - 1); i++)
+        {
+            NSString *commandWithBracket = [commandArray objectAtIndex:i];
+            if ([[commandWithBracket substringWithRange:NSMakeRange(0,1)] isEqualToString:@"<"])
+            {
+                NSString *command = [commandWithBracket substringFromIndex:1];
+                NSArray *commandElements = [command componentsSeparatedByString:@":"];
+                if ([[commandElements objectAtIndex:0] isEqualToString:@"fp"]) //finished playing
+                {
+                    [self.delegate matlabFinishedPlayingScore];
+                }
+                else if ([[commandElements objectAtIndex:0] isEqualToString:@"ct"] && ([commandElements count] > 1)) //current time
+                {
+                    int matlabTime = (int)[[commandElements objectAtIndex:1] integerValue];
+                    
+                    if(matlabTime == 0) //it throws a zero if it doesn't find a number.  We may actually receive zeros, so we'll actually send it anyway.  We'll throw it out if time ever progresses backwards.
+                    {
+                        NSLog(@"Warning: Matlab may have sent a time command without valid time");
+                        NSLog(@"Command Causing the issue: %@",command);
+                    }
+                    
+                    [self.delegate matlabReachedTimeIndex:matlabTime];
+                }
+                else
+                {
+                    NSLog(@"Problem: Received unrecognized command from matlab");
+                    NSLog(@"Command causing the issue: %@",command);
+                }
+            }
+            else
+            {
+                NSLog(@"Problem: Parsed command that didn't begin with '<'");
+                NSLog(@"Command causing the issue (command will have bracket still on front): %@", commandWithBracket);
+            }
+        }
+        NSLog(@"Received Message:%@",InputString);
+        
+        [InputString setString:[commandArray objectAtIndex:[commandArray count]-1]];
+        
+    }
     NSLog(@"Received Message:%@",InputString);
-    InputString = nil;
     
 }
 

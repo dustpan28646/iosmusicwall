@@ -7,6 +7,7 @@
 //
 
 #import "DetailViewController.h"
+#define DYNAMIC_OFFSET 10
 
 @interface DetailViewController ()
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
@@ -139,13 +140,14 @@
 {
     //[self drawDrumWithCenter:CGPointMake(50, 50) withRadius:20];
     [gridImageView setAlpha:0.0];
-    PAvailableText.text = [NSString stringWithFormat:@"%i", (int)round(PSlider.value)];
-    GAvailableText.text = [NSString stringWithFormat:@"%i", (int)round(GSlider.value)];
-    DAvailableText.text = [NSString stringWithFormat:@"%i", (int)round(DSlider.value)];
-    PGAvailableText.text = [NSString stringWithFormat:@"%i", (int)round(PGSlider.value)];
-    GDAvailableText.text = [NSString stringWithFormat:@"%i", (int)round(GDSlider.value)];
-    PDAvailableText.text = [NSString stringWithFormat:@"%i", (int)round(PDSlider.value)];
-    PGDAvailableText.text = [NSString stringWithFormat:@"%i", (int)round(PGDSlider.value)];
+    //PAvailableText.text = [NSString stringWithFormat:@"%i", (int)round(PSlider.value)];
+    //GAvailableText.text = [NSString stringWithFormat:@"%i", (int)round(GSlider.value)];
+    //DAvailableText.text = [NSString stringWithFormat:@"%i", (int)round(DSlider.value)];
+    //PGAvailableText.text = [NSString stringWithFormat:@"%i", (int)round(PGSlider.value)];
+    //GDAvailableText.text = [NSString stringWithFormat:@"%i", (int)round(GDSlider.value)];
+    //PDAvailableText.text = [NSString stringWithFormat:@"%i", (int)round(PDSlider.value)];
+    //PGDAvailableText.text = [NSString stringWithFormat:@"%i", (int)round(PGDSlider.value)];
+    
     [self PSliderValueChanged:self];
     [self GSliderValueChanged:self];
     [self DSliderValueChanged:self];
@@ -153,6 +155,9 @@
     [self GDSliderValueChanged:self];
     [self PDSliderValueChanged:self];
     [self PGDSliderValueChanged:self];
+    isGloballyFeasible = false;
+    isCurrentlyPlaying = false;
+    scoreMask = nil;
     [super viewWillAppear:animated];
 }
 
@@ -162,300 +167,190 @@
     tempoControl.maximumValue = 1.5;
     tempoControl.stepValue = 0.1;
     tempoControl.value = 1.0;
-    [self newTimeIndex:currentScoreIndex withScore:nil];
+    [score changeTimeIndexTo:currentScoreIndex];
+    [self updateButtonColors];
+    [self updateNoteExistanceFromCurrentTimeToEnd];
     [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateButtonColors) userInfo:nil repeats:NO];
-    [self sendData];
-}
-
-- (void) sendData
-{
-    //rework sending and receiving
-//    if(sendSocket == nil)
-//    {
-//        sendSocket = [[GCDAsyncUdpSocket alloc] initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
-//        [sendSocket bindToPort:4550 error:nil];
-//        [sendSocket beginReceiving:nil];
-//    }
-//    
-//    NSString * string = @"Indices: 1 2 3 4 5 6 7";
-//    //NSString * address = @"128.61.61.11";
-//    NSString * address = @"143.215.117.137";
-//    UInt16 port = 4560;
-//    NSData * data = [string dataUsingEncoding:NSUTF8StringEncoding];
-//    [sendSocket sendData:data toHost:address port:port withTimeout:-1 tag:1];
-}
-
-- (void) receiveDataWithSocket:(AsyncUdpSocket *)socket
-{
-    //receiveSocket = [[AsyncUdpSocket alloc] initWithDelegate:self];
-    //[socket bindToPort:4560 error:nil];
-}
-
-- (BOOL) onUdpSocket:(AsyncUdpSocket *)sock didReceiveData:(NSData *)data withTag:(long)tag fromHost:(NSString *)host port:(UInt16)port
-{
-    NSLog(@"Received Data");
-    NSLog(@"data:%@",[NSString stringWithUTF8String:[data bytes]]);
-    NSLog(@"port: %d",port);
-    NSLog(@"host: %@",host);
-    [self sendData];
-    return YES;
-}
-
-- (void) onUdpSocket:(AsyncUdpSocket *)sock didSendDataWithTag:(long)tag
-{
-    NSLog(@"SENT TAG!");
-}
-
-- (void) onUdpSocket:(AsyncUdpSocket *)sock didNotSendDataWithTag:(long)tag dueToError:(NSError *)error
-{
-    NSLog(@"Error:");
-}
-
-- (void)udpSocket:(GCDAsyncUdpSocket *)sock didSendDataWithTag:(long)tag
-{
-    NSLog(@"Sent!!");
-}
-
-- (void) udpSocket:(GCDAsyncUdpSocket *)sock didReceiveData:(NSData *)data fromAddress:(NSData *)address withFilterContext:(id)filterContext
-{
-//    NSString *mystring = [NSString stringWithUTF8String:[data bytes]];
-//    NSLog(@"Received %@", mystring);
-//    [self sendData];
+    self.currentMatlabTime = 0;
 }
 
 - (IBAction)PSliderValueChanged:(id)sender
 {
-    PAvailableText.text = [NSString stringWithFormat:@"%i", (int)round(PSlider.value)];
-    PSlider.value = round(PSlider.value);
-    if (PSlider.value > 0)
-    {
-        [PInUseText setTextColor:[UIColor yellowColor]];
-        [PTypeText setTextColor:[UIColor yellowColor]];
-        [PAvailableText setTextColor:[UIColor yellowColor]];
-    }
-    else
-    {
-        [PInUseText setTextColor:[UIColor whiteColor]];
-        [PTypeText setTextColor:[UIColor whiteColor]];
-        [PAvailableText setTextColor:[UIColor whiteColor]];
-    }
-    if (score != nil)
-    {
-        [self updateFeasibilityAndRobotDistribution];
-    }
+    [self changedSliderValue:PSlider withAvailableText:PAvailableText withInUseText:PInUseText withTypeText:PTypeText];
 }
 
 - (IBAction)GSliderValueChanged:(id)sender
 {
-    GAvailableText.text = [NSString stringWithFormat:@"%i", (int)round(GSlider.value)];
-    GSlider.value = round(GSlider.value);
-    if (GSlider.value > 0)
-    {
-        [GInUseText setTextColor:[UIColor yellowColor]];
-        [GTypeText setTextColor:[UIColor yellowColor]];
-        [GAvailableText setTextColor:[UIColor yellowColor]];
-    }
-    else
-    {
-        [GInUseText setTextColor:[UIColor whiteColor]];
-        [GTypeText setTextColor:[UIColor whiteColor]];
-        [GAvailableText setTextColor:[UIColor whiteColor]];
-    }
-    if (score != nil)
-    {
-        [self updateFeasibilityAndRobotDistribution];
-    }
+    [self changedSliderValue:GSlider withAvailableText:GAvailableText withInUseText:GInUseText withTypeText:GTypeText];
 }
 
 - (IBAction)DSliderValueChanged:(id)sender
 {
-    DAvailableText.text = [NSString stringWithFormat:@"%i", (int)round(DSlider.value)];
-    DSlider.value = round(DSlider.value);
-    if (DSlider.value > 0)
-    {
-        [DInUseText setTextColor:[UIColor yellowColor]];
-        [DTypeText setTextColor:[UIColor yellowColor]];
-        [DAvailableText setTextColor:[UIColor yellowColor]];
-    }
-    else
-    {
-        [DInUseText setTextColor:[UIColor whiteColor]];
-        [DTypeText setTextColor:[UIColor whiteColor]];
-        [DAvailableText setTextColor:[UIColor whiteColor]];
-    }
-    if (score != nil)
-    {
-        [self updateFeasibilityAndRobotDistribution];
-    }
+    [self changedSliderValue:DSlider withAvailableText:DAvailableText withInUseText:DInUseText withTypeText:DTypeText];
 }
 
 - (IBAction)PGSliderValueChanged:(id)sender
 {
-    PGAvailableText.text = [NSString stringWithFormat:@"%i", (int)round(PGSlider.value)];
-    PGSlider.value = round(PGSlider.value);
-    if (PGSlider.value > 0)
-    {
-        [PGInUseText setTextColor:[UIColor yellowColor]];
-        [PGTypeText setTextColor:[UIColor yellowColor]];
-        [PGAvailableText setTextColor:[UIColor yellowColor]];
-    }
-    else
-    {
-        [PGInUseText setTextColor:[UIColor whiteColor]];
-        [PGTypeText setTextColor:[UIColor whiteColor]];
-        [PGAvailableText setTextColor:[UIColor whiteColor]];
-    }
-    if (score != nil)
-    {
-        [self updateFeasibilityAndRobotDistribution];
-    }
+    [self changedSliderValue:PGSlider withAvailableText:PGAvailableText withInUseText:PGInUseText withTypeText:PGTypeText];
 }
 
 - (IBAction)GDSliderValueChanged:(id)sender
 {
-    GDAvailableText.text = [NSString stringWithFormat:@"%i", (int)round(GDSlider.value)];
-    GDSlider.value = round(GDSlider.value);
-    if (GDSlider.value > 0)
-    {
-        [GDInUseText setTextColor:[UIColor yellowColor]];
-        [GDTypeText setTextColor:[UIColor yellowColor]];
-        [GDAvailableText setTextColor:[UIColor yellowColor]];
-    }
-    else
-    {
-        [GDInUseText setTextColor:[UIColor whiteColor]];
-        [GDTypeText setTextColor:[UIColor whiteColor]];
-        [GDAvailableText setTextColor:[UIColor whiteColor]];
-    }
-    if (score != nil)
-    {
-        [self updateFeasibilityAndRobotDistribution];
-    }
+    [self changedSliderValue:GDSlider withAvailableText:GDAvailableText withInUseText:GDInUseText withTypeText:GDTypeText];
 }
 
 - (IBAction)PDSliderValueChanged:(id)sender
 {
-    PDAvailableText.text = [NSString stringWithFormat:@"%i", (int)round(PDSlider.value)];
-    PDSlider.value = round(PDSlider.value);
-    if (PDSlider.value > 0)
-    {
-        [PDInUseText setTextColor:[UIColor yellowColor]];
-        [PDTypeText setTextColor:[UIColor yellowColor]];
-        [PDAvailableText setTextColor:[UIColor yellowColor]];
-    }
-    else
-    {
-        [PDInUseText setTextColor:[UIColor whiteColor]];
-        [PDTypeText setTextColor:[UIColor whiteColor]];
-        [PDAvailableText setTextColor:[UIColor whiteColor]];
-    }
-    if (score != nil)
-    {
-        [self updateFeasibilityAndRobotDistribution];
-    }
+    [self changedSliderValue:PDSlider withAvailableText:PDAvailableText withInUseText:PDInUseText withTypeText:PDTypeText];
 }
 
 - (IBAction)PGDSliderValueChanged:(id)sender
 {
-    PGDAvailableText.text = [NSString stringWithFormat:@"%i", (int)round(PGDSlider.value)];
-    PGDSlider.value = round(PGDSlider.value);
-    if (PGDSlider.value > 0)
+    [self changedSliderValue:PGDSlider withAvailableText:PGDAvailableText withInUseText:PGDInUseText withTypeText:PGDTypeText];
+}
+
+-(void)changedSliderValue:(UISlider *)slider withAvailableText:(UILabel *)availableText withInUseText:(UILabel *)inUseText withTypeText:(UILabel *)typeText
+{
+    int oldVal = [availableText.text intValue];
+    int newVal = (int)round(slider.value);
+    slider.value = newVal;
+    if (oldVal != newVal)
     {
-        [PGDInUseText setTextColor:[UIColor yellowColor]];
-        [PGDTypeText setTextColor:[UIColor yellowColor]];
-        [PGDAvailableText setTextColor:[UIColor yellowColor]];
-    }
-    else
-    {
-        [PGDInUseText setTextColor:[UIColor whiteColor]];
-        [PGDTypeText setTextColor:[UIColor whiteColor]];
-        [PGDAvailableText setTextColor:[UIColor whiteColor]];
-    }
-    if (score != nil)
-    {
-        [self updateFeasibilityAndRobotDistribution];
+        availableText.text = [NSString stringWithFormat:@"%i", (int)round(slider.value)];
+        if (slider.value > 0)
+        {
+            [inUseText setTextColor:[UIColor yellowColor]];
+            [typeText setTextColor:[UIColor yellowColor]];
+            [availableText setTextColor:[UIColor yellowColor]];
+        }
+        else
+        {
+            [inUseText setTextColor:[UIColor whiteColor]];
+            [typeText setTextColor:[UIColor whiteColor]];
+            [availableText setTextColor:[UIColor whiteColor]];
+        }
+        if (score != nil)
+        {
+            [self updateFeasibilityAndRobotDistribution];
+        }
     }
 }
 
 - (IBAction)touchedButtonOne:(id)sender
 {
-//    [score addOrRemoveSubscoreWithName:[buttonOne titleLabel].text withTimeIndex:currentScoreIndex];
-    [score addOrRemoveSubscoreWithName:[buttonOne titleLabel].text withTimeIndex:0];
-    [self newTimeIndex:currentScoreIndex withScore:nil];
+    [self buttonAddOrRemoveSubscoreWithName:[buttonOne titleLabel].text];
 }
 
 - (IBAction)touchedButtonTwo:(id)sender
 {
-//    [score addOrRemoveSubscoreWithName:[buttonTwo titleLabel].text withTimeIndex:currentScoreIndex];
-    [score addOrRemoveSubscoreWithName:[buttonTwo titleLabel].text withTimeIndex:0];
-    [self newTimeIndex:currentScoreIndex withScore:nil];
+    [self buttonAddOrRemoveSubscoreWithName:[buttonTwo titleLabel].text];
 }
 
 - (IBAction)touchedButtonThree:(id)sender
 {
-//    [score addOrRemoveSubscoreWithName:[buttonThree titleLabel].text withTimeIndex:currentScoreIndex];
-    [score addOrRemoveSubscoreWithName:[buttonThree titleLabel].text withTimeIndex:0];
-    [self newTimeIndex:currentScoreIndex withScore:nil];
+    [self buttonAddOrRemoveSubscoreWithName:[buttonThree titleLabel].text];
 }
 
 - (IBAction)touchedButtonFour:(id)sender
 {
-//    [score addOrRemoveSubscoreWithName:[buttonFour titleLabel].text withTimeIndex:currentScoreIndex];
-    [score addOrRemoveSubscoreWithName:[buttonFour titleLabel].text withTimeIndex:0];
-    [self newTimeIndex:currentScoreIndex withScore:nil];
+    [self buttonAddOrRemoveSubscoreWithName:[buttonFour titleLabel].text];
 }
 
 - (IBAction)touchedButtonFive:(id)sender
 {
-//    [score addOrRemoveSubscoreWithName:[buttonFive titleLabel].text withTimeIndex:currentScoreIndex];
-    [score addOrRemoveSubscoreWithName:[buttonFive titleLabel].text withTimeIndex:0];
-    [self newTimeIndex:currentScoreIndex withScore:nil];
+    [self buttonAddOrRemoveSubscoreWithName:[buttonFive titleLabel].text];
 }
 
 - (IBAction)touchedButtonSix:(id)sender
 {
-//    [score addOrRemoveSubscoreWithName:[buttonSix titleLabel].text withTimeIndex:currentScoreIndex];
-    [score addOrRemoveSubscoreWithName:[buttonSix titleLabel].text withTimeIndex:0];
-    [self newTimeIndex:currentScoreIndex withScore:nil];
+    [self buttonAddOrRemoveSubscoreWithName:[buttonSix titleLabel].text];
+}
+
+- (void)buttonAddOrRemoveSubscoreWithName:(NSString *)name
+{
+    int startTime = [self getFirstEditableTimeForScore];
+    bool isAddingSubscore = [score addOrRemoveSubscoreWithName:name withTimeIndex:startTime];
+    [score changeTimeIndexTo:currentScoreIndex];  //maybe reorder these so we don't have to do visual updates until we know if its feasible.  not sure right now, so we'll wait
+    [self updateButtonColors];
+    [self updateNoteExistanceToEndFromTime:startTime];
+    if (isCurrentlyPlaying && !isGloballyFeasible)
+    {
+        UIAlertView * alert =[[UIAlertView alloc ] initWithTitle:@"Infeasible Change"
+                                                         message:@"Your score change was infeasible for the robots that are currently playing."
+                                                        delegate:self
+                                               cancelButtonTitle:@"OK"
+                                               otherButtonTitles: nil];
+        [alert show];
+        [score addOrRemoveSubscoreWithName:name withTimeIndex:startTime];
+        [score changeTimeIndexTo:currentScoreIndex];
+        [self updateButtonColors];
+        [self updateNoteExistanceToEndFromTime:startTime];
+        if (!isGloballyFeasible)
+        {
+            NSLog(@"Problem: reversed subscore change didn't reverse infeasibility.");
+        }
+    }
+    else
+    {
+        if (isAddingSubscore)
+        {
+            [score sendAddSubscoreMessage:name withStartTimeIndex:startTime];
+        }
+        else
+        {
+            [score sendRemoveSubscoreMessage:name withStartTimeIndex:startTime];
+        }
+    }
 }
 
 - (IBAction)startPush:(id)sender
 {
+    PSlider.enabled = false;
+    GSlider.enabled = false;
+    DSlider.enabled = false;
+    PGSlider.enabled = false;
+    GDSlider.enabled = false;
+    PDSlider.enabled = false;
+    PGDSlider.enabled = false;
     [self updateFeasibilityAndRobotDistribution];
-    UIView *mask = [[UIView alloc] initWithFrame:self.view.window.frame];
-    [mask setBackgroundColor:[UIColor colorWithWhite:0.0 alpha:0.78]];
-    [self.view addSubview:mask];
-    [score startPlayingWithMessage:[NSString stringWithFormat:@":%@:%@:%@:%@:%@:%@:%@", PInUseText.text, GInUseText.text, DInUseText.text, PGInUseText.text, GDInUseText.text, PDInUseText.text, PGDInUseText.text]];
+//    scoreMask = [[UIView alloc] initWithFrame:self.view.window.frame];
+//    [scoreMask setBackgroundColor:[UIColor colorWithWhite:0.0 alpha:0/*.78*/]];
+//    [self.view addSubview:scoreMask];
+//    [score startPlayingWithMessage:[NSString stringWithFormat:@":%@:%@:%@:%@:%@:%@:%@:%0.1f", PInUseText.text, GInUseText.text, DInUseText.text, PGInUseText.text, GDInUseText.text, PDInUseText.text, PGDInUseText.text,(tempoControl.maximumValue - tempoControl.value + tempoControl.minimumValue)]];
+    [score startPlayingWithMessage:[NSString stringWithFormat:@":%@:%@:%@:%@:%@:%@:%@:%0.1f", PAvailableText.text, GAvailableText.text, DAvailableText.text, PGAvailableText.text, GDAvailableText.text, PDAvailableText.text, PGDAvailableText.text,(tempoControl.maximumValue - tempoControl.value + tempoControl.minimumValue)]];
+    isCurrentlyPlaying = true;
+    startButton.enabled = false;
+    [self updateScoreMaskExistance];
 }
 
 - (IBAction)didTouchTempo:(id)sender
 {
     [masterView setTempoFactor:(tempoControl.maximumValue - tempoControl.value + tempoControl.minimumValue)];
-    tempoText.text = [NSString stringWithFormat:@"Tempo (%0.1f sec)", (tempoControl.maximumValue - tempoControl.value + tempoControl.minimumValue)];
+    tempoText.text = [NSString stringWithFormat:@"Tempo (%0.1fx)", (tempoControl.maximumValue - tempoControl.value + tempoControl.minimumValue)];
     
     /*for(UIView *myView in [ScoreView subviews])
     {
         [myView removeFromSuperview];
     }*/
     
-    UIGraphicsBeginImageContextWithOptions(ScoreView.bounds.size, ScoreView.opaque, 0.0);
-    [ScoreView.layer renderInContext:UIGraphicsGetCurrentContext()];
-    
-    UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *filePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"GridImage.png"];
-    
-    NSLog(@"path = %@",[paths objectAtIndex:0]);
-    
-    if ([UIImagePNGRepresentation(img) writeToFile:filePath atomically:YES])
-    {
-        NSLog(@"wrote to file: %@",filePath);
-    }
-    else
-    {
-        NSLog(@"Failed to write to file");
-    }
+//    UIGraphicsBeginImageContextWithOptions(ScoreView.bounds.size, ScoreView.opaque, 0.0);
+//    [ScoreView.layer renderInContext:UIGraphicsGetCurrentContext()];
+//    
+//    UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
+//    UIGraphicsEndImageContext();
+//    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+//    NSString *filePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"GridImage.png"];
+//    
+//    NSLog(@"path = %@",[paths objectAtIndex:0]);
+//    
+//    if ([UIImagePNGRepresentation(img) writeToFile:filePath atomically:YES])
+//    {
+//        NSLog(@"wrote to file: %@",filePath);
+//    }
+//    else
+//    {
+//        NSLog(@"Failed to write to file");
+//    }
 }
 
 -(void)setMasterView:(id)master
@@ -485,7 +380,7 @@
         view.delegate = self;
     }
     
-    NetworkHelper *networkHelper = [[NetworkHelper alloc] init];
+    NetworkHelper *networkHelper = [[NetworkHelper alloc] initWithDelegate:self];
     InstrumentViewsManager *manager = [[InstrumentViewsManager alloc] initWithGuitars:guitarArray andPianos:pianoArray andDrums:drumArray andNetworkHelper:networkHelper];
     //comment line below when we don't wanna print the position crud anymore
     printf("frameSize = [%0.2f,%0.2f];\n",ScoreView.frame.size.width,ScoreView.frame.size.height);
@@ -515,18 +410,11 @@
     doSubscoreNotesExistAtTimes = myArray;
 }
 
--(void)newTimeIndex:(int)index withScore:(NSDictionary *)scoreDict
-{
-    [score changeTimeIndexTo:index];
-    currentScoreIndex = index;
-    [self updateButtonColors];
-    [self updateNoteExistanceFromCurrentTimeToEnd];
-}
-
 -(void) setTimeIndexWithoutUpdate:(int)index
 {
     [score changeTimeIndexTo:index];
     currentScoreIndex = index;
+    [self updateScoreMaskExistance];
     [self updateButtonColors];
 }
 
@@ -625,9 +513,20 @@
     [self updateNoteExistanceToEndFromTime:currentScoreIndex];
 }
 
-- (void) didChangeNoteForCurrentTime
+- (bool) isValidNoteChangeForCurrentTime
 {
     [self updateNoteExistanceForCurrentTime];
+    if ((!isGloballyFeasible) && isCurrentlyPlaying)
+    {
+        UIAlertView * alert =[[UIAlertView alloc ] initWithTitle:@"Infeasible Choice"
+                                                         message:@"Your score change was infeasible for the robots that are currently playing."
+                                                        delegate:self
+                                               cancelButtonTitle:@"OK"
+                                               otherButtonTitles: nil];
+        [alert show];
+        return NO;
+    }
+    return YES;
 }
 
 - (void)updateFeasibilityAndRobotDistribution
@@ -648,6 +547,10 @@
         PDInUseText.text = @"0";
         PGDInUseText.text = @"0";
         startButton.enabled = false;
+        isGloballyFeasible = false;
+        self.navigationController.navigationBar.barTintColor = [UIColor redColor];
+        NSLog(@"nav bar frame: %0.2f", self.navigationController.navigationBar.frame.size.height);
+        ((MasterViewController *)masterView).navigationController.navigationBar.barTintColor = [UIColor redColor];
     }
     else
     {
@@ -660,11 +563,17 @@
         PDInUseText.text = [[NSString alloc] initWithFormat:@"%i",[[optimalDistrib objectAtIndex:5] intValue]];
         PGDInUseText.text = [[NSString alloc] initWithFormat:@"%i",[[optimalDistrib objectAtIndex:6] intValue]];
         NSLog(@"WOOOO FEASIBLE!!!!");
-        startButton.enabled = true;
+        if (!isCurrentlyPlaying)
+        {
+            startButton.enabled = true;
+        }
+        isGloballyFeasible = true;
+        self.navigationController.navigationBar.barTintColor = nil;
+        NSLog(@"nav bar frame: %0.2f", self.navigationController.navigationBar.frame.size.height);
+        ((MasterViewController *)masterView).navigationController.navigationBar.barTintColor = nil;
+        
     }
-//    [[UINavigationBar appearance] setTintColor:[UIColor redColor]];
-//    [[UINavigationBar appearance] setBackgroundImage:[[UIImage alloc] init] forBarMetrics:UIBarMetricsDefault];
-//    [[UINavigationBar appearance] setBackgroundColor:[UIColor redColor]];
+    
     [[masterView tableView] reloadData];
 }
 
@@ -688,6 +597,76 @@
         return YES;
     }
     return NO;
+}
+
+- (void)matlabFinishedPlayingScore
+{
+    isCurrentlyPlaying = false;
+    self.currentMatlabTime = 0;
+    if (isGloballyFeasible)
+    {
+        startButton.enabled = true;
+    }
+    [self updateScoreMaskExistance];
+    [[masterView tableView] reloadData];
+    PSlider.enabled = true;
+    GSlider.enabled = true;
+    DSlider.enabled = true;
+    PGSlider.enabled = true;
+    GDSlider.enabled = true;
+    PDSlider.enabled = true;
+    PGDSlider.enabled = true;
+}
+
+- (void) matlabReachedTimeIndex:(int)index
+{
+    if (isCurrentlyPlaying && index < self.currentMatlabTime)
+    {
+        NSLog(@"Problem: Matlab sent a previous time before finishing the score.");
+    }
+    else
+    {
+        self.currentMatlabTime = index - 1;
+    }
+    [self updateScoreMaskExistance];
+        
+    [[masterView tableView] reloadData];
+    //[[masterView tableView] performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
+}
+
+-(void) updateScoreMaskExistance
+{
+    if ([self isTimeIndexDisabled:currentScoreIndex])
+    {
+        if (scoreMask == nil)
+        {
+            scoreMask = [[UIView alloc] initWithFrame:self.view.window.frame];
+            [scoreMask setBackgroundColor:[UIColor colorWithWhite:0.0 alpha:.78]];
+        }
+        
+        if (![scoreMask isDescendantOfView:self.view])
+        {
+            [self.view addSubview:scoreMask];
+        }
+    }
+    else if ([scoreMask isDescendantOfView:self.view])
+    {
+        [scoreMask removeFromSuperview];
+    }
+}
+
+-(bool)isTimeIndexDisabled:(int)timeIndex
+{
+    return ([self getFirstEditableTimeForScore] > timeIndex);
+}
+
+-(int)getFirstEditableTimeForScore
+{
+    if (!isCurrentlyPlaying)
+    {
+        return 0;
+    }
+    return (self.currentMatlabTime + 10);
 }
 
 @end

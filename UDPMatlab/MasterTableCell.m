@@ -21,6 +21,14 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
+    if(selected)
+    {
+        self.timeText.textColor = [UIColor blackColor];
+    }
+    else
+    {
+        self.timeText.textColor = [UIColor whiteColor];
+    }
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state

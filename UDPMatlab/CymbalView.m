@@ -11,7 +11,7 @@
 @implementation CymbalView
 @synthesize delegate;
 
-static float const buttonRadius = 6.0;
+static float const buttonRadius = 15.0;
 static float const unselectedRadius = 3.0;
 static float const selectedRadius = 6.0;
 static float const inset = 3.0;
@@ -57,7 +57,7 @@ static float const inset = 3.0;
     UIButton *instrumentButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [instrumentButton addTarget:self action:@selector(touchedChangeInstrument:) forControlEvents:UIControlEventTouchDown];
     [instrumentButton setFrame:CGRectMake(round(0.0/*frame.origin.x - frame.size.height/4.0*/), round(0.0/*frame.origin.y + (3.0 * frame.size.height/4.0)*/), round(frame.size.height/4.0), round(frame.size.height/4.0))];
-    [instrumentButton setBackgroundImage:[UIImage imageNamed:@"imageedit_2_3232341617.png"] forState:UIControlStateNormal];
+    //[instrumentButton setBackgroundImage:[UIImage imageNamed:@"imageedit_2_3232341617.png"] forState:UIControlStateNormal];
     [instrumentButton setBackgroundColor:[UIColor clearColor]];
     [self addSubview:instrumentButton];
 }
@@ -77,6 +77,12 @@ static float const inset = 3.0;
             break;
         case TYPE_BASS_DRUM:
             //type.type = TYPE_CYMBAL;
+            newType = [[InstrumentType alloc] initWithType:TYPE_CYMBAL_2];
+            break;
+        case TYPE_CYMBAL_2:
+            newType = [[InstrumentType alloc] initWithType:TYPE_BASS_DRUM_2];
+            break;
+        case TYPE_BASS_DRUM_2:
             newType = [[InstrumentType alloc] initWithType:TYPE_CYMBAL];
             break;
         default:
@@ -103,6 +109,12 @@ static float const inset = 3.0;
             break;
         case TYPE_BASS_DRUM:
             piano = [UIImage imageNamed:@"DV016_Jpg_Large_H71031.001.003_walnut_burst_24x18.jpg"];
+            break;
+        case TYPE_CYMBAL_2:
+            piano = [UIImage imageNamed:@"cymbal.jpg"]; //need to change to diff image
+            break;
+        case TYPE_BASS_DRUM_2:
+            piano = [UIImage imageNamed:@"DV016_Jpg_Large_H71031.001.003_walnut_burst_24x18.jpg"]; //need to change image
             break;
         default:
             break;
@@ -162,18 +174,30 @@ static float const inset = 3.0;
 
 - (void) touchedNote:(id)sender
 {
+    Subscore *tempSubscore = note.noteSubscore; //not sure if we need to nil out the subscore for fesibility but just in case
     note.doesNoteExist = !note.doesNoteExist;
     note.noteSubscore = nil;
-    if (note.doesNoteExist)
+    if (![delegate isValidNoteChangeForCurrentTime]) //returns feasibility
     {
-        [networkHelper sendString:[NSString stringWithFormat:@"<ad%i:%i:%i>",type.type - 2,time,drumIndex]];
+        note.doesNoteExist = !note.doesNoteExist;
+        note.noteSubscore = tempSubscore;
+        if (![delegate isValidNoteChangeForCurrentTime])
+        {
+            NSLog(@"Problem: reversing note change didn't correct feasibility.");
+        }
     }
     else
     {
-        [networkHelper sendString:[NSString stringWithFormat:@"<rd%i:%i:%i>",type.type - 2,time,drumIndex]];
+        if (note.doesNoteExist)
+        {
+            [networkHelper sendString:[NSString stringWithFormat:@"<ad%i:%i:%i>",type.type - 2,time,drumIndex]];
+        }
+        else
+        {
+            [networkHelper sendString:[NSString stringWithFormat:@"<rd%i:%i:%i>",type.type - 2,time,drumIndex]];
+        }
+        [self setNeedsDisplay];
     }
-    [self setNeedsDisplay];
-    [delegate didChangeNoteForCurrentTime];
 }
 
 

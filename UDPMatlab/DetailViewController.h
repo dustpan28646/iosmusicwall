@@ -13,7 +13,7 @@
 #import "ScoreObject.h"
 #import "NoteExistanceStructure.h"
 
-@interface DetailViewController : UIViewController <UISplitViewControllerDelegate, AsyncUdpSocketDelegate, DrumViewDelegate, GridViewDelegate>
+@interface DetailViewController : UIViewController <UISplitViewControllerDelegate, DrumViewDelegate, GridViewDelegate, NetworkHelperDelegate>
 {
     NSTimer *myTimer;
     GCDAsyncUdpSocket *sendSocket;
@@ -27,6 +27,9 @@
     NSArray *buttonArray;
     NSArray *doSubscoreNotesExistAtTimes;
     NSMutableArray *feasibilityArray;
+    UIView *scoreMask;
+    bool isGloballyFeasible;
+    bool isCurrentlyPlaying;
 }
 
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
@@ -103,6 +106,8 @@
 
 @property (weak, nonatomic) IBOutlet UINavigationItem *topBar;
 
+@property (nonatomic) int currentMatlabTime;
+
 - (IBAction)PSliderValueChanged:(id)sender;
 - (IBAction)GSliderValueChanged:(id)sender;
 - (IBAction)DSliderValueChanged:(id)sender;
@@ -120,11 +125,11 @@
 - (IBAction)startPush:(id)sender;
 
 - (IBAction)didTouchTempo:(id)sender;
--(void)newTimeIndex:(int)index withScore:(NSDictionary *)scoreDict;
--(void) setTimeIndexWithoutUpdate:(int)index;
--(void)setMasterView:(id)master;
+- (void) setTimeIndexWithoutUpdate:(int)index;
+- (void)setMasterView:(id)master;
 - (void) initializeScoreWithSubscores:(NSMutableDictionary *)subscores withNumberOfTimeIndices:(int)numTimes;
 - (NSArray *) getNoteExistanceArrayForTime:(int)timeInstant;
 - (NSMutableArray *) getFeasibilityArray;
 - (bool)doesScoreExist;
+- (bool)isTimeIndexDisabled:(int)timeIndex;
 @end

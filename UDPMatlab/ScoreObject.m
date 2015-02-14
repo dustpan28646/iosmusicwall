@@ -37,6 +37,7 @@
             if (mySubscore.isDefault)
             {
                 [self addSubscoreWithName:mySubscore.name withTimeIndex:0];
+                [self sendAddSubscoreMessage:mySubscore.name withStartTimeIndex:0];
             }
         }
     }
@@ -45,7 +46,6 @@
 
 - (void) addSubscoreWithName:(NSString *)subscoreName withTimeIndex:(int)timeIndex
 {
-    [networkHelper sendString:[NSString stringWithFormat:@"<as:%i:%@>",timeIndex,subscoreName]];
     Subscore *subscore = [subscoreDictionary objectForKey:subscoreName];
     
     if (subscore.type == SUBSCORE_PIANO)
@@ -125,7 +125,6 @@
 
 - (void) removeSubscoreWithName:(NSString *)subscoreName withTimeIndex:(int)timeIndex
 {
-    [networkHelper sendString:[NSString stringWithFormat:@"<rs:%i:%@>",timeIndex,subscoreName]];
     Subscore *subscore = [subscoreDictionary objectForKey:subscoreName];
     
     if (subscore.type == SUBSCORE_PIANO)
@@ -209,16 +208,28 @@
     [instViewsManager newInstantaneousScore:[instantaneousScoreArray objectAtIndex:index] withTime:index];
 }
 
-- (void) addOrRemoveSubscoreWithName:(NSString *)subscoreName withTimeIndex:(int)timeIndex
+- (bool) addOrRemoveSubscoreWithName:(NSString *)subscoreName withTimeIndex:(int)timeIndex //returns true for add and false for remove
 {
     if ([self isSubscoreName:subscoreName includedInScoreAtTime:timeIndex])
     {
         [self removeSubscoreWithName:subscoreName withTimeIndex:timeIndex];
+        return NO;
     }
     else
     {
         [self addSubscoreWithName:subscoreName withTimeIndex:timeIndex];
+        return YES;
     }
+}
+
+- (void) sendRemoveSubscoreMessage:(NSString *)subscoreName withStartTimeIndex:(int)timeIndex
+{
+    [networkHelper sendString:[NSString stringWithFormat:@"<rs:%i:%@>",timeIndex,subscoreName]];
+}
+
+- (void) sendAddSubscoreMessage:(NSString *)subscoreName withStartTimeIndex:(int)timeIndex
+{
+    [networkHelper sendString:[NSString stringWithFormat:@"<as:%i:%@>",timeIndex,subscoreName]];
 }
 
 - (bool) isSubscoreName:(NSString *)subscoreName includedInScoreAtTime:(int)time

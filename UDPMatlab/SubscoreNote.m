@@ -36,7 +36,7 @@
         return OCTAVE_NO_NOTE;
     }
     
-    if ([noteString rangeOfString:@"drum" options:NSCaseInsensitiveSearch].location == NSNotFound)
+    if ([noteString length]>1)//[noteString rangeOfString:@"drum" options:NSCaseInsensitiveSearch].location == NSNotFound)
     {
         NSString *octaveString = [noteString substringFromIndex:([noteString length] - 1)];
         int octave = [octaveString intValue];
@@ -58,6 +58,10 @@
 
 - (int) getIntegerIndexForNote
 {
+    if (self.octave == DRUM_NOTE_OCTAVE)
+    {
+        return self.letter;
+    }
     return ((self.octave * 12) + (self.letter));
 }
 
@@ -68,7 +72,7 @@
         return NOTE_NO_NOTE;
     }
     
-    if ([noteString rangeOfString:@"drum" options:NSCaseInsensitiveSearch].location == NSNotFound)
+    if ([noteString length]>1)
     {
         NSString *letterString = [noteString substringToIndex:([noteString length] - 1)];
         
@@ -129,7 +133,7 @@
     else
     {
         NSString *drumNoteString = [noteString substringFromIndex:([noteString length] - 1)];
-        int drumNote = [drumNoteString intValue];
+        int drumNote = [drumNoteString intValue] - 1;
         if (drumNote < 5)
         {
             return drumNote;

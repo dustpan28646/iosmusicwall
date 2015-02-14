@@ -13,7 +13,7 @@
 
 static float const unselectedRadius = 3.0;
 static float const selectedRadius = 6.0;
-static float const buttonRadius = 6.0;
+static float const buttonRadius = 15.0;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -94,8 +94,8 @@ static float const buttonRadius = 6.0;
     
     UIButton *instrumentButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [instrumentButton addTarget:self action:@selector(touchedChangeInstrument:) forControlEvents:UIControlEventTouchDown];
-    [instrumentButton setFrame:CGRectMake(round(0.0 /*- frame.size.height/4.0*/), round(0.0 /*+ (3.0 * frame.size.height/4.0)*/), round(frame.size.height/4.0), round(frame.size.height/4.0))];
-    [instrumentButton setBackgroundImage:[UIImage imageNamed:@"imageedit_2_3232341617.png"] forState:UIControlStateNormal];
+    [instrumentButton setFrame:CGRectMake(round(0.0 /*- frame.size.height/4.0*/), round(0.0 /*+ (3.0 * frame.size.height/4.0)*/), round(frame.size.height/3.5), round(frame.size.height/3.5))];
+    //[instrumentButton setBackgroundImage:[UIImage imageNamed:@"imageedit_2_3232341617.png"] forState:UIControlStateNormal];
     [instrumentButton setBackgroundColor:[UIColor clearColor]];
     [self addSubview:instrumentButton];
 }
@@ -190,63 +190,49 @@ static float const buttonRadius = 6.0;
 
 -(void)touchedNoteSix:(id)sender
 {
-    int i = 5;
-    BooleanObject *boolObj = [score objectAtIndex:i];
-    boolObj.doesNoteExist = !boolObj.doesNoteExist;
-    boolObj.noteSubscore = nil;
-    [self sendAddOrRemoveNoteMessageWithNoteIndex:i withAddOrRemoveBool:boolObj.doesNoteExist];
-    [self setNeedsDisplay];
-    [delegate didChangeNoteForCurrentTime];
+    [self touchedNoteWithIndex:5];
 }
 -(void)touchedNoteOne:(id)sender
 {
-    int i = 0;
-    BooleanObject *boolObj = [score objectAtIndex:i];
-    boolObj.doesNoteExist = !boolObj.doesNoteExist;
-    boolObj.noteSubscore = nil;
-    [self sendAddOrRemoveNoteMessageWithNoteIndex:i withAddOrRemoveBool:boolObj.doesNoteExist];
-    [self setNeedsDisplay];
-    [delegate didChangeNoteForCurrentTime];
+    [self touchedNoteWithIndex:0];
 }
 -(void)touchedNoteTwo:(id)sender
 {
-    int i = 1;
-    BooleanObject *boolObj = [score objectAtIndex:i];
-    boolObj.doesNoteExist = !boolObj.doesNoteExist;
-    boolObj.noteSubscore = nil;
-    [self sendAddOrRemoveNoteMessageWithNoteIndex:i withAddOrRemoveBool:boolObj.doesNoteExist];
-    [self setNeedsDisplay];
-    [delegate didChangeNoteForCurrentTime];
+    [self touchedNoteWithIndex:1];
 }
 -(void)touchedNoteThree:(id)sender
 {
-    int i = 2;
-    BooleanObject *boolObj = [score objectAtIndex:i];
-    boolObj.doesNoteExist = !boolObj.doesNoteExist;
-    boolObj.noteSubscore = nil;
-    [self sendAddOrRemoveNoteMessageWithNoteIndex:i withAddOrRemoveBool:boolObj.doesNoteExist];
-    [self setNeedsDisplay];
-    [delegate didChangeNoteForCurrentTime];
+    [self touchedNoteWithIndex:2];
 }
 -(void)touchedNoteFour:(id)sender
 {
-    int i = 3;
-    BooleanObject *boolObj = [score objectAtIndex:i];
-    boolObj.doesNoteExist = !boolObj.doesNoteExist;
-    boolObj.noteSubscore = nil;
-    [self sendAddOrRemoveNoteMessageWithNoteIndex:i withAddOrRemoveBool:boolObj.doesNoteExist];
-    [self setNeedsDisplay];
-    [delegate didChangeNoteForCurrentTime];
+    [self touchedNoteWithIndex:3];
 }
 -(void)touchedNoteFive:(id)sender
 {
-    int i = 4;
-    BooleanObject *boolObj = [score objectAtIndex:i];
+    [self touchedNoteWithIndex:4];
+}
+
+-(void)touchedNoteWithIndex:(int)index
+{
+    BooleanObject *boolObj = [score objectAtIndex:index];
+    Subscore *temp = boolObj.noteSubscore;  //once again, not sure if we need to actually nil this out, but just in case
     boolObj.doesNoteExist = !boolObj.doesNoteExist;
     boolObj.noteSubscore = nil;
-    [self sendAddOrRemoveNoteMessageWithNoteIndex:i withAddOrRemoveBool:boolObj.doesNoteExist];
-    [self setNeedsDisplay];
-    [delegate didChangeNoteForCurrentTime];
+    if (![delegate isValidNoteChangeForCurrentTime])
+    {
+        boolObj.doesNoteExist = !boolObj.doesNoteExist;
+        boolObj.noteSubscore = temp;
+        if (![delegate isValidNoteChangeForCurrentTime])
+        {
+            NSLog(@"Problem: reversing note change didn't fix feasibility.");
+        }
+    }
+    else
+    {
+        [self sendAddOrRemoveNoteMessageWithNoteIndex:index withAddOrRemoveBool:boolObj.doesNoteExist];
+        [self setNeedsDisplay];
+    }
 }
 
 -(void) printButtonPositions
