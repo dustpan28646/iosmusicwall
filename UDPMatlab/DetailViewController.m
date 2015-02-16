@@ -629,8 +629,9 @@
         self.currentMatlabTime = index - 1;
     }
     [self updateScoreMaskExistance];
-        
+    NSLog(@"Matlab stuff");
     [[masterView tableView] reloadData];
+    //[[masterView tableView] performSelector:@selector(reloadData) onThread:<#(NSThread *)#> withObject:<#(id)#> waitUntilDone:<#(BOOL)#>];
     //[[masterView tableView] performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
 }
 
@@ -640,8 +641,10 @@
     {
         if (scoreMask == nil)
         {
-            scoreMask = [[UIView alloc] initWithFrame:self.view.window.frame];
-            [scoreMask setBackgroundColor:[UIColor colorWithWhite:0.0 alpha:.78]];
+            CGRect coverFrame = self.view.window.frame;
+            coverFrame.size.height = coverFrame.size.height - 170;
+            scoreMask = [[UIView alloc] initWithFrame:coverFrame];
+            [scoreMask setBackgroundColor:[UIColor colorWithWhite:0.0 alpha:.5]];
         }
         
         if (![scoreMask isDescendantOfView:self.view])
@@ -666,7 +669,7 @@
     {
         return 0;
     }
-    return (self.currentMatlabTime + 10);
+    return (self.currentMatlabTime + 2);
 }
 
 @end
