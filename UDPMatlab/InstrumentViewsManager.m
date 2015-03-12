@@ -26,50 +26,50 @@
         //comment this when not wanting to print all this crap
         //this is just a convenient place to force all the positions to print to console
         
-//        printf("guitarArray = [...\n");
-//        for (GridView *guitarView in self.guitarViews)
-//        {
-//            [guitarView printButtonPositions];
-//        }
-//        
-//        printf("];\npianoArray = [...\n");
-//        
-//        for (GridView *pianoView in self.pianoViews)
-//        {
-//            [pianoView printButtonPositions];
-//        }
-//        
-//        printf("];\ndrumArray = [...\n");
-//        
-//        for (CymbalView *cymbalView in self.drumViews)
-//        {
-//            [cymbalView printPosition];
-//        }
-//        
-//        printf("];\n");
+        printf("guitarArray = [...\n");
+        for (GridView *guitarView in self.guitarViews)
+        {
+            [guitarView printButtonPositions];
+        }
+        
+        printf("];\npianoArray = [...\n");
+        
+        for (GridView *pianoView in self.pianoViews)
+        {
+            [pianoView printButtonPositions];
+        }
+        
+        printf("];\ndrumArray = [...\n");
+        
+        for (CymbalView *cymbalView in self.drumViews)
+        {
+            [cymbalView printPosition];
+        }
+        
+        printf("];\n");
         
         
-//        printf("guitarXYWH = [...\n");
-//        for (GridView *guitarView in self.guitarViews)
-//        {
-//            printf("%0.2f,%0.2f,%0.2f,%0.2f;...\n", guitarView.frame.origin.x, guitarView.frame.origin.y, guitarView.frame.size.width, guitarView.frame.size.height);
-//        }
-//        
-//        printf("];\npianoXYWH = [...\n");
-//        
-//        for (GridView *pianoView in self.pianoViews)
-//        {
-//            printf("%0.2f,%0.2f,%0.2f,%0.2f;...\n", pianoView.frame.origin.x, pianoView.frame.origin.y, pianoView.frame.size.width, pianoView.frame.size.height);
-//        }
-//        
-//        printf("];\ndrumXYWH = [...\n");
-//        
-//        for (CymbalView *cymbalView in self.drumViews)
-//        {
-//            printf("%0.2f,%0.2f,%0.2f,%0.2f;...\n", cymbalView.frame.origin.x, cymbalView.frame.origin.y, cymbalView.frame.size.width, cymbalView.frame.size.height);
-//        }
-//        
-//        printf("];\n");
+        printf("guitarXYWH = [...\n");
+        for (GridView *guitarView in self.guitarViews)
+        {
+            printf("%0.2f,%0.2f,%0.2f,%0.2f;...\n", guitarView.frame.origin.x, guitarView.frame.origin.y, guitarView.frame.size.width, guitarView.frame.size.height);
+        }
+        
+        printf("];\npianoXYWH = [...\n");
+        
+        for (GridView *pianoView in self.pianoViews)
+        {
+            printf("%0.2f,%0.2f,%0.2f,%0.2f;...\n", pianoView.frame.origin.x, pianoView.frame.origin.y, pianoView.frame.size.width, pianoView.frame.size.height);
+        }
+        
+        printf("];\ndrumXYWH = [...\n");
+        
+        for (CymbalView *cymbalView in self.drumViews)
+        {
+            printf("%0.2f,%0.2f,%0.2f,%0.2f;...\n", cymbalView.frame.origin.x, cymbalView.frame.origin.y, cymbalView.frame.size.width, cymbalView.frame.size.height);
+        }
+        
+        printf("];\n");
         
     }
     return self;

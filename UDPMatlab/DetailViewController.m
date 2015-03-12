@@ -158,6 +158,13 @@
     isGloballyFeasible = false;
     isCurrentlyPlaying = false;
     scoreMask = nil;
+    buttonOneBool = false;
+    buttonTwoBool = false;
+    buttonThreeBool = false;
+    buttonFourBool = false;
+    buttonFiveBool = false;
+    buttonSixBool = false;
+    tempoControl.hidden = true;
     [super viewWillAppear:animated];
 }
 
@@ -238,67 +245,76 @@
 
 - (IBAction)touchedButtonOne:(id)sender
 {
+    buttonOneBool = !buttonOneBool;
     [self buttonAddOrRemoveSubscoreWithName:[buttonOne titleLabel].text];
 }
 
 - (IBAction)touchedButtonTwo:(id)sender
 {
+    buttonTwoBool = !buttonTwoBool;
     [self buttonAddOrRemoveSubscoreWithName:[buttonTwo titleLabel].text];
 }
 
 - (IBAction)touchedButtonThree:(id)sender
 {
+    buttonThreeBool = !buttonThreeBool;
     [self buttonAddOrRemoveSubscoreWithName:[buttonThree titleLabel].text];
 }
 
 - (IBAction)touchedButtonFour:(id)sender
 {
+    buttonFourBool = !buttonFourBool;
     [self buttonAddOrRemoveSubscoreWithName:[buttonFour titleLabel].text];
 }
 
 - (IBAction)touchedButtonFive:(id)sender
 {
+    buttonFiveBool = !buttonFiveBool;
     [self buttonAddOrRemoveSubscoreWithName:[buttonFive titleLabel].text];
 }
 
 - (IBAction)touchedButtonSix:(id)sender
 {
+    buttonSixBool = !buttonSixBool;
     [self buttonAddOrRemoveSubscoreWithName:[buttonSix titleLabel].text];
 }
 
 - (void)buttonAddOrRemoveSubscoreWithName:(NSString *)name
 {
     int startTime = [self getFirstEditableTimeForScore];
-    bool isAddingSubscore = [score addOrRemoveSubscoreWithName:name withTimeIndex:startTime];
-    [score changeTimeIndexTo:currentScoreIndex];  //maybe reorder these so we don't have to do visual updates until we know if its feasible.  not sure right now, so we'll wait
-    [self updateButtonColors];
-    [self updateNoteExistanceToEndFromTime:startTime];
-    if (isCurrentlyPlaying && !isGloballyFeasible)
+    if (startTime < score.numberOfTimeInstances)
     {
-        UIAlertView * alert =[[UIAlertView alloc ] initWithTitle:@"Infeasible Change"
-                                                         message:@"Your score change was infeasible for the robots that are currently playing."
-                                                        delegate:self
-                                               cancelButtonTitle:@"OK"
-                                               otherButtonTitles: nil];
-        [alert show];
-        [score addOrRemoveSubscoreWithName:name withTimeIndex:startTime];
-        [score changeTimeIndexTo:currentScoreIndex];
+        bool isAddingSubscore = [score addOrRemoveSubscoreWithName:name withTimeIndex:startTime];
+        [score changeTimeIndexTo:currentScoreIndex];  //maybe reorder these so we don't have to do visual updates until we know if its feasible.  not sure right now, so we'll wait
         [self updateButtonColors];
         [self updateNoteExistanceToEndFromTime:startTime];
-        if (!isGloballyFeasible)
+        if (isCurrentlyPlaying && !isGloballyFeasible)
         {
-            NSLog(@"Problem: reversed subscore change didn't reverse infeasibility.");
-        }
-    }
-    else
-    {
-        if (isAddingSubscore)
-        {
-            [score sendAddSubscoreMessage:name withStartTimeIndex:startTime];
+            UIAlertView * alert =[[UIAlertView alloc ] initWithTitle:@"Infeasible Change"
+                                                             message:@"Your score change was infeasible for the robots that are currently playing."
+                                                            delegate:self
+                                                   cancelButtonTitle:@"OK"
+                                                   otherButtonTitles: nil];
+            [alert show];
+            [score addOrRemoveSubscoreWithName:name withTimeIndex:startTime];
+            [score changeTimeIndexTo:currentScoreIndex];
+            [self updateButtonColors];
+            [self updateNoteExistanceToEndFromTime:startTime];
+            if (!isGloballyFeasible)
+            {
+                NSLog(@"Problem: reversed subscore change didn't reverse infeasibility.");
+            }
         }
         else
         {
-            [score sendRemoveSubscoreMessage:name withStartTimeIndex:startTime];
+            if (isAddingSubscore)
+            {
+                [score sendAddSubscoreMessage:name withStartTimeIndex:startTime];
+            }
+            else
+            {
+                [score sendRemoveSubscoreMessage:name withStartTimeIndex:startTime];
+            }
         }
     }
 }
@@ -326,7 +342,7 @@
 - (IBAction)didTouchTempo:(id)sender
 {
     [masterView setTempoFactor:(tempoControl.maximumValue - tempoControl.value + tempoControl.minimumValue)];
-    tempoText.text = [NSString stringWithFormat:@"Tempo (%0.1fx)", (tempoControl.maximumValue - tempoControl.value + tempoControl.minimumValue)];
+    //tempoText.text = [NSString stringWithFormat:@"Tempo (%0.1fx)", (tempoControl.maximumValue - tempoControl.value + tempoControl.minimumValue)];
     
     /*for(UIView *myView in [ScoreView subviews])
     {
@@ -361,8 +377,8 @@
 - (void) initializeScoreWithSubscores:(NSMutableDictionary *)subscores withNumberOfTimeIndices:(int)numTimes
 {
     buttonArray = [[NSArray alloc] initWithObjects:buttonOne, buttonTwo, buttonThree, buttonFour, buttonFive, buttonSix, nil];
-    NSArray *guitarArray = [[NSArray alloc] initWithObjects:Grid2, Grid3, Grid7, Grid9, Grid11, Grid13, Grid14, nil];
-    NSArray *pianoArray = [[NSArray alloc] initWithObjects:Grid1, Grid4, Grid5, Grid6, Grid8, Grid10, Grid12, nil];
+    NSArray *guitarArray = [[NSArray alloc] initWithObjects:Grid2, Grid11, Grid14, Grid9, Grid3, Grid13, Grid7, nil];
+    NSArray *pianoArray = [[NSArray alloc] initWithObjects:Grid1, Grid12, Grid5, Grid6, Grid8, Grid10, Grid4, nil];
     NSArray *drumArray = [[NSArray alloc] initWithObjects:Drum1, Drum2, Drum3, Drum4, Drum5, nil];
     
     for (GridView *view in guitarArray)
@@ -421,17 +437,94 @@
 
 - (void) updateButtonColors
 {
-    for (UIButton *button in buttonArray)
+//    for (UIButton *button in buttonArray)
+//    {
+//        NSString *subscoreName = button.titleLabel.text;
+//        if ([score isSubscoreName:subscoreName includedInScoreAtTime:currentScoreIndex])
+//        {
+//            Subscore *subscore = [score.subscoreDictionary objectForKey:subscoreName];
+//            [button setTitleColor:subscore.color forState:UIControlStateNormal];
+//        }
+//        else
+//        {
+//            [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//        }
+//    }
+    int i = 0;
+    for (i = 0; i < 6; i++)
     {
+        UIButton *button = [buttonArray objectAtIndex:i];
         NSString *subscoreName = button.titleLabel.text;
-        if ([score isSubscoreName:subscoreName includedInScoreAtTime:currentScoreIndex])
+        switch (i)
         {
-            Subscore *subscore = [score.subscoreDictionary objectForKey:subscoreName];
-            [button setTitleColor:subscore.color forState:UIControlStateNormal];
-        }
-        else
-        {
-            [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            case 0:
+                if (buttonOneBool)
+                {
+                    Subscore *subscore = [score.subscoreDictionary objectForKey:subscoreName];
+                    [button setTitleColor:subscore.color forState:UIControlStateNormal];
+                }
+                else
+                {
+                    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                }
+                break;
+            case 1:
+                if (buttonTwoBool)
+                {
+                    Subscore *subscore = [score.subscoreDictionary objectForKey:subscoreName];
+                    [button setTitleColor:subscore.color forState:UIControlStateNormal];
+                }
+                else
+                {
+                    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                }
+                break;
+            case 2:
+                if (buttonThreeBool)
+                {
+                    Subscore *subscore = [score.subscoreDictionary objectForKey:subscoreName];
+                    [button setTitleColor:subscore.color forState:UIControlStateNormal];
+                }
+                else
+                {
+                    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                }
+                break;
+            case 3:
+                if (buttonFourBool)
+                {
+                    Subscore *subscore = [score.subscoreDictionary objectForKey:subscoreName];
+                    [button setTitleColor:subscore.color forState:UIControlStateNormal];
+                }
+                else
+                {
+                    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                }
+                break;
+            case 4:
+                if (buttonFiveBool)
+                {
+                    Subscore *subscore = [score.subscoreDictionary objectForKey:subscoreName];
+                    [button setTitleColor:subscore.color forState:UIControlStateNormal];
+                }
+                else
+                {
+                    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                }
+                break;
+            case 5:
+                if (buttonSixBool)
+                {
+                    Subscore *subscore = [score.subscoreDictionary objectForKey:subscoreName];
+                    [button setTitleColor:subscore.color forState:UIControlStateNormal];
+                }
+                else
+                {
+                    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                }
+                break;
+            default:
+                break;
         }
     }
 }
@@ -539,13 +632,13 @@
     {
         textColor = [UIColor redColor];
         NSLog(@"NOT FEASIBLE");
-        PInUseText.text = @"0";
-        GInUseText.text = @"0";
-        DInUseText.text = @"0";
-        PGInUseText.text = @"0";
-        GDInUseText.text = @"0";
-        PDInUseText.text = @"0";
-        PGDInUseText.text = @"0";
+//        PInUseText.text = @"0";
+//        GInUseText.text = @"0";
+//        DInUseText.text = @"0";
+//        PGInUseText.text = @"0";
+//        GDInUseText.text = @"0";
+//        PDInUseText.text = @"0";
+//        PGDInUseText.text = @"0";
         startButton.enabled = false;
         isGloballyFeasible = false;
         self.navigationController.navigationBar.barTintColor = [UIColor redColor];
@@ -555,13 +648,13 @@
     else
     {
         textColor = [UIColor clearColor];
-        PInUseText.text = [[NSString alloc] initWithFormat:@"%i",[[optimalDistrib objectAtIndex:0] intValue]];
-        GInUseText.text = [[NSString alloc] initWithFormat:@"%i",[[optimalDistrib objectAtIndex:1] intValue]];
-        DInUseText.text = [[NSString alloc] initWithFormat:@"%i",[[optimalDistrib objectAtIndex:2] intValue]];
-        PGInUseText.text = [[NSString alloc] initWithFormat:@"%i",[[optimalDistrib objectAtIndex:3] intValue]];
-        GDInUseText.text = [[NSString alloc] initWithFormat:@"%i",[[optimalDistrib objectAtIndex:4] intValue]];
-        PDInUseText.text = [[NSString alloc] initWithFormat:@"%i",[[optimalDistrib objectAtIndex:5] intValue]];
-        PGDInUseText.text = [[NSString alloc] initWithFormat:@"%i",[[optimalDistrib objectAtIndex:6] intValue]];
+//        PInUseText.text = [[NSString alloc] initWithFormat:@"%i",[[optimalDistrib objectAtIndex:0] intValue]];
+//        GInUseText.text = [[NSString alloc] initWithFormat:@"%i",[[optimalDistrib objectAtIndex:1] intValue]];
+//        DInUseText.text = [[NSString alloc] initWithFormat:@"%i",[[optimalDistrib objectAtIndex:2] intValue]];
+//        PGInUseText.text = [[NSString alloc] initWithFormat:@"%i",[[optimalDistrib objectAtIndex:3] intValue]];
+//        GDInUseText.text = [[NSString alloc] initWithFormat:@"%i",[[optimalDistrib objectAtIndex:4] intValue]];
+//        PDInUseText.text = [[NSString alloc] initWithFormat:@"%i",[[optimalDistrib objectAtIndex:5] intValue]];
+//        PGDInUseText.text = [[NSString alloc] initWithFormat:@"%i",[[optimalDistrib objectAtIndex:6] intValue]];
         NSLog(@"WOOOO FEASIBLE!!!!");
         if (!isCurrentlyPlaying)
         {
@@ -616,6 +709,68 @@
     GDSlider.enabled = true;
     PDSlider.enabled = true;
     PGDSlider.enabled = true;
+    
+    for (int i = 0; i< [buttonArray count]; i++)
+    {
+        UIButton *button = [buttonArray objectAtIndex:i];
+        NSString *subscoreName = button.titleLabel.text;
+        if ([score isSubscoreName:subscoreName includedInScoreAtTime:0])
+        {
+            Subscore *subscore = [score.subscoreDictionary objectForKey:subscoreName];
+            [button setTitleColor:subscore.color forState:UIControlStateNormal];
+            switch (i)
+            {
+                case 0:
+                    buttonOneBool = YES;
+                    break;
+                case 1:
+                    buttonTwoBool = YES;
+                    break;
+                case 2:
+                    buttonThreeBool = YES;
+                    break;
+                case 3:
+                    buttonFourBool = YES;
+                    break;
+                case 4:
+                    buttonFiveBool = YES;
+                    break;
+                case 5:
+                    buttonSixBool = YES;
+                    break;
+                default:
+                    break;
+            }
+        }
+        else
+        {
+            [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            switch (i)
+            {
+                case 0:
+                    buttonOneBool = NO;
+                    break;
+                case 1:
+                    buttonTwoBool = NO;
+                    break;
+                case 2:
+                    buttonThreeBool = NO;
+                    break;
+                case 3:
+                    buttonFourBool = NO;
+                    break;
+                case 4:
+                    buttonFiveBool = NO;
+                    break;
+                case 5:
+                    buttonSixBool = NO;
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+    
 }
 
 - (void) matlabReachedTimeIndex:(int)index
@@ -633,6 +788,110 @@
     [[masterView tableView] reloadData];
     //[[masterView tableView] performSelector:@selector(reloadData) onThread:<#(NSThread *)#> withObject:<#(id)#> waitUntilDone:<#(BOOL)#>];
     //[[masterView tableView] performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
+    if ([self getFirstEditableTimeForScore] == (15+10))
+    {
+        for (int i = 0; i < [buttonArray count]; i++)
+        {
+            UIButton *button = [buttonArray objectAtIndex:i];
+            if ([button.titleLabel.text isEqualToString:@"Drums"])
+            {
+                switch (i)
+                {
+                    case 0:
+                        [self touchedButtonOne:nil];
+                        break;
+                    case 1:
+                        [self touchedButtonTwo:nil];
+                        break;
+                    case 2:
+                        [self touchedButtonThree:nil];
+                        break;
+                    case 3:
+                        [self touchedButtonFour:nil];
+                        break;
+                    case 4:
+                        [self touchedButtonFive:nil];
+                        break;
+                    case 5:
+                        [self touchedButtonSix:nil];
+                        break;
+                    default:
+                        break;
+                }
+            }
+                
+        }
+    }
+    
+    if ([self getFirstEditableTimeForScore] == (25+10))
+    {
+        for (int i = 0; i < [buttonArray count]; i++)
+        {
+            UIButton *button = [buttonArray objectAtIndex:i];
+            if ([button.titleLabel.text isEqualToString:@"Guitar Chords"])
+            {
+                switch (i)
+                {
+                    case 0:
+                        [self touchedButtonOne:nil];
+                        break;
+                    case 1:
+                        [self touchedButtonTwo:nil];
+                        break;
+                    case 2:
+                        [self touchedButtonThree:nil];
+                        break;
+                    case 3:
+                        [self touchedButtonFour:nil];
+                        break;
+                    case 4:
+                        [self touchedButtonFive:nil];
+                        break;
+                    case 5:
+                        [self touchedButtonSix:nil];
+                        break;
+                    default:
+                        break;
+                }
+            }
+            
+        }
+    }
+    
+//    if ([self getFirstEditableTimeForScore] == 51)
+//    {
+//        for (int i = 0; i < [buttonArray count]; i++)
+//        {
+//            UIButton *button = [buttonArray objectAtIndex:i];
+//            if ([button.titleLabel.text isEqualToString:@"Piano Harmony 1"])
+//            {
+//                switch (i)
+//                {
+//                    case 0:
+//                        [self touchedButtonOne:nil];
+//                        break;
+//                    case 1:
+//                        [self touchedButtonTwo:nil];
+//                        break;
+//                    case 2:
+//                        [self touchedButtonThree:nil];
+//                        break;
+//                    case 3:
+//                        [self touchedButtonFour:nil];
+//                        break;
+//                    case 4:
+//                        [self touchedButtonFive:nil];
+//                        break;
+//                    case 5:
+//                        [self touchedButtonSix:nil];
+//                        break;
+//                    default:
+//                        break;
+//                }
+//            }
+//            
+//        }
+//    }
 }
 
 -(void) updateScoreMaskExistance
@@ -669,7 +928,7 @@
     {
         return 0;
     }
-    return (self.currentMatlabTime + 2);
+    return (self.currentMatlabTime + 10);
 }
 
 @end

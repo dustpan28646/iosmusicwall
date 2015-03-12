@@ -162,7 +162,8 @@ static float const coloredCircleDiameter = 28.0;
                         instrumentType = SUBSCORE_PIANO;
                     }
                     
-                    bool isSubscoreDefault = [field isEqualToString:@"Piano/Guitar Lead"] || [field isEqualToString:@"Guitar Chords"] || [field isEqualToString:@"Piano Bass"];
+                    bool isSubscoreDefault = false;
+                    //bool isSubscoreDefault = [field isEqualToString:@"Piano/Guitar Lead"] || [field isEqualToString:@"Guitar Chords"] || [field isEqualToString:@"Piano Bass"];
                     
                     Subscore *subscore = [[Subscore alloc] initWithInstrumentType:instrumentType withIsDefault:isSubscoreDefault wthName:field withColor:[colorArray objectAtIndex:[subscoreDictionary count]]];
                     [subscoreNames addObject:field];
@@ -174,13 +175,13 @@ static float const coloredCircleDiameter = 28.0;
             }
             else if ((currentSubscoreName != nil) && ![currentSubscoreName isEqualToString:@""])
             {
-                [currentSubscoreLine addObject:[[SubscoreNote alloc] initWithNoteString:field]];
+                [currentSubscoreLine addObject:[[SubscoreNote alloc] initWithNoteString:field withSubscoreName:currentSubscoreName]];
             }
         }
     }
     else if (currentSubscoreLine != nil)
     {
-        [currentSubscoreLine addObject:[[SubscoreNote alloc] initWithNoteString:@""]];
+        [currentSubscoreLine addObject:[[SubscoreNote alloc] initWithNoteString:@"" withSubscoreName:currentSubscoreName]];
     }
 }
 
@@ -407,6 +408,8 @@ static float const coloredCircleDiameter = 28.0;
     {
         [myTable selectRowAtIndexPath:currentSelection animated:NO scrollPosition:UITableViewScrollPositionNone];
     }
+    
+    
     //NSLog(@"Did Scroll");
 }
 

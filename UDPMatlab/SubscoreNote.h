@@ -44,16 +44,24 @@ enum DRUM_NOTES
     DRUM_NOTE_FOUR = 4
 };
 
+enum SUBSCORE_TYPE
+{
+    SUBSCORE_TYPE_GUITAR = 0,
+    SUBSCORE_TYPE_PIANO = 1,
+    SUBSCORE_TYPE_DRUM = 2
+};
+
 @interface SubscoreNote : NSObject
 {
 }
 
 @property (nonatomic) enum NOTE_OCTAVE octave;
 @property (nonatomic) enum NOTE_LETTER letter;
+@property (nonatomic) enum SUBSCORE_TYPE subscoreType;
 
-- (id) initWithOctave:(enum NOTE_OCTAVE)noteOctave withLetter:(enum NOTE_LETTER)noteLetter;
+- (id) initWithOctave:(enum NOTE_OCTAVE)noteOctave withLetter:(enum NOTE_LETTER)noteLetter withSubscoreName:(NSString *)subscoreName;
 
-- (id) initWithNoteString:(NSString *)noteString;
+- (id) initWithNoteString:(NSString *)noteString withSubscoreName:(NSString *)subscoreName;
 
 - (int) getIntegerIndexForNote;
 

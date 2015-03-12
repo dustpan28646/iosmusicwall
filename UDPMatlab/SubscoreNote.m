@@ -13,20 +13,36 @@
 @synthesize letter;
 @synthesize octave;
 
-- (id) initWithOctave:(enum NOTE_OCTAVE)noteOctave withLetter:(enum NOTE_LETTER)noteLetter
+- (id) initWithOctave:(enum NOTE_OCTAVE)noteOctave withLetter:(enum NOTE_LETTER)noteLetter withSubscoreName:(NSString *)subscoreName
 {
     self = [super init];
     if (self)
     {
         self.octave = noteOctave;
         self.letter = noteLetter;
+        if ([subscoreName rangeOfString:@"Guitar"].location != NSNotFound)
+        {
+            self.subscoreType = SUBSCORE_TYPE_GUITAR;
+        }
+        else if ([subscoreName rangeOfString:@"Piano"].location != NSNotFound)
+        {
+            self.subscoreType = SUBSCORE_TYPE_PIANO;
+        }
+        else if ([subscoreName rangeOfString:@"Drum"].location != NSNotFound)
+        {
+            self.subscoreType = SUBSCORE_TYPE_DRUM;
+        }
+        else
+        {
+            NSLog(@"No valid type for subscore name!  Problem!");
+        }
     }
     return self;
 }
 
-- (id) initWithNoteString:(NSString *)noteString
+- (id) initWithNoteString:(NSString *)noteString withSubscoreName:(NSString *)subscoreName
 {
-    return [self initWithOctave:[SubscoreNote getOctaveForString:noteString] withLetter:[SubscoreNote getLetterForString:noteString]];
+    return [self initWithOctave:[SubscoreNote getOctaveForString:noteString] withLetter:[SubscoreNote getLetterForString:noteString] withSubscoreName:subscoreName];
 }
 
 + (enum NOTE_OCTAVE) getOctaveForString:(NSString *)noteString
@@ -62,6 +78,90 @@
     {
         return self.letter;
     }
+    
+    if ((self.octave == OCTAVE_ONE) && (self.letter == NOTE_F) && (self.subscoreType == SUBSCORE_TYPE_PIANO))
+    {
+        return ((OCTAVE_THREE *12) + (NOTE_B));
+    }
+    
+    if ((self.octave == OCTAVE_THREE) && (self.letter == NOTE_C_SHARP) && (self.subscoreType == SUBSCORE_TYPE_PIANO))
+    {
+        return ((OCTAVE_ONE *12) + (NOTE_G_SHARP));
+    }
+    
+    if ((self.octave == OCTAVE_THREE) && (self.letter == NOTE_B) && (self.subscoreType == SUBSCORE_TYPE_PIANO))
+    {
+        return ((OCTAVE_THREE *12) + (NOTE_C_SHARP));
+    }
+    
+    if ((self.octave == OCTAVE_ONE) && (self.letter == NOTE_G_SHARP) && (self.subscoreType == SUBSCORE_TYPE_PIANO))
+    {
+        return ((OCTAVE_ONE *12) + (NOTE_F));
+    }
+    
+    //new swaps
+    if ((self.octave == OCTAVE_ONE) && (self.letter == NOTE_C) && (self.subscoreType == SUBSCORE_TYPE_GUITAR))
+    {
+        return ((OCTAVE_ONE *12) + (NOTE_E));
+    }
+    
+    if ((self.octave == OCTAVE_ONE) && (self.letter == NOTE_E) && (self.subscoreType == SUBSCORE_TYPE_GUITAR))
+    {
+        return ((OCTAVE_ONE *12) + (NOTE_C));
+    }
+    
+    if ((self.octave == OCTAVE_ONE) && (self.letter == NOTE_F) && (self.subscoreType == SUBSCORE_TYPE_GUITAR))
+    {
+        return ((OCTAVE_ONE *12) + (NOTE_C_SHARP));
+    }
+    
+    if ((self.octave == OCTAVE_ONE) && (self.letter == NOTE_C_SHARP) && (self.subscoreType == SUBSCORE_TYPE_GUITAR))
+    {
+        return ((OCTAVE_TWO *12) + (NOTE_C));
+    }
+    
+    if ((self.octave == OCTAVE_TWO) && (self.letter == NOTE_C) && (self.subscoreType == SUBSCORE_TYPE_GUITAR))
+    {
+        return ((OCTAVE_ONE *12) + (NOTE_F));
+    }
+    
+    // new piano swaps
+    
+    //D3 <-> B2
+    if ((self.octave == OCTAVE_THREE) && (self.letter == NOTE_D) && (self.subscoreType == SUBSCORE_TYPE_PIANO))
+    {
+        return ((OCTAVE_TWO *12) + (NOTE_B));
+    }
+    
+    if ((self.octave == OCTAVE_TWO) && (self.letter == NOTE_B) && (self.subscoreType == SUBSCORE_TYPE_PIANO))
+    {
+        return ((OCTAVE_THREE *12) + (NOTE_D));
+    }
+    
+    
+    //F#2 <-> D#2
+    if ((self.octave == OCTAVE_TWO) && (self.letter == NOTE_F_SHARP) && (self.subscoreType == SUBSCORE_TYPE_PIANO))
+    {
+        return ((OCTAVE_TWO *12) + (NOTE_E_FLAT));
+    }
+    
+    if ((self.octave == OCTAVE_TWO) && (self.letter == NOTE_E_FLAT) && (self.subscoreType == SUBSCORE_TYPE_PIANO))
+    {
+        return ((OCTAVE_TWO *12) + (NOTE_F_SHARP));
+    }
+    
+    //G#2 <-> G1
+    
+    if ((self.octave == OCTAVE_TWO) && (self.letter == NOTE_G_SHARP) && (self.subscoreType == SUBSCORE_TYPE_PIANO))
+    {
+        return ((OCTAVE_ONE *12) + (NOTE_G));
+    }
+    
+    if ((self.octave == OCTAVE_ONE) && (self.letter == NOTE_G) && (self.subscoreType == SUBSCORE_TYPE_PIANO))
+    {
+        return ((OCTAVE_TWO *12) + (NOTE_G_SHARP));
+    }
+    
     return ((self.octave * 12) + (self.letter));
 }
 
