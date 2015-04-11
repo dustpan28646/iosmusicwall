@@ -17,6 +17,9 @@
 		C935107E1819895D002B3C19 /* CymbalView.m in Sources */ = {isa = PBXBuildFile; fileRef = C935107D1819895D002B3C19 /* CymbalView.m */; };
 		C93510801819898F002B3C19 /* cymbal.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C935107F1819898F002B3C19 /* cymbal.jpg */; };
 		C935108218198A9D002B3C19 /* Piano-Keyboard-Bumper-Sticker-(7396).jpg in Resources */ = {isa = PBXBuildFile; fileRef = C935108118198A9D002B3C19 /* Piano-Keyboard-Bumper-Sticker-(7396).jpg */; };
+		C94250491AD31CDB0004EF0A /* BareBooleanObject.m in Sources */ = {isa = PBXBuildFile; fileRef = C94250481AD31CDB0004EF0A /* BareBooleanObject.m */; };
+		C942507E1AD473190004EF0A /* SubscoreSuper.m in Sources */ = {isa = PBXBuildFile; fileRef = C942507D1AD473190004EF0A /* SubscoreSuper.m */; };
+		C94250811AD474A50004EF0A /* SubscoreLinked.m in Sources */ = {isa = PBXBuildFile; fileRef = C94250801AD474A50004EF0A /* SubscoreLinked.m */; };
 		C9425F9C17F09FF700A32E9B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9425F9B17F09FF700A32E9B /* UIKit.framework */; };
 		C9425F9E17F09FF700A32E9B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9425F9D17F09FF700A32E9B /* Foundation.framework */; };
 		C9425FA017F09FF700A32E9B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9425F9F17F09FF700A32E9B /* CoreGraphics.framework */; };
@@ -67,6 +70,12 @@
 		C935107D1819895D002B3C19 /* CymbalView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CymbalView.m; sourceTree = "<group>"; };
 		C935107F1819898F002B3C19 /* cymbal.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cymbal.jpg; sourceTree = "<group>"; };
 		C935108118198A9D002B3C19 /* Piano-Keyboard-Bumper-Sticker-(7396).jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Piano-Keyboard-Bumper-Sticker-(7396).jpg"; sourceTree = "<group>"; };
+		C94250471AD31CDB0004EF0A /* BareBooleanObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BareBooleanObject.h; sourceTree = "<group>"; };
+		C94250481AD31CDB0004EF0A /* BareBooleanObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BareBooleanObject.m; sourceTree = "<group>"; };
+		C942507C1AD473190004EF0A /* SubscoreSuper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubscoreSuper.h; sourceTree = "<group>"; };
+		C942507D1AD473190004EF0A /* SubscoreSuper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubscoreSuper.m; sourceTree = "<group>"; };
+		C942507F1AD474A50004EF0A /* SubscoreLinked.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubscoreLinked.h; sourceTree = "<group>"; };
+		C94250801AD474A50004EF0A /* SubscoreLinked.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubscoreLinked.m; sourceTree = "<group>"; };
 		C9425F9817F09FF700A32E9B /* UDPMatlab.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UDPMatlab.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9425F9B17F09FF700A32E9B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		C9425F9D17F09FF700A32E9B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -202,10 +211,16 @@
 				78BE742A1894B2C800C6FEEF /* InstantaneousScoreObject.m */,
 				C9444313188F0B8500EDE608 /* Subscore.h */,
 				C9444314188F0B8500EDE608 /* Subscore.m */,
+				C942507C1AD473190004EF0A /* SubscoreSuper.h */,
+				C942507D1AD473190004EF0A /* SubscoreSuper.m */,
+				C942507F1AD474A50004EF0A /* SubscoreLinked.h */,
+				C94250801AD474A50004EF0A /* SubscoreLinked.m */,
 				C9F22F4718967C54007497C6 /* SubscoreNote.h */,
 				C9F22F4818967C54007497C6 /* SubscoreNote.m */,
 				C9F22F4A18969453007497C6 /* BooleanObject.h */,
 				C9F22F4B18969453007497C6 /* BooleanObject.m */,
+				C94250471AD31CDB0004EF0A /* BareBooleanObject.h */,
+				C94250481AD31CDB0004EF0A /* BareBooleanObject.m */,
 				C9F22F4D1896A1AC007497C6 /* InstrumentType.h */,
 				C9F22F4E1896A1AC007497C6 /* InstrumentType.m */,
 				C9E0C27318A9558200C0EE7A /* NoteExistanceStructure.h */,
@@ -329,10 +344,12 @@
 				C9444315188F0B8500EDE608 /* Subscore.m in Sources */,
 				C966954818F336E800386C09 /* minRobots.c in Sources */,
 				C9425FA817F09FF700A32E9B /* main.m in Sources */,
+				C942507E1AD473190004EF0A /* SubscoreSuper.m in Sources */,
 				C9425FAC17F09FF700A32E9B /* AppDelegate.m in Sources */,
 				C9425FBB17F09FF700A32E9B /* MasterViewController.m in Sources */,
 				78BE742B1894B2C800C6FEEF /* InstantaneousScoreObject.m in Sources */,
 				C96DDCF11A23ACD300C8DADA /* NetworkHelper.m in Sources */,
+				C94250811AD474A50004EF0A /* SubscoreLinked.m in Sources */,
 				C966954618F336E800386C09 /* hungarian.c in Sources */,
 				C95B00EB182AEF04008DBAF1 /* ScoreObject.m in Sources */,
 				C9F22F4F1896A1AC007497C6 /* InstrumentType.m in Sources */,
@@ -341,6 +358,7 @@
 				C966954718F336E800386C09 /* initialAssignment.c in Sources */,
 				C9425FC617F0A2A500A32E9B /* AsyncUdpSocket.m in Sources */,
 				C966953F18F2742700386C09 /* typeComparison.c in Sources */,
+				C94250491AD31CDB0004EF0A /* BareBooleanObject.m in Sources */,
 				C9425FC917F3345200A32E9B /* GCDAsyncUdpSocket.m in Sources */,
 				C935106A18195B5F002B3C19 /* GridView.m in Sources */,
 				C9E0C27518A9558200C0EE7A /* NoteExistanceStructure.m in Sources */,

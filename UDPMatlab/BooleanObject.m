@@ -12,10 +12,9 @@
 
 -(id) initWithBool:(bool)noteExist withSubscore:(Subscore *)initSubscore
 {
-    self = [super init];
+    self = [super initWithBool:noteExist];
     if (self)
     {
-        self.doesNoteExist = noteExist;
         self.noteSubscore = initSubscore;
     }
     return self;

@@ -122,21 +122,21 @@
     bool userNotesExist = NO;
     for (BooleanObject *note in self.pianoScoreArray)
     {
-        if (note.doesNoteExist && (note.noteSubscore == nil))
+        if (note.value && (note.noteSubscore == nil))
         {
             userNotesExist = YES;
         }
     }
     for (BooleanObject *note in self.guitarScoreArray)
     {
-        if (note.doesNoteExist && (note.noteSubscore == nil))
+        if (note.value && (note.noteSubscore == nil))
         {
             userNotesExist = YES;
         }
     }
     for (BooleanObject *note in self.drumScoreArray)
     {
-        if (note.doesNoteExist && (note.noteSubscore == nil))
+        if (note.value && (note.noteSubscore == nil))
         {
             userNotesExist = YES;
         }

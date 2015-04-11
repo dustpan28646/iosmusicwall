@@ -43,4 +43,6 @@
 
 - (void) sendAddSubscoreMessage:(NSString *)subscoreName withStartTimeIndex:(int)timeIndex;
 
+- (void) clearScore;
+
 @end

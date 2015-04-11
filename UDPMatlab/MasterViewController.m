@@ -165,6 +165,14 @@ static float const coloredCircleDiameter = 28.0;
                     bool isSubscoreDefault = false;
                     //bool isSubscoreDefault = [field isEqualToString:@"Piano/Guitar Lead"] || [field isEqualToString:@"Guitar Chords"] || [field isEqualToString:@"Piano Bass"];
                     
+                    SubscoreSuper *defaultSubscore = [self findDefaultSubscoreForSubscoreName:field];
+                    
+                    if (defaultSubscore != nil)
+                    {
+                        SubscoreLinked *linkedSubscore = [[SubscoreLinked alloc] initWithInstrumentType:instrumentType withIsDefault:isSubscoreDefault wthName:field withColor:defaultSubscore.color withUpLinkedSubscore:defaultSubscore];
+                        defaultSubscore.downLinkedSubscore = linkedSubscore;
+                    }
+        
                     Subscore *subscore = [[Subscore alloc] initWithInstrumentType:instrumentType withIsDefault:isSubscoreDefault wthName:field withColor:[colorArray objectAtIndex:[subscoreDictionary count]]];
                     [subscoreNames addObject:field];
                     currentSubscoreLine = [[NSMutableArray alloc] initWithCapacity:numberOfTimesInScore];
@@ -411,6 +419,56 @@ static float const coloredCircleDiameter = 28.0;
     
     
     //NSLog(@"Did Scroll");
+}
+
+- (SubscoreSuper *) findDefaultSubscoreForSubscoreName:(NSString *)name
+{
+    for (NSString *key in subscoreDictionary)
+    {
+        if ([self areMatchingGPSubscoresWithFirstName:key withSecondName:name])
+        {
+            return [subscoreDictionary objectForKey:key];
+        }
+    }
+    return nil;
+}
+
+
+- (bool)areMatchingGPSubscoresWithFirstName:(NSString *)fName withSecondName:(NSString *)sName
+{
+    NSRange fGuitarRangeValue = [fName rangeOfString:@"guitar" options:NSCaseInsensitiveSearch];
+    NSRange fPianoRangeValue = [fName rangeOfString:@"piano" options:NSCaseInsensitiveSearch];
+    NSRange sRange;
+    NSRange fRange;
+    
+    if (fGuitarRangeValue.location != NSNotFound)
+    {
+        sRange = [fName rangeOfString:@"piano" options:NSCaseInsensitiveSearch];
+        if (sRange.location == NSNotFound)
+        {
+            return NO;
+        }
+        fRange = fGuitarRangeValue;
+    }
+    else if (fPianoRangeValue.location != NSNotFound)
+    {
+        sRange = [fName rangeOfString:@"guitar" options:NSCaseInsensitiveSearch];
+        if (sRange.location == NSNotFound)
+        {
+            return NO;
+        }
+        fRange = fPianoRangeValue;
+    }
+    
+    NSString *reducedFString = [fName stringByReplacingCharactersInRange:fRange withString:@""];
+    NSString *reducedSString = [sName stringByReplacingCharactersInRange:sRange withString:@""];
+    
+    if ([reducedFString caseInsensitiveCompare:reducedSString] == NSOrderedSame)
+    {
+        return YES;
+    }
+    
+    return NO;
 }
 
 @end

@@ -25,7 +25,7 @@
         
         CFReadStreamRef readStream;
         CFWriteStreamRef writeStream;
-        CFStringRef remoteHost = /*CFSTR("192.168.2.145");*/CFSTR("localhost");/*CFSTR("192.168.1.29");*///CFSTR("192.168.2.141");
+        CFStringRef remoteHost = /*CFSTR("192.168.2.145");*//*CFSTR("localhost");*/CFSTR("192.168.2.145");//CFSTR("192.168.2.141");
         
         CFStreamCreatePairWithSocketToHost(NULL, remoteHost, 4380, &readStream, &writeStream);
         

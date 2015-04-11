@@ -60,7 +60,7 @@
                 if (integerIndex < 42)
                 {
                     BooleanObject *scoreNote = [instantaneousScore.pianoScoreArray objectAtIndex:integerIndex];
-                    scoreNote.doesNoteExist = YES;
+                    scoreNote.value = YES;
                     scoreNote.noteSubscore = subscore;
                 }
                 else if(integerIndex != 220)
@@ -83,7 +83,7 @@
                 if (integerIndex < 42)
                 {
                     BooleanObject *scoreNote = [instantaneousScore.guitarScoreArray objectAtIndex:integerIndex];
-                    scoreNote.doesNoteExist = YES;
+                    scoreNote.value = YES;
                     scoreNote.noteSubscore = subscore;
                 }
                 else if (integerIndex != 220)
@@ -106,7 +106,7 @@
                 if (integerIndex < 5)
                 {
                     BooleanObject *scoreNote = [instantaneousScore.drumScoreArray objectAtIndex:integerIndex];
-                    scoreNote.doesNoteExist = YES;
+                    scoreNote.value = YES;
                     scoreNote.noteSubscore = subscore;
                 }
                 else  if (integerIndex != 220)
@@ -139,7 +139,7 @@
                 if (integerIndex < 42)
                 {
                     BooleanObject *scoreNote = [instantaneousScore.pianoScoreArray objectAtIndex:integerIndex];
-                    scoreNote.doesNoteExist = NO;
+                    scoreNote.value = NO;
                     scoreNote.noteSubscore = nil;
                 }
                 else if(integerIndex != 220)
@@ -162,7 +162,7 @@
                 if (integerIndex < 42)
                 {
                     BooleanObject *scoreNote = [instantaneousScore.guitarScoreArray objectAtIndex:integerIndex];
-                    scoreNote.doesNoteExist = NO;
+                    scoreNote.value = NO;
                     scoreNote.noteSubscore = nil;
                 }
                 else if (integerIndex != 220)
@@ -185,7 +185,7 @@
                 if (integerIndex < 5)
                 {
                     BooleanObject *scoreNote = [instantaneousScore.drumScoreArray objectAtIndex:integerIndex];
-                    scoreNote.doesNoteExist = NO;
+                    scoreNote.value = NO;
                     scoreNote.noteSubscore = nil;
                 }
                 else  if (integerIndex != 220)
@@ -294,14 +294,14 @@
         for (int j = 0; j < 42; j++)
         {
             BooleanObject *booleanObj = [instScore.guitarScoreArray objectAtIndex:j];
-            if(booleanObj.doesNoteExist)
+            if(booleanObj.value)
             {
                 positionMatrix[i][positionArrayIndex] = [self convertInstrumentTypeToCombinationalType:[instScore.guitarHasInstrumentType objectAtIndex:floor(j/7)]];
                 positionArrayIndex++;
             }
             
             booleanObj = [instScore.pianoScoreArray objectAtIndex:j];
-            if(booleanObj.doesNoteExist)
+            if(booleanObj.value)
             {
                 positionMatrix[i][positionArrayIndex] = [self convertInstrumentTypeToCombinationalType:[instScore.pianoHasInstrumentType objectAtIndex:floor(j/7)]];
                 positionArrayIndex++;
@@ -311,7 +311,7 @@
         for (int j = 0; j<5; j++)
         {
             BooleanObject *booleanObj = [instScore.drumScoreArray objectAtIndex:j];
-            if(booleanObj.doesNoteExist)
+            if(booleanObj.value)
             {
                 positionMatrix[i][positionArrayIndex] = [self convertInstrumentTypeToCombinationalType:[instScore.drumHasInstrumentType objectAtIndex:j]];
                 positionArrayIndex++;
@@ -389,6 +389,30 @@
 - (void) startPlayingWithMessage:(NSString *)message
 {
     [networkHelper sendString:[NSString stringWithFormat:@"<start%@>", message]];
+}
+
+- (void) clearScore
+{
+    for (InstantaneousScoreObject *instScore in instantaneousScoreArray)
+    {
+        for (int i = 0; i < [instScore.pianoScoreArray count]; i++)
+        {
+            BooleanObject *scoreNotePiano = [instScore.pianoScoreArray objectAtIndex:i];
+            BooleanObject *scoreNoteGuitar = [instScore.guitarScoreArray objectAtIndex:i];
+            scoreNotePiano.value = NO;
+            scoreNoteGuitar.value = NO;
+            scoreNotePiano.noteSubscore = nil;
+            scoreNoteGuitar.noteSubscore = nil;
+        }
+        for (BooleanObject *drumNote in instScore.drumScoreArray)
+        {
+            drumNote.value = NO;
+            drumNote.noteSubscore = nil;
+        }
+        
+        [instScore.subscores removeAllObjects];
+    }
+    
 }
 
 @end

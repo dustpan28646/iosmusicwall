@@ -148,7 +148,7 @@ static float const inset = 3.0;
     CGContextStrokePath(context);
     UIColor *circleColor = blackColor;
     float drawRadius = 0.0;
-    if (note.doesNoteExist)
+    if (note.value)
     {
         drawRadius = selectedRadius;
         circleColor = [BooleanObject colorForSubscore:note.noteSubscore];
@@ -175,11 +175,11 @@ static float const inset = 3.0;
 - (void) touchedNote:(id)sender
 {
     Subscore *tempSubscore = note.noteSubscore; //not sure if we need to nil out the subscore for fesibility but just in case
-    note.doesNoteExist = !note.doesNoteExist;
+    note.value = !note.value;
     note.noteSubscore = nil;
     if (![delegate isValidNoteChangeForCurrentTime]) //returns feasibility
     {
-        note.doesNoteExist = !note.doesNoteExist;
+        note.value = !note.value;
         note.noteSubscore = tempSubscore;
         if (![delegate isValidNoteChangeForCurrentTime])
         {
@@ -188,7 +188,7 @@ static float const inset = 3.0;
     }
     else
     {
-        if (note.doesNoteExist)
+        if (note.value)
         {
             [networkHelper sendString:[NSString stringWithFormat:@"<ad%i:%i:%i>",type.type - 2,time,drumIndex]];
         }

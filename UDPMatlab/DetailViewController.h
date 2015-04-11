@@ -30,12 +30,13 @@
     UIView *scoreMask;
     bool isGloballyFeasible;
     bool isCurrentlyPlaying;
-    bool buttonOneBool;
-    bool buttonTwoBool;
-    bool buttonThreeBool;
-    bool buttonFourBool;
-    bool buttonFiveBool;
-    bool buttonSixBool;
+    NSArray *isButtonSelected;
+//    bool buttonOneBool;
+//    bool buttonTwoBool;
+//    bool buttonThreeBool;
+//    bool buttonFourBool;
+//    bool buttonFiveBool;
+//    bool buttonSixBool;
 }
 
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;

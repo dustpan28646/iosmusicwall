@@ -158,7 +158,7 @@ static float const buttonRadius = 15.0;
     while (i < 6)
     {
         BooleanObject *boolObj = [score objectAtIndex:i];
-        if (boolObj.doesNoteExist)
+        if (boolObj.value)
         {
             circleRadius = selectedRadius;
             myColor = [BooleanObject colorForSubscore:boolObj.noteSubscore];
@@ -217,11 +217,11 @@ static float const buttonRadius = 15.0;
 {
     BooleanObject *boolObj = [score objectAtIndex:index];
     Subscore *temp = boolObj.noteSubscore;  //once again, not sure if we need to actually nil this out, but just in case
-    boolObj.doesNoteExist = !boolObj.doesNoteExist;
+    boolObj.value = !boolObj.value;
     boolObj.noteSubscore = nil;
     if (![delegate isValidNoteChangeForCurrentTime])
     {
-        boolObj.doesNoteExist = !boolObj.doesNoteExist;
+        boolObj.value = !boolObj.value;
         boolObj.noteSubscore = temp;
         if (![delegate isValidNoteChangeForCurrentTime])
         {
@@ -230,7 +230,7 @@ static float const buttonRadius = 15.0;
     }
     else
     {
-        [self sendAddOrRemoveNoteMessageWithNoteIndex:index withAddOrRemoveBool:boolObj.doesNoteExist];
+        [self sendAddOrRemoveNoteMessageWithNoteIndex:index withAddOrRemoveBool:boolObj.value];
         [self setNeedsDisplay];
     }
 }

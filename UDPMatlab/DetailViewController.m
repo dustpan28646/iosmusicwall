@@ -158,12 +158,12 @@
     isGloballyFeasible = false;
     isCurrentlyPlaying = false;
     scoreMask = nil;
-    buttonOneBool = false;
-    buttonTwoBool = false;
-    buttonThreeBool = false;
-    buttonFourBool = false;
-    buttonFiveBool = false;
-    buttonSixBool = false;
+//    buttonOneBool = false;
+//    buttonTwoBool = false;
+//    buttonThreeBool = false;
+//    buttonFourBool = false;
+//    buttonFiveBool = false;
+//    buttonSixBool = false;
     tempoControl.hidden = true;
     [super viewWillAppear:animated];
 }
@@ -245,42 +245,37 @@
 
 - (IBAction)touchedButtonOne:(id)sender
 {
-    buttonOneBool = !buttonOneBool;
-    [self buttonAddOrRemoveSubscoreWithName:[buttonOne titleLabel].text];
+    [self buttonAddOrRemoveSubscoreWithButtonIndex:0];
 }
 
 - (IBAction)touchedButtonTwo:(id)sender
 {
-    buttonTwoBool = !buttonTwoBool;
-    [self buttonAddOrRemoveSubscoreWithName:[buttonTwo titleLabel].text];
+    [self buttonAddOrRemoveSubscoreWithButtonIndex:1];
 }
 
 - (IBAction)touchedButtonThree:(id)sender
 {
-    buttonThreeBool = !buttonThreeBool;
-    [self buttonAddOrRemoveSubscoreWithName:[buttonThree titleLabel].text];
+    [self buttonAddOrRemoveSubscoreWithButtonIndex:2];
 }
 
 - (IBAction)touchedButtonFour:(id)sender
 {
-    buttonFourBool = !buttonFourBool;
-    [self buttonAddOrRemoveSubscoreWithName:[buttonFour titleLabel].text];
+    [self buttonAddOrRemoveSubscoreWithButtonIndex:3];
 }
 
 - (IBAction)touchedButtonFive:(id)sender
 {
-    buttonFiveBool = !buttonFiveBool;
-    [self buttonAddOrRemoveSubscoreWithName:[buttonFive titleLabel].text];
+    [self buttonAddOrRemoveSubscoreWithButtonIndex:4];
 }
 
 - (IBAction)touchedButtonSix:(id)sender
 {
-    buttonSixBool = !buttonSixBool;
-    [self buttonAddOrRemoveSubscoreWithName:[buttonSix titleLabel].text];
+    [self buttonAddOrRemoveSubscoreWithButtonIndex:5];
 }
 
-- (void)buttonAddOrRemoveSubscoreWithName:(NSString *)name
+- (void)buttonAddOrRemoveSubscoreWithButtonIndex:(int)buttonIndex
 {
+    NSString *name = [((UIButton *)[buttonArray objectAtIndex:buttonIndex]) titleLabel].text;
     int startTime = [self getFirstEditableTimeForScore];
     if (startTime < score.numberOfTimeInstances)
     {
@@ -310,10 +305,12 @@
             if (isAddingSubscore)
             {
                 [score sendAddSubscoreMessage:name withStartTimeIndex:startTime];
+                ((BareBooleanObject *)[isButtonSelected objectAtIndex:buttonIndex]).value = YES;
             }
             else
             {
                 [score sendRemoveSubscoreMessage:name withStartTimeIndex:startTime];
+                ((BareBooleanObject *)[isButtonSelected objectAtIndex:buttonIndex]).value = NO;
             }
         }
     }
@@ -377,6 +374,13 @@
 - (void) initializeScoreWithSubscores:(NSMutableDictionary *)subscores withNumberOfTimeIndices:(int)numTimes
 {
     buttonArray = [[NSArray alloc] initWithObjects:buttonOne, buttonTwo, buttonThree, buttonFour, buttonFive, buttonSix, nil];
+    isButtonSelected = [[NSArray alloc] initWithObjects:[[NSNumber alloc] initWithBool:NO],
+                        [[BareBooleanObject alloc] initWithBool:NO],
+                        [[BareBooleanObject alloc] initWithBool:NO],
+                        [[BareBooleanObject alloc] initWithBool:NO],
+                        [[BareBooleanObject alloc] initWithBool:NO],
+                        [[BareBooleanObject alloc] initWithBool:NO],
+                        nil];
     NSArray *guitarArray = [[NSArray alloc] initWithObjects:Grid2, Grid11, Grid14, Grid9, Grid3, Grid13, Grid7, nil];
     NSArray *pianoArray = [[NSArray alloc] initWithObjects:Grid1, Grid12, Grid5, Grid6, Grid8, Grid10, Grid4, nil];
     NSArray *drumArray = [[NSArray alloc] initWithObjects:Drum1, Drum2, Drum3, Drum4, Drum5, nil];
@@ -450,89 +454,104 @@
 //            [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
 //        }
 //    }
-    int i = 0;
-    for (i = 0; i < 6; i++)
+    
+    for (int i = 0; i < [isButtonSelected count]; i++)
     {
         UIButton *button = [buttonArray objectAtIndex:i];
-        NSString *subscoreName = button.titleLabel.text;
-        switch (i)
+        if ([[isButtonSelected objectAtIndex:i] boolValue])
         {
-            case 0:
-                if (buttonOneBool)
-                {
-                    Subscore *subscore = [score.subscoreDictionary objectForKey:subscoreName];
-                    [button setTitleColor:subscore.color forState:UIControlStateNormal];
-                }
-                else
-                {
-                    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-                }
-                break;
-            case 1:
-                if (buttonTwoBool)
-                {
-                    Subscore *subscore = [score.subscoreDictionary objectForKey:subscoreName];
-                    [button setTitleColor:subscore.color forState:UIControlStateNormal];
-                }
-                else
-                {
-                    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-                }
-                break;
-            case 2:
-                if (buttonThreeBool)
-                {
-                    Subscore *subscore = [score.subscoreDictionary objectForKey:subscoreName];
-                    [button setTitleColor:subscore.color forState:UIControlStateNormal];
-                }
-                else
-                {
-                    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-                }
-                break;
-            case 3:
-                if (buttonFourBool)
-                {
-                    Subscore *subscore = [score.subscoreDictionary objectForKey:subscoreName];
-                    [button setTitleColor:subscore.color forState:UIControlStateNormal];
-                }
-                else
-                {
-                    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-                }
-                break;
-            case 4:
-                if (buttonFiveBool)
-                {
-                    Subscore *subscore = [score.subscoreDictionary objectForKey:subscoreName];
-                    [button setTitleColor:subscore.color forState:UIControlStateNormal];
-                }
-                else
-                {
-                    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-                }
-                break;
-            case 5:
-                if (buttonSixBool)
-                {
-                    Subscore *subscore = [score.subscoreDictionary objectForKey:subscoreName];
-                    [button setTitleColor:subscore.color forState:UIControlStateNormal];
-                }
-                else
-                {
-                    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-                }
-                break;
-            default:
-                break;
+            Subscore *subscore = [score.subscoreDictionary objectForKey:button.titleLabel.text];
+            [button setTitleColor:subscore.color forState:UIControlStateNormal];
+        }
+        else
+        {
+            [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         }
     }
+//    int i = 0;
+//    for (i = 0; i < 6; i++)
+//    {
+//        UIButton *button = [buttonArray objectAtIndex:i];
+//        NSString *subscoreName = button.titleLabel.text;
+//        switch (i)
+//        {
+//            case 0:
+//                if (buttonOneBool)
+//                {
+//                    Subscore *subscore = [score.subscoreDictionary objectForKey:subscoreName];
+//                    [button setTitleColor:subscore.color forState:UIControlStateNormal];
+//                }
+//                else
+//                {
+//                    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//                }
+//                break;
+//            case 1:
+//                if (buttonTwoBool)
+//                {
+//                    Subscore *subscore = [score.subscoreDictionary objectForKey:subscoreName];
+//                    [button setTitleColor:subscore.color forState:UIControlStateNormal];
+//                }
+//                else
+//                {
+//                    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//                }
+//                break;
+//            case 2:
+//                if (buttonThreeBool)
+//                {
+//                    Subscore *subscore = [score.subscoreDictionary objectForKey:subscoreName];
+//                    [button setTitleColor:subscore.color forState:UIControlStateNormal];
+//                }
+//                else
+//                {
+//                    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//                }
+//                break;
+//            case 3:
+//                if (buttonFourBool)
+//                {
+//                    Subscore *subscore = [score.subscoreDictionary objectForKey:subscoreName];
+//                    [button setTitleColor:subscore.color forState:UIControlStateNormal];
+//                }
+//                else
+//                {
+//                    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//                }
+//                break;
+//            case 4:
+//                if (buttonFiveBool)
+//                {
+//                    Subscore *subscore = [score.subscoreDictionary objectForKey:subscoreName];
+//                    [button setTitleColor:subscore.color forState:UIControlStateNormal];
+//                }
+//                else
+//                {
+//                    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//                }
+//                break;
+//            case 5:
+//                if (buttonSixBool)
+//                {
+//                    Subscore *subscore = [score.subscoreDictionary objectForKey:subscoreName];
+//                    [button setTitleColor:subscore.color forState:UIControlStateNormal];
+//                }
+//                else
+//                {
+//                    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//                }
+//                break;
+//            default:
+//                break;
+//        }
+//    }
 }
 
 - (void) didTapChangeDrumInView:(CymbalView *)view withInstrumentType:(InstrumentType *)instrumentType
 {
     [score changeDrumView:view toInstrumentType:instrumentType withTimeIndex:currentScoreIndex];
     [self updateFeasibilityAndRobotDistribution];
+    
 }
 
 - (void) didTapChangeGridInView:(GridView *)view withInstrumentType:(InstrumentType *)instrumentType
@@ -710,67 +729,77 @@
     PDSlider.enabled = true;
     PGDSlider.enabled = true;
     
-    for (int i = 0; i< [buttonArray count]; i++)
+//    for (int i = 0; i< [buttonArray count]; i++)
+//    {
+//        UIButton *button = [buttonArray objectAtIndex:i];
+//        NSString *subscoreName = button.titleLabel.text;
+//        if ([score isSubscoreName:subscoreName includedInScoreAtTime:0])
+//        {
+//            Subscore *subscore = [score.subscoreDictionary objectForKey:subscoreName];
+//            [button setTitleColor:subscore.color forState:UIControlStateNormal];
+//            switch (i)
+//            {
+//                case 0:
+//                    buttonOneBool = YES;
+//                    break;
+//                case 1:
+//                    buttonTwoBool = YES;
+//                    break;
+//                case 2:
+//                    buttonThreeBool = YES;
+//                    break;
+//                case 3:
+//                    buttonFourBool = YES;
+//                    break;
+//                case 4:
+//                    buttonFiveBool = YES;
+//                    break;
+//                case 5:
+//                    buttonSixBool = YES;
+//                    break;
+//                default:
+//                    break;
+//            }
+//        }
+//        else
+//        {
+//            [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//            switch (i)
+//            {
+//                case 0:
+//                    buttonOneBool = NO;
+//                    break;
+//                case 1:
+//                    buttonTwoBool = NO;
+//                    break;
+//                case 2:
+//                    buttonThreeBool = NO;
+//                    break;
+//                case 3:
+//                    buttonFourBool = NO;
+//                    break;
+//                case 4:
+//                    buttonFiveBool = NO;
+//                    break;
+//                case 5:
+//                    buttonSixBool = NO;
+//                    break;
+//                default:
+//                    break;
+//            }
+//        }
+//    }
+    [self clearAllNotes];
+}
+
+- (void) clearAllNotes
+{
+    for (int i = 0; i < [isButtonSelected count]; i++)
     {
-        UIButton *button = [buttonArray objectAtIndex:i];
-        NSString *subscoreName = button.titleLabel.text;
-        if ([score isSubscoreName:subscoreName includedInScoreAtTime:0])
-        {
-            Subscore *subscore = [score.subscoreDictionary objectForKey:subscoreName];
-            [button setTitleColor:subscore.color forState:UIControlStateNormal];
-            switch (i)
-            {
-                case 0:
-                    buttonOneBool = YES;
-                    break;
-                case 1:
-                    buttonTwoBool = YES;
-                    break;
-                case 2:
-                    buttonThreeBool = YES;
-                    break;
-                case 3:
-                    buttonFourBool = YES;
-                    break;
-                case 4:
-                    buttonFiveBool = YES;
-                    break;
-                case 5:
-                    buttonSixBool = YES;
-                    break;
-                default:
-                    break;
-            }
-        }
-        else
-        {
-            [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-            switch (i)
-            {
-                case 0:
-                    buttonOneBool = NO;
-                    break;
-                case 1:
-                    buttonTwoBool = NO;
-                    break;
-                case 2:
-                    buttonThreeBool = NO;
-                    break;
-                case 3:
-                    buttonFourBool = NO;
-                    break;
-                case 4:
-                    buttonFiveBool = NO;
-                    break;
-                case 5:
-                    buttonSixBool = NO;
-                    break;
-                default:
-                    break;
-            }
-        }
+        ((BooleanObject *)[isButtonSelected objectAtIndex:i]).value = NO;
     }
-    
+    [score clearScore];
+    [self updateNoteExistanceToEndFromTime:0];
 }
 
 - (void) matlabReachedTimeIndex:(int)index
@@ -788,75 +817,75 @@
     [[masterView tableView] reloadData];
     //[[masterView tableView] performSelector:@selector(reloadData) onThread:<#(NSThread *)#> withObject:<#(id)#> waitUntilDone:<#(BOOL)#>];
     //[[masterView tableView] performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
-    if ([self getFirstEditableTimeForScore] == (15+10))
-    {
-        for (int i = 0; i < [buttonArray count]; i++)
-        {
-            UIButton *button = [buttonArray objectAtIndex:i];
-            if ([button.titleLabel.text isEqualToString:@"Drums"])
-            {
-                switch (i)
-                {
-                    case 0:
-                        [self touchedButtonOne:nil];
-                        break;
-                    case 1:
-                        [self touchedButtonTwo:nil];
-                        break;
-                    case 2:
-                        [self touchedButtonThree:nil];
-                        break;
-                    case 3:
-                        [self touchedButtonFour:nil];
-                        break;
-                    case 4:
-                        [self touchedButtonFive:nil];
-                        break;
-                    case 5:
-                        [self touchedButtonSix:nil];
-                        break;
-                    default:
-                        break;
-                }
-            }
-                
-        }
-    }
+//    if ([self getFirstEditableTimeForScore] == (15+10))
+//    {
+//        for (int i = 0; i < [buttonArray count]; i++)
+//        {
+//            UIButton *button = [buttonArray objectAtIndex:i];
+//            if ([button.titleLabel.text isEqualToString:@"Drums"])
+//            {
+//                switch (i)
+//                {
+//                    case 0:
+//                        [self touchedButtonOne:nil];
+//                        break;
+//                    case 1:
+//                        [self touchedButtonTwo:nil];
+//                        break;
+//                    case 2:
+//                        [self touchedButtonThree:nil];
+//                        break;
+//                    case 3:
+//                        [self touchedButtonFour:nil];
+//                        break;
+//                    case 4:
+//                        [self touchedButtonFive:nil];
+//                        break;
+//                    case 5:
+//                        [self touchedButtonSix:nil];
+//                        break;
+//                    default:
+//                        break;
+//                }
+//            }
+//                
+//        }
+//    }
     
-    if ([self getFirstEditableTimeForScore] == (25+10))
-    {
-        for (int i = 0; i < [buttonArray count]; i++)
-        {
-            UIButton *button = [buttonArray objectAtIndex:i];
-            if ([button.titleLabel.text isEqualToString:@"Guitar Chords"])
-            {
-                switch (i)
-                {
-                    case 0:
-                        [self touchedButtonOne:nil];
-                        break;
-                    case 1:
-                        [self touchedButtonTwo:nil];
-                        break;
-                    case 2:
-                        [self touchedButtonThree:nil];
-                        break;
-                    case 3:
-                        [self touchedButtonFour:nil];
-                        break;
-                    case 4:
-                        [self touchedButtonFive:nil];
-                        break;
-                    case 5:
-                        [self touchedButtonSix:nil];
-                        break;
-                    default:
-                        break;
-                }
-            }
-            
-        }
-    }
+//    if ([self getFirstEditableTimeForScore] == (25+10))
+//    {
+//        for (int i = 0; i < [buttonArray count]; i++)
+//        {
+//            UIButton *button = [buttonArray objectAtIndex:i];
+//            if ([button.titleLabel.text isEqualToString:@"Guitar Chords"])
+//            {
+//                switch (i)
+//                {
+//                    case 0:
+//                        [self touchedButtonOne:nil];
+//                        break;
+//                    case 1:
+//                        [self touchedButtonTwo:nil];
+//                        break;
+//                    case 2:
+//                        [self touchedButtonThree:nil];
+//                        break;
+//                    case 3:
+//                        [self touchedButtonFour:nil];
+//                        break;
+//                    case 4:
+//                        [self touchedButtonFive:nil];
+//                        break;
+//                    case 5:
+//                        [self touchedButtonSix:nil];
+//                        break;
+//                    default:
+//                        break;
+//                }
+//            }
+//            
+//        }
+//    }
     
 //    if ([self getFirstEditableTimeForScore] == 51)
 //    {
@@ -928,7 +957,7 @@
     {
         return 0;
     }
-    return (self.currentMatlabTime + 10);
+    return (self.currentMatlabTime + 5);
 }
 
 @end
