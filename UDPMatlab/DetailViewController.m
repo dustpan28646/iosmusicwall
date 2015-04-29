@@ -280,8 +280,8 @@
     if (startTime < score.numberOfTimeInstances)
     {
         bool isAddingSubscore = [score addOrRemoveSubscoreWithName:name withTimeIndex:startTime];
-        [score changeTimeIndexTo:currentScoreIndex];  //maybe reorder these so we don't have to do visual updates until we know if its feasible.  not sure right now, so we'll wait
-        [self updateButtonColors];
+        //[score changeTimeIndexTo:currentScoreIndex];  //maybe reorder these so we don't have to do visual updates until we know if its feasible.  not sure right now, so we'll wait
+        //[self updateButtonColors];
         [self updateNoteExistanceToEndFromTime:startTime];
         if (isCurrentlyPlaying && !isGloballyFeasible)
         {
@@ -292,8 +292,8 @@
                                                    otherButtonTitles: nil];
             [alert show];
             [score addOrRemoveSubscoreWithName:name withTimeIndex:startTime];
-            [score changeTimeIndexTo:currentScoreIndex];
-            [self updateButtonColors];
+            //[score changeTimeIndexTo:currentScoreIndex];
+            //[self updateButtonColors];
             [self updateNoteExistanceToEndFromTime:startTime];
             if (!isGloballyFeasible)
             {
@@ -314,6 +314,8 @@
             }
         }
     }
+    [score changeTimeIndexTo:currentScoreIndex];
+    [self updateButtonColors];
 }
 
 - (IBAction)startPush:(id)sender
@@ -374,7 +376,7 @@
 - (void) initializeScoreWithSubscores:(NSMutableDictionary *)subscores withNumberOfTimeIndices:(int)numTimes
 {
     buttonArray = [[NSArray alloc] initWithObjects:buttonOne, buttonTwo, buttonThree, buttonFour, buttonFive, buttonSix, nil];
-    isButtonSelected = [[NSArray alloc] initWithObjects:[[NSNumber alloc] initWithBool:NO],
+    isButtonSelected = [[NSArray alloc] initWithObjects:[[BareBooleanObject alloc] initWithBool:NO],
                         [[BareBooleanObject alloc] initWithBool:NO],
                         [[BareBooleanObject alloc] initWithBool:NO],
                         [[BareBooleanObject alloc] initWithBool:NO],
@@ -458,7 +460,7 @@
     for (int i = 0; i < [isButtonSelected count]; i++)
     {
         UIButton *button = [buttonArray objectAtIndex:i];
-        if ([[isButtonSelected objectAtIndex:i] boolValue])
+        if (((BareBooleanObject *)[isButtonSelected objectAtIndex:i]).value)
         {
             Subscore *subscore = [score.subscoreDictionary objectForKey:button.titleLabel.text];
             [button setTitleColor:subscore.color forState:UIControlStateNormal];

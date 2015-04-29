@@ -10,6 +10,8 @@
 #import "Subscore.h"
 #import "SubscoreLinked.h"
 
+@class SubscoreLinked;
+
 @interface SubscoreSuper : Subscore
 
 @property (strong, nonatomic) SubscoreLinked *downLinkedSubscore;

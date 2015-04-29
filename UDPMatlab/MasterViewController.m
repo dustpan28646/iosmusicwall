@@ -459,6 +459,10 @@ static float const coloredCircleDiameter = 28.0;
         }
         fRange = fPianoRangeValue;
     }
+    else
+    {
+        return NO;
+    }
     
     NSString *reducedFString = [fName stringByReplacingCharactersInRange:fRange withString:@""];
     NSString *reducedSString = [sName stringByReplacingCharactersInRange:sRange withString:@""];

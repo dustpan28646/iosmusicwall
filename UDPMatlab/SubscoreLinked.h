@@ -6,8 +6,11 @@
 //  Copyright (c) 2015 Matthew Rice. All rights reserved.
 //
 
-#import "Subscore.h"
+#import <Foundation/Foundation.h>
 #import "SubscoreSuper.h"
+#import "Subscore.h"
+
+@class SubscoreSuper;
 
 @interface SubscoreLinked : Subscore
 
